@@ -1,4 +1,4 @@
-package org.fi.muni.pa165.library.pa165.library;
+package cz.fi.muni.pa165.library;
 
 /**
  * Hello world!
