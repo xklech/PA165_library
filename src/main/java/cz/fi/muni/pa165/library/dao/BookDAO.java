@@ -43,15 +43,15 @@ public interface BookDAO {
      * @param id id of searched book
      * @return book with given id
      */    
-    public Book findBookById(Long id);
+    public Book findBookById(Long id)throws BookDAOException;
     
     /**
      * Finds book with given ISBN.
      * 
-     * @param ISBN ISBN of searched book
+     * @param isbn ISBN of searched book
      * @return book with given ISBN
      */
-    public Book findBookByISBN(String ISBN);
+    public Book findBookByISBN(String isbn);
     
     /**
      * Finds books with given author
@@ -59,7 +59,7 @@ public interface BookDAO {
      * @param author author of the books
      * @return books with given author
      */
-    public Collection<Book> findBookByAuthor(String author);
+    public Collection<Book> findBooksByAuthor(String author);
     
     /**
      * Finds books by publish date.
@@ -92,5 +92,5 @@ public interface BookDAO {
      * @param impression impression to find book for
      * @return Book for given impression
      */
-    public Book findBookByImpression(Impression impression);
+    public Book findBookByImpression(Impression impression) throws BookDAOException;
 }

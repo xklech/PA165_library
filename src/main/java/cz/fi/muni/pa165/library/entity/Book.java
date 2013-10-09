@@ -29,9 +29,9 @@ public class Book implements Serializable{
     private String name;
     
     @Column(length=20)
-    private String ISBN;
+    private String isbn;
     
-    @OneToMany(mappedBy = "impression", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Impression> impressions;
     
     @Column(length=50)
@@ -46,9 +46,9 @@ public class Book implements Serializable{
     public Book() {
     }
 
-    public Book(String name, String ISBN, List<Impression> impressions, String department, Date publishDate, String author) {
+    public Book(String name, String isbn, List<Impression> impressions, String department, Date publishDate, String author) {
         this.name = name;
-        this.ISBN = ISBN;
+        this.isbn = isbn;
         this.impressions = impressions;
         this.department = department;
         this.publishDate = publishDate;
@@ -72,11 +72,11 @@ public class Book implements Serializable{
     }
 
     public String getISBN() {
-        return ISBN;
+        return isbn;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setISBN(String isbn) {
+        this.isbn = isbn;
     }
 
     public List<Impression> getImpressions() {
@@ -135,7 +135,7 @@ public class Book implements Serializable{
 
     @Override
     public String toString() {
-        return "Book{" + "id=" + id + ", name=" + name + ", ISBN=" + ISBN + ", impressions=" + impressions + ", department=" + department + ", publishDate=" + publishDate + ", author=" + author + '}';
+        return "Book{" + "id=" + id + ", name=" + name + ", ISBN=" + isbn + ", impressions=" + impressions + ", department=" + department + ", publishDate=" + publishDate + ", author=" + author + '}';
     }
 
 
