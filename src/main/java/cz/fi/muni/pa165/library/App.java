@@ -2,10 +2,16 @@ package cz.fi.muni.pa165.library;
 
 import cz.fi.muni.pa165.library.dao.BookDAO;
 import cz.fi.muni.pa165.library.dao.BookDAOImpl;
+import cz.fi.muni.pa165.library.dao.LoanDAO;
+import cz.fi.muni.pa165.library.dao.LoanDAOImpl;
 import cz.fi.muni.pa165.library.entity.Book;
 import cz.fi.muni.pa165.library.entity.Impression;
+import cz.fi.muni.pa165.library.entity.Loan;
+import cz.fi.muni.pa165.library.entity.Loan;
 import cz.fi.muni.pa165.library.exceptions.BookDAOException;
+import cz.fi.muni.pa165.library.exceptions.LoanDAOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -18,7 +24,7 @@ import javax.persistence.Persistence;
  */
 public class App 
 {
-    public static void main( String[] args ) throws BookDAOException
+    public static void main( String[] args ) throws BookDAOException, LoanDAOException
     {
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibraryPU");
@@ -36,5 +42,15 @@ public class App
         manager.getTransaction().begin();
             bookDAO.addBook(book);
         manager.getTransaction().commit();
+	
+	LoanDAO loanDAO = new LoanDAOImpl(manager);
+	Loan loan = new Loan();
+        manager.getTransaction().begin();
+            loanDAO.addLoan(loan);
+        manager.getTransaction().commit();
+	Collection<Loan> loans = loanDAO.findLoansByFromTo(null,new Date());
+	for (Loan l : loans) {
+	    System.out.println(l);
+	}
     }
 }

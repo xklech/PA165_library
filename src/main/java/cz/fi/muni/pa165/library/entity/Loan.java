@@ -1,24 +1,124 @@
 package cz.fi.muni.pa165.library.entity;
 
+import cz.fi.muni.pa165.library.enums.ConditionType;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author Michal Sukupčák
  */
 @Entity
-public class Loan implements Serializable{
+public class Loan implements Serializable {
+        
     @Id
+    @GeneratedValue
     private Long id;
+    
+    @ManyToOne
+    private Customer customer;
+    
+    @OneToOne
+    private Impression impression;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fromDate;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date toDate;
+    
+    private ConditionType conditionType;
 
+    public Loan() {}
+    
+    public Loan (Customer customer, Impression impression, Date fromDate, Date toDate, ConditionType conditionType) {
+	this.customer = customer;
+	this.impression = impression;
+	this.fromDate = fromDate;
+	this.toDate = toDate;
+	this.conditionType = conditionType;
+    }
+    
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+        
+    public Customer getCustomer() {
+	return this.customer;
+    }
+
+    public void setCustomer(Customer customer) {
+	this.customer = customer;
+    }
+
+    public Impression getImpression() {
+	return this.impression;
+    }
+
+    public void setImpression(Impression impression) {
+	this.impression = impression;
+    }
+    
+    public Date getFromDate() {
+	return this.fromDate;
+    }
+
+    public void setFromDate(Date fromDate) {
+	this.fromDate = fromDate;
+    }
+    
+    public Date getToDate() {
+	return this.toDate;
+    }
+
+    public void setToDate(Date toDate) {
+	this.toDate = toDate;
+    }
+    
+    public ConditionType getConditionType() {
+	return this.conditionType;
+    }
+
+    public void setConditionType(ConditionType conditionType) {
+	this.conditionType = conditionType;
+    }
+
+    @Override
+    public int hashCode() {
+	int hash = 7;
+	hash = 67 * hash + Objects.hashCode(this.id);
+	return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (obj == null) {
+	    return false;
+	}
+	if (getClass() != obj.getClass()) {
+	    return false;
+	}
+	final Loan other = (Loan) obj;
+	if (!Objects.equals(this.id, other.id)) {
+	    return false;
+	}
+	return true;
+    }
+
+    @Override
+    public String toString() {
+	return "Loan: {#id = " + this.id + ", Customer = " + this.customer + ", Impression = " + this.impression +  ", From = " + this.fromDate + ", To = " + this.toDate + " Condition = " + this.conditionType;
     }
     
 }
