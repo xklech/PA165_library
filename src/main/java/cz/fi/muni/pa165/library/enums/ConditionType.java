@@ -5,8 +5,9 @@
 package cz.fi.muni.pa165.library.enums;
 
 /**
+ * All possible condition types of an impression.
  *
- * @author bloodspell
+ * @author Michal Sukupčák
  */
 public enum ConditionType {
     

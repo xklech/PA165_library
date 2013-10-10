@@ -12,7 +12,7 @@ import java.util.Date;
 
 /**
  *
- * @author bloodspell
+ * @author Michal Sukupčák
  */
 public interface LoanDAO {
  
