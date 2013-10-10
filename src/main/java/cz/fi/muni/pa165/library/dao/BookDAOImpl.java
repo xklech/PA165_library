@@ -79,7 +79,7 @@ public class BookDAOImpl implements BookDAO{
 
     @Override
     public Book findBookByISBN(String isbn) {
-        TypedQuery query = em.createQuery("SELECT b FROM Book WHERE b.isbn = :isbn",Book.class);
+        TypedQuery query = em.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn",Book.class);
         query.setParameter("isbn", isbn);
         List<Book> books = query.getResultList();
         if(books == null || books.isEmpty()){
