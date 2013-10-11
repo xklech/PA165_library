@@ -119,7 +119,7 @@ public class Loan implements Serializable {
 
     @Override
     public String toString() {
-	return "Loan: {#id = " + this.id + ", Customer = " + this.customer + ", Impression = " + this.impression +  ", From = " + this.fromDate + ", To = " + this.toDate + " Condition = " + this.conditionType;
+	return "Loan{" + "id=" + id + ", customer=" + customer + ", impression=" + impression + ", fromDate=" + fromDate + ", toDate=" + toDate + ", conditionType=" + conditionType + '}';
     }
-    
+
 }

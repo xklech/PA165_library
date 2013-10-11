@@ -7,7 +7,6 @@ import cz.fi.muni.pa165.library.dao.LoanDAOImpl;
 import cz.fi.muni.pa165.library.entity.Book;
 import cz.fi.muni.pa165.library.entity.Impression;
 import cz.fi.muni.pa165.library.entity.Loan;
-import cz.fi.muni.pa165.library.entity.Loan;
 import cz.fi.muni.pa165.library.exceptions.BookDAOException;
 import cz.fi.muni.pa165.library.exceptions.LoanDAOException;
 import java.util.ArrayList;

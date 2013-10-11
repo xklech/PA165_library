@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.fi.muni.pa165.library.dao;
 
 import cz.fi.muni.pa165.library.entity.Customer;
@@ -57,7 +53,6 @@ public class LoanDAOImpl implements LoanDAO {
 	loanToUpdate.setFromDate(loan.getFromDate());
 	loanToUpdate.setToDate(loan.getToDate());
 	loanToUpdate.setConditionType(loan.getConditionType());
-	
     }
 
     @Override

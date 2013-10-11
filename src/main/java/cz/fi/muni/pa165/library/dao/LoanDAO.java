@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.fi.muni.pa165.library.dao;
 
 import cz.fi.muni.pa165.library.entity.Customer;
@@ -11,6 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
+ * Data Access Object for managing entity Loan.
  *
  * @author Michal Sukupčák
  */

@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * Data Acces Object for managing entity Book.
+ * Data Access Object for managing entity Book.
  * 
  * @author Jaroslav Klech
  */
