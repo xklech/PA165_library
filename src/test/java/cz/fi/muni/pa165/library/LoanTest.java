@@ -219,12 +219,6 @@ public class LoanTest {
 	Collection<Loan> loansFromDatabase = this.loanDAO.findLoansByFromTo(from,to);
 	this.em.getTransaction().commit();
 	for (Loan loanFromDatabase : loansFromDatabase) {
-	    if (loanFromDatabase.getFromDate().after(from)) {
-		System.out.println("XDA_DATE: " + loanFromDatabase.getFromDate() + " AFTER " + from);
-	    }
-	    if (loanFromDatabase.getFromDate().before(to)) {
-		System.out.println("XDA_DATE: " + loanFromDatabase.getFromDate() + " BEFORE " + from);
-	    }
 	    Assert.assertTrue(loanFromDatabase.getFromDate().after(from) && loanFromDatabase.getToDate().before(to));
 	}
     }
