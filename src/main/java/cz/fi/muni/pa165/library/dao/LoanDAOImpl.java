@@ -52,7 +52,7 @@ public class LoanDAOImpl implements LoanDAO {
 	loanToUpdate.setImpression(loan.getImpression());
 	loanToUpdate.setFromDate(loan.getFromDate());
 	loanToUpdate.setToDate(loan.getToDate());
-	loanToUpdate.setConditionType(loan.getConditionType());
+	loanToUpdate.setDamageType(loan.getDamageType());
     }
 
     @Override

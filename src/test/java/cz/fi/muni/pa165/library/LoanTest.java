@@ -5,7 +5,7 @@ import cz.fi.muni.pa165.library.dao.LoanDAOImpl;
 import cz.fi.muni.pa165.library.entity.Customer;
 import cz.fi.muni.pa165.library.entity.Impression;
 import cz.fi.muni.pa165.library.entity.Loan;
-import cz.fi.muni.pa165.library.enums.ConditionType;
+import cz.fi.muni.pa165.library.enums.DamageType;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,8 +58,8 @@ public class LoanTest {
 	Impression impression1 = new Impression();
 	Impression impression2 = new Impression();
 	Impression impression3 = new Impression();
-	Loan loan1 = new Loan(customer1,impression1,date1From,date1To,ConditionType.USED);
-	Loan loan2 = new Loan(customer1,impression2,date2From,date2To,ConditionType.SLIGHTLY_DAMAGED);
+	Loan loan1 = new Loan(customer1,impression1,date1From,date1To,DamageType.USED);
+	Loan loan2 = new Loan(customer1,impression2,date2From,date2To,DamageType.SLIGHTLY_DAMAGED);
 	Loan loan3 = new Loan(customer1,impression3,date3From,date3To,null);
 	Collection<Loan> loans = new ArrayList();
 	loans.add(loan1);
@@ -82,7 +82,7 @@ public class LoanTest {
     @Test
     public void testAddLoan() throws Exception {
 	Customer customer = new Customer();
-	Loan loan = new Loan(customer,new Impression(),this.parseDate("01/01/2001"),this.parseDate("02/02/2002"),ConditionType.DAMAGED);
+	Loan loan = new Loan(customer,new Impression(),this.parseDate("01/01/2001"),this.parseDate("02/02/2002"),DamageType.DAMAGED);
 	Collection<Loan> loans = new ArrayList();
 	loans.add(loan);
 	customer.setLoans(loans);
@@ -116,7 +116,7 @@ public class LoanTest {
     @Test
     public void testDeleteLoan() throws Exception {
 	Customer customer = new Customer();
-	Loan loan = new Loan(customer,new Impression(),this.parseDate("01/01/2001"),this.parseDate("02/02/2002"),ConditionType.DAMAGED);
+	Loan loan = new Loan(customer,new Impression(),this.parseDate("01/01/2001"),this.parseDate("02/02/2002"),DamageType.DAMAGED);
 	Collection<Loan> loans = new ArrayList();
 	loans.add(loan);
 	customer.setLoans(loans);
@@ -172,7 +172,7 @@ public class LoanTest {
     @Test
     public void testFindLoansByCustomer() throws Exception {
 	Customer customer = new Customer();
-	Loan loan = new Loan(customer,new Impression(),this.parseDate("07/07/2007"),this.parseDate("08/08/2008"),ConditionType.DAMAGED);
+	Loan loan = new Loan(customer,new Impression(),this.parseDate("07/07/2007"),this.parseDate("08/08/2008"),DamageType.DAMAGED);
 	Collection<Loan> loans = new ArrayList();
 	loans.add(loan);
 	customer.setLoans(loans);
@@ -192,13 +192,13 @@ public class LoanTest {
 	Date from = this.parseDate("09/09/2009");
 	Date to = this.parseDate("10/10/2010");
 	Customer customer = new Customer();
-	Loan loan1 = new Loan(customer,new Impression(),this.parseDate("01/01/2010"),this.parseDate("02/01/2010"),ConditionType.USED);
-	Loan loan2 = new Loan(customer,new Impression(),this.parseDate("01/02/2010"),this.parseDate("02/02/2010"),ConditionType.USED);
-	Loan loan3 = new Loan(customer,new Impression(),this.parseDate("01/03/2010"),this.parseDate("02/03/2010"),ConditionType.USED);
-	Loan loan4 = new Loan(customer,new Impression(),this.parseDate("01/04/2010"),this.parseDate("02/04/2010"),ConditionType.USED);
-	Loan loan5 = new Loan(customer,new Impression(),this.parseDate("01/01/1990"),this.parseDate("02/01/1990"),ConditionType.USED);
-	Loan loan6 = new Loan(customer,new Impression(),this.parseDate("09/10/2010"),this.parseDate("11/10/2010"),ConditionType.USED);
-	Loan loan7 = new Loan(customer,new Impression(),this.parseDate("08/09/2009"),this.parseDate("10/09/2009"),ConditionType.USED);
+	Loan loan1 = new Loan(customer,new Impression(),this.parseDate("01/01/2010"),this.parseDate("02/01/2010"),DamageType.USED);
+	Loan loan2 = new Loan(customer,new Impression(),this.parseDate("01/02/2010"),this.parseDate("02/02/2010"),DamageType.USED);
+	Loan loan3 = new Loan(customer,new Impression(),this.parseDate("01/03/2010"),this.parseDate("02/03/2010"),DamageType.USED);
+	Loan loan4 = new Loan(customer,new Impression(),this.parseDate("01/04/2010"),this.parseDate("02/04/2010"),DamageType.USED);
+	Loan loan5 = new Loan(customer,new Impression(),this.parseDate("01/01/1990"),this.parseDate("02/01/1990"),DamageType.USED);
+	Loan loan6 = new Loan(customer,new Impression(),this.parseDate("09/10/2010"),this.parseDate("11/10/2010"),DamageType.USED);
+	Loan loan7 = new Loan(customer,new Impression(),this.parseDate("08/09/2009"),this.parseDate("10/09/2009"),DamageType.USED);
 	this.em.getTransaction().begin();
 	this.em.persist(loan1);
 	this.em.persist(loan2);

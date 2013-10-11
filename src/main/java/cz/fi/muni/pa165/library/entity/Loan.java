@@ -1,6 +1,6 @@
 package cz.fi.muni.pa165.library.entity;
 
-import cz.fi.muni.pa165.library.enums.ConditionType;
+import cz.fi.muni.pa165.library.enums.DamageType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -35,16 +35,16 @@ public class Loan implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date toDate;
     
-    private ConditionType conditionType;
+    private DamageType damageType;
 
     public Loan() {}
     
-    public Loan (Customer customer, Impression impression, Date fromDate, Date toDate, ConditionType conditionType) {
+    public Loan (Customer customer, Impression impression, Date fromDate, Date toDate, DamageType damageType) {
 	this.customer = customer;
 	this.impression = impression;
 	this.fromDate = fromDate;
 	this.toDate = toDate;
-	this.conditionType = conditionType;
+	this.damageType = damageType;
     }
     
     public Long getId() {
@@ -87,12 +87,12 @@ public class Loan implements Serializable {
 	this.toDate = toDate;
     }
     
-    public ConditionType getConditionType() {
-	return this.conditionType;
+    public DamageType getDamageType() {
+	return this.damageType;
     }
 
-    public void setConditionType(ConditionType conditionType) {
-	this.conditionType = conditionType;
+    public void setDamageType(DamageType damageType) {
+	this.damageType = damageType;
     }
 
     @Override
@@ -119,7 +119,7 @@ public class Loan implements Serializable {
 
     @Override
     public String toString() {
-	return "Loan{" + "id=" + id + ", customer=" + customer + ", impression=" + impression + ", fromDate=" + fromDate + ", toDate=" + toDate + ", conditionType=" + conditionType + '}';
+	return "Loan{" + "id=" + id + ", customer=" + customer + ", impression=" + impression + ", fromDate=" + fromDate + ", toDate=" + toDate + ", damageType=" + damageType + '}';
     }
 
 }

@@ -5,7 +5,7 @@ package cz.fi.muni.pa165.library.enums;
  *
  * @author Michal Sukupčák
  */
-public enum ConditionType {
+public enum DamageType {
     
     NEW,
     USED,
