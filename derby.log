@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Thu Oct 10 13:23:11 CEST 2013:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0141-a21b-28d9-000007a37ba0 
-on database directory memory:/home/bloodspell/Development/java/PA165-Library/PA165_library/StudentsDB with class loader sun.misc.Launcher$AppClassLoader@6fd7bd04 
+Fri Oct 11 02:52:27 CEST 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0141-a500-141a-000006af5720 
+on database directory memory:/home/bloodspell/Development/java/PA165-Library/PA165_library/StudentsDB with class loader sun.misc.Launcher$AppClassLoader@65499154 
 Loaded from file:/home/bloodspell/.m2/repository/org/apache/derby/derby/10.10.1.1/derby-10.10.1.1.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.7.0_25-b30

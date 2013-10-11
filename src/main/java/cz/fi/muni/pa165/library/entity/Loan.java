@@ -4,6 +4,7 @@ import cz.fi.muni.pa165.library.enums.ConditionType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,10 +23,10 @@ public class Loan implements Serializable {
     @GeneratedValue
     private Long id;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Customer customer;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Impression impression;
     
     @Temporal(javax.persistence.TemporalType.DATE)

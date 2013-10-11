@@ -113,11 +113,12 @@ public class LoanDAOImpl implements LoanDAO {
 	if (fromDate == null && toDate == null) {
 	    cq.select(r);
 	} else {
-	    if (fromDate != null) {
-		cq.where(cb.greaterThanOrEqualTo(r.get(Loan_.fromDate),fromDate));
-	    }
-	    if (toDate != null) {
+	    if (fromDate == null) {
 		cq.where(cb.lessThanOrEqualTo(r.get(Loan_.toDate),toDate));
+	    } else if (toDate == null) {
+		cq.where(cb.greaterThanOrEqualTo(r.get(Loan_.fromDate),fromDate));
+	    } else {
+		cq.where(cb.greaterThanOrEqualTo(r.get(Loan_.fromDate),fromDate),cb.lessThanOrEqualTo(r.get(Loan_.toDate),toDate));
 	    }
 	}
 	TypedQuery q = this.em.createQuery(cq);
