@@ -2,10 +2,13 @@ package cz.fi.muni.pa165.library;
 
 import cz.fi.muni.pa165.library.dao.CustomerDAO;
 import cz.fi.muni.pa165.library.dao.CustomerDAOImpl;
+import cz.fi.muni.pa165.library.entity.Customer;
+import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,7 +41,7 @@ public class CustomerTest {
     
     @Test
     public void testAddCustomer() throws Exception {
-	Customer customer = new Customer((new Long(2350), "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973", null);
+	Customer customer = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973", null);
         Customer customerSaved;
         em.getTransaction().begin();
         customerDAO.addCustomer(customer);
@@ -49,6 +52,12 @@ public class CustomerTest {
     
     @Test
     public void testUpdateCustomer() throws Exception {
+        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973", null);
+        em.getTransaction().begin();
+            em.persist(customer1);
+        em.getTransaction().commit();
+        
+        
         Customer customer = em.find(Customer.class,new Long(1));
         customer.setFirstName("George");
         em.getTransaction().begin();
@@ -62,6 +71,10 @@ public class CustomerTest {
     
     @Test
     public void testDeleteCustomer() throws Exception {
+        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973", null);
+        em.getTransaction().begin();
+            em.persist(customer1);
+        em.getTransaction().commit();
     	Customer customer = em.find(Customer.class,new Long(1));
         em.getTransaction().begin();
         customerDAO.deleteCustomer(customer);

@@ -18,6 +18,8 @@ import org.junit.Test;
 
 /**
  * Unit test for BookDAO implementation
+ * 
+ * @author Jaroslav Klech
  */
 public class BookTest 
 
