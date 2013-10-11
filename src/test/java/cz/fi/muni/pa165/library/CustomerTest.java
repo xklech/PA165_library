@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit test for LoanDAO implementation
+ * Unit test for customerDAO implementation
  *
  * @author Michal Sukupčák
  */
