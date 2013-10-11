@@ -78,7 +78,7 @@ public class CustomerTest {
         Customer customer2 = customerDAO.findCustomerById(new Long(2));
         Assert.assertEquals(customer, customer2);
         
-        Customer customer3 = customerDAO.findCustomerById(new Long(754));
+        Customer customer3 = customerDAO.findCustomerById(new Long(18));
         Assert.assertNull(customer3);
     }
     
@@ -89,7 +89,7 @@ public class CustomerTest {
     
     @Test
     public void testFindCustomersByBook() throws Exception {
-
+	
     }
     
     @Test
