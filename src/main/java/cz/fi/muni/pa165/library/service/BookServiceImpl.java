@@ -26,16 +26,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class BookServiceImpl {
 
+    @Autowired
     private BookDao bookDao;
     
-    @Required
-    public void setBookDao(BookDao dao){
-        bookDao = dao;
-    }
-
-    public BookDao getCustomerDao() {
-        return bookDao;
-    }
     
     @Transactional
     public void save(Book book){

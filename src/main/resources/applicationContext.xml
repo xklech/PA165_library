@@ -17,6 +17,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
+    <context:annotation-config />
+    <context:component-scan base-package="cz.fi.muni.pa165.library" />
+    
     <aop:aspectj-autoproxy/>
     <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
     
@@ -52,12 +55,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
     
-    <bean id="bookDao" class="cz.fi.muni.pa165.library.dao.BookDaoImpl">
-        <property name="entityManagerFactory" ref="entityManagerFactory" /> 
-    </bean>
+    <bean id="bookDao" class="cz.fi.muni.pa165.library.dao.BookDaoImpl"/>
     
-    <bean id="bookService" class="cz.fi.muni.pa165.library.service.BookServiceImpl">
-        <property name="bookDao" ref="bookDao" /> 
-    </bean>
+    <bean id="bookService" class="cz.fi.muni.pa165.library.service.BookServiceImpl"/>
+
     
 </beans>

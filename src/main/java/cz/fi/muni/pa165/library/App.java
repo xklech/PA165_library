@@ -66,7 +66,7 @@ public class App
         ApplicationContext ctx
                 = new ClassPathXmlApplicationContext("applicationContext.xml");
         BookServiceImpl bookService = (BookServiceImpl) ctx.getBean("bookService");
-        System.out.println(" service: "+bookService.getCustomerDao());
+        System.out.println(" service: "+bookService);
         
 
         Book book = new Book("Java", "123456789", null, "Skola", null, "Pepa");
@@ -75,6 +75,6 @@ public class App
         
 
 
-        System.err.println(book.getId());
+        System.err.println(bookService.findByName(book.getName()));
     }
 }
