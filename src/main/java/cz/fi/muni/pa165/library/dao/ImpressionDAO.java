@@ -4,49 +4,49 @@ import cz.fi.muni.pa165.library.entity.Book;
 import cz.fi.muni.pa165.library.enums.DamageType;
 import cz.fi.muni.pa165.library.entity.Impression;
 import cz.fi.muni.pa165.library.enums.StatusType;
-import cz.fi.muni.pa165.library.exceptions.ImpressionDAOException;
+import cz.fi.muni.pa165.library.exceptions.ImpressionDaoException;
 import java.util.List;
 
 /**
  *
  * @author Mask
  */
-public interface ImpressionDAO {
+public interface ImpressionDao {
     
     /**
      * Saves given impression.
      * 
      * @param impression impression to be saved
-     * @throws ImpressionDAOException is thrown when impression is null or has ID
+     * @throws ImpressionDaoException is thrown when impression is null or has ID
      * @return the inputed impression
      */
-    public Impression addImpression(Impression impression) throws ImpressionDAOException;
+    public Impression addImpression(Impression impression) throws ImpressionDaoException;
     
     /**
      * Updates given impression
      * 
      * @param impression impression to be updated
-     * @throws ImpressionDAOException is thrown when impression is null, has no ID or doesn't exist in DB
+     * @throws ImpressionDaoException is thrown when impression is null, has no ID or doesn't exist in DB
      * @return the inputed impression
      */
-    public Impression updateImpression(Impression impression) throws ImpressionDAOException;
+    public Impression updateImpression(Impression impression) throws ImpressionDaoException;
     
     /**
      * Deletes given impression
      * 
      * @param impression impression to be updated
-     * @throws ImpressionDAOException is thrown when impression is null, has no ID or doesn't exist in DB
+     * @throws ImpressionDaoException is thrown when impression is null, has no ID or doesn't exist in DB
      */
-    public void deleteImpression(Impression impression) throws ImpressionDAOException;
+    public void deleteImpression(Impression impression) throws ImpressionDaoException;
     
     /**
      * Finds impression with given ID.
      * 
      * @param id id (Long) of searched impression
-     * @throws ImpressionDAOException is thrown when inputed ID is null
+     * @throws ImpressionDaoException is thrown when inputed ID is null
      * @return impression with given id or null if not found
      */    
-    public Impression findImpressionById(Long id) throws ImpressionDAOException;
+    public Impression findImpressionById(Long id) throws ImpressionDaoException;
     
     /**
      * Finds all impressions with given damage level
@@ -68,9 +68,9 @@ public interface ImpressionDAO {
      * Finds all impressions of given books
      * 
      * @param status status of impressions to find
-     * @throws ImpressionDAOException is thrown, when inputed Book is null
+     * @throws ImpressionDaoException is thrown, when inputed Book is null
      * @return List of all impressions of given book or empty list
      */
-    public List<Impression> findImpressionsByBook(Book book) throws ImpressionDAOException;
+    public List<Impression> findImpressionsByBook(Book book) throws ImpressionDaoException;
     
 }

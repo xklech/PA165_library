@@ -2,7 +2,7 @@ package cz.fi.muni.pa165.library.dao;
 
 import cz.fi.muni.pa165.library.entity.Customer;
 import cz.fi.muni.pa165.library.entity.Loan;
-import cz.fi.muni.pa165.library.exceptions.LoanDAOException;
+import cz.fi.muni.pa165.library.exceptions.LoanDaoException;
 import java.util.Collection;
 import java.util.Date;
 
@@ -11,45 +11,45 @@ import java.util.Date;
  *
  * @author Michal Sukupčák
  */
-public interface LoanDAO {
+public interface LoanDao {
  
     /**
      * Saves loan supplied as parameter into database.
      * 
      * @param loan loan to be saved
-     * @throws LoanDAOException thrown when loan parameter is null, or has id
+     * @throws LoanDaoException thrown when loan parameter is null, or has id
      *				with non-null value
      */
-    public void addLoan(Loan loan) throws LoanDAOException;
+    public void addLoan(Loan loan) throws LoanDaoException;
     
     /**
      * Updates data of loan supplied as parameter in database.
      * 
      * @param loan loan to be updated
-     * @throws LoanDAOException thrown when loan parameter is null or loan has
+     * @throws LoanDaoException thrown when loan parameter is null or loan has
 				null id parameter or loan with given id doesn't
 				exist in database
      */
-    public void updateLoan(Loan loan) throws LoanDAOException;
+    public void updateLoan(Loan loan) throws LoanDaoException;
     
     /**
      * Deletes loan supplied as parameter from database.
      * 
      * @param loan loan to be deleted
-     * @throws LoanDAOException thrown when loan parameter is null or loan has
+     * @throws LoanDaoException thrown when loan parameter is null or loan has
 				null id parameter or loan with given id doesn't
 				exist in database
      */
-    public void deleteLoan(Loan loan) throws LoanDAOException;
+    public void deleteLoan(Loan loan) throws LoanDaoException;
     
     /**
      * Finds and returns loan according to its id
      * 
      * @param id id of loan to be returned
      * @return loan with given id
-     * @throws LoanDAOException thrown when id parameter is null
+     * @throws LoanDaoException thrown when id parameter is null
      */
-    public Loan findLoanById(Long id) throws LoanDAOException;
+    public Loan findLoanById(Long id) throws LoanDaoException;
     
     /**
      * Finds and returns all active loans (loans who's toDate parameter value is
@@ -64,17 +64,17 @@ public interface LoanDAO {
      * 
      * @param customer customer who's loans are looked up
      * @return loan loans assigned to given customer
-     * @throws LoanDAOException thrown when customer or customer's id null
+     * @throws LoanDaoException thrown when customer or customer's id null
      */
-    public Collection<Loan> findLoansByCustomer(Customer customer) throws LoanDAOException;
+    public Collection<Loan> findLoansByCustomer(Customer customer) throws LoanDaoException;
     
     /**
      * Finds and returns all loans limited satisfying fromDate and toDate
      * limitations.
      * 
      * Method allows null values as parameters. Null value represents no
-     * limitation on fromDate and/or toDate parameters. (ie.
-     * LoanDAO.findLoansByFromTo(null,null) returns ALL loans from database.)
+ limitation on fromDate and/or toDate parameters. (ie.
+ LoanDao.findLoansByFromTo(null,null) returns ALL loans from database.)
      * 
      * @param fromDate date at which loan started
      * @param toDate date at which loan ended (or is going to end)

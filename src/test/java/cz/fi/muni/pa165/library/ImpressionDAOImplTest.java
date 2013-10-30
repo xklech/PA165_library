@@ -1,11 +1,11 @@
 package cz.fi.muni.pa165.library;
 
-import cz.fi.muni.pa165.library.dao.ImpressionDAOImpl;
+import cz.fi.muni.pa165.library.dao.ImpressionDaoImpl;
 import cz.fi.muni.pa165.library.entity.Book;
 import cz.fi.muni.pa165.library.enums.DamageType;
 import cz.fi.muni.pa165.library.entity.Impression;
 import cz.fi.muni.pa165.library.enums.StatusType;
-import cz.fi.muni.pa165.library.exceptions.ImpressionDAOException;
+import cz.fi.muni.pa165.library.exceptions.ImpressionDaoException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -22,7 +22,7 @@ public class ImpressionDAOImplTest {
     
     private static EntityManagerFactory emf;
     private static EntityManager em;
-    private static ImpressionDAOImpl idao;
+    private static ImpressionDaoImpl idao;
 
     private Impression imp;
 
@@ -35,7 +35,7 @@ public class ImpressionDAOImplTest {
         // Get the entity manager for the tests.
         emf = Persistence.createEntityManagerFactory("LibraryPU");
         em = emf.createEntityManager();
-        idao = new ImpressionDAOImpl(em);
+        idao = new ImpressionDaoImpl(em);
         imp = new Impression(null, DamageType.NEW, 
                                 DamageType.NEW, StatusType.AVAILIBLE);
     }
@@ -55,7 +55,7 @@ public class ImpressionDAOImplTest {
         em.getTransaction().begin();
         try {
             storedImp = idao.addImpression(imp);
-        } catch (ImpressionDAOException ex) {
+        } catch (ImpressionDaoException ex) {
             fail(buildErrMsg(ex));
             return;
         }
@@ -68,7 +68,7 @@ public class ImpressionDAOImplTest {
         Impression result;
         try {
             result = idao.findImpressionById(storedImp.getId());
-        } catch (ImpressionDAOException ex) {
+        } catch (ImpressionDaoException ex) {
             fail(buildErrMsg(ex));
             return;
         }
@@ -95,7 +95,7 @@ public class ImpressionDAOImplTest {
         try {
             imp2 = idao.updateImpression(imp2);
         }
-        catch(ImpressionDAOException ex) {
+        catch(ImpressionDaoException ex) {
             em.getTransaction().rollback();
             fail(buildErrMsg(ex));
             return;
@@ -119,7 +119,7 @@ public class ImpressionDAOImplTest {
         em.getTransaction().begin();
         try {
             idao.deleteImpression(imp);
-        } catch (ImpressionDAOException ex) {
+        } catch (ImpressionDaoException ex) {
             em.getTransaction().rollback();
             fail(buildErrMsg(ex));
             return;            
@@ -173,7 +173,7 @@ public class ImpressionDAOImplTest {
         try {
             beforeList = idao.findImpressionsByBook(book);
         }
-        catch (ImpressionDAOException ex) {
+        catch (ImpressionDaoException ex) {
             fail(buildErrMsg(ex));
             return;
         }
@@ -184,7 +184,7 @@ public class ImpressionDAOImplTest {
         try {
             afterList = idao.findImpressionsByBook(book);
         }
-        catch (ImpressionDAOException ex) {
+        catch (ImpressionDaoException ex) {
             fail(buildErrMsg(ex));
             return;
         }

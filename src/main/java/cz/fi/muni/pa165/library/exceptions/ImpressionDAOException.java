@@ -5,13 +5,13 @@ package cz.fi.muni.pa165.library.exceptions;
  * 
  * @author Mask
  */
-public class ImpressionDAOException extends Exception {
+public class ImpressionDaoException extends Exception {
 
     /**
      * Creates a new instance of
      * <code>ImpressionDAOException</code> without detail message.
      */
-    public ImpressionDAOException() {
+    public ImpressionDaoException() {
     }
 
     /**
@@ -20,11 +20,11 @@ public class ImpressionDAOException extends Exception {
      *
      * @param msg the detail message.
      */
-    public ImpressionDAOException(String msg) {
+    public ImpressionDaoException(String msg) {
         super(msg);
     }
     
-    public ImpressionDAOException(String msg, Throwable cause) {
+    public ImpressionDaoException(String msg, Throwable cause) {
         super(msg, cause);
     }
 }

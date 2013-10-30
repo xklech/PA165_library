@@ -1,7 +1,7 @@
 package cz.fi.muni.pa165.library;
 
-import cz.fi.muni.pa165.library.dao.CustomerDAO;
-import cz.fi.muni.pa165.library.dao.CustomerDAOImpl;
+import cz.fi.muni.pa165.library.dao.CustomerDao;
+import cz.fi.muni.pa165.library.dao.CustomerDaoImpl;
 import cz.fi.muni.pa165.library.entity.Customer;
 import java.util.Date;
 import javax.persistence.EntityManager;
@@ -21,7 +21,7 @@ public class CustomerTest {
     
     private EntityManagerFactory emf;
     private EntityManager em;
-    private CustomerDAO customerDAO; 
+    private CustomerDao customerDAO; 
     
     public CustomerTest() {}
 
@@ -29,7 +29,7 @@ public class CustomerTest {
     public void CustomerTest() {
 	this.emf = Persistence.createEntityManagerFactory("LibraryPU");
 	this.em = emf.createEntityManager();
-	this.customerDAO = new CustomerDAOImpl(this.em);
+	this.customerDAO = new CustomerDaoImpl(this.em);
 	
     }
     

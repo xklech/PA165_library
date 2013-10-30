@@ -5,13 +5,13 @@ package cz.fi.muni.pa165.library.exceptions;
  * 
  * @author Michal Sukupčák
  */
-public class CustomerDAOException extends Exception {
+public class CustomerDaoException extends Exception {
 
     /**
      * Creates a new instance of
      * <code>CustomerDAOException</code> without detail message.
      */
-    public CustomerDAOException() {}
+    public CustomerDaoException() {}
 
     /**
      * Constructs an instance of
@@ -19,7 +19,7 @@ public class CustomerDAOException extends Exception {
      *
      * @param msg the detail message.
      */
-    public CustomerDAOException(String msg) {
+    public CustomerDaoException(String msg) {
         super(msg);
     }
 
@@ -30,7 +30,7 @@ public class CustomerDAOException extends Exception {
      * @param msg the detail message.
      * @param cause the cause of exception
      */
-    public CustomerDAOException(String message, Throwable cause) {
+    public CustomerDaoException(String message, Throwable cause) {
         super(message, cause);
     }
     

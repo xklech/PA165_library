@@ -1,14 +1,15 @@
 package cz.fi.muni.pa165.library;
 
-import cz.fi.muni.pa165.library.dao.BookDAO;
-import cz.fi.muni.pa165.library.dao.BookDAOImpl;
-import cz.fi.muni.pa165.library.dao.LoanDAO;
-import cz.fi.muni.pa165.library.dao.LoanDAOImpl;
+import cz.fi.muni.pa165.library.dao.BookDao;
+import cz.fi.muni.pa165.library.dao.BookDaoImpl;
+import cz.fi.muni.pa165.library.dao.LoanDao;
+import cz.fi.muni.pa165.library.dao.LoanDaoImpl;
 import cz.fi.muni.pa165.library.entity.Book;
 import cz.fi.muni.pa165.library.entity.Impression;
 import cz.fi.muni.pa165.library.entity.Loan;
-import cz.fi.muni.pa165.library.exceptions.BookDAOException;
-import cz.fi.muni.pa165.library.exceptions.LoanDAOException;
+import cz.fi.muni.pa165.library.exceptions.BookDaoException;
+import cz.fi.muni.pa165.library.exceptions.LoanDaoException;
+import cz.fi.muni.pa165.library.service.BookServiceImpl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -16,20 +17,31 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 /**
  * Hello world!
  *
  */
+
 public class App 
 {
-    public static void main( String[] args ) throws BookDAOException, LoanDAOException
+        
+    
+    
+    public static void main( String[] args ) throws BookDaoException, LoanDaoException
     {
         
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibraryPU");
+        /* emf = Persistence.createEntityManagerFactory("LibraryPU");
         EntityManager manager = emf.createEntityManager();
         Book book = new Book("Android", "111-222-444-555", null, "Zbraně", new Date(), "Jarek");
-        BookDAO bookDAO = new BookDAOImpl(manager);
+        BookDao bookDAO = new BookDaoImpl(manager);
         Impression impression1 = new Impression();
         impression1.setBook(book);
         Impression impression2 = new Impression();
@@ -42,7 +54,7 @@ public class App
             bookDAO.addBook(book);
         manager.getTransaction().commit();
 	
-	LoanDAO loanDAO = new LoanDAOImpl(manager);
+	LoanDao loanDAO = new LoanDaoImpl(manager);
 	Loan loan = new Loan();
         manager.getTransaction().begin();
             loanDAO.addLoan(loan);
@@ -50,6 +62,19 @@ public class App
 	Collection<Loan> loans = loanDAO.findLoansByFromTo(null,new Date());
 	for (Loan l : loans) {
 	    System.out.println(l);
-	}
+	}*/
+        ApplicationContext ctx
+                = new ClassPathXmlApplicationContext("applicationContext.xml");
+        BookServiceImpl bookService = (BookServiceImpl) ctx.getBean("bookService");
+        System.out.println(" service: "+bookService.getCustomerDao());
+        
+
+        Book book = new Book("Java", "123456789", null, "Skola", null, "Pepa");
+
+        bookService.save(book);
+        
+
+
+        System.err.println(book.getId());
     }
 }

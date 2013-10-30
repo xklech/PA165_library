@@ -5,13 +5,13 @@ package cz.fi.muni.pa165.library.exceptions;
  * 
  * @author Michal Sukupčák
  */
-public class LoanDAOException extends Exception {
+public class LoanDaoException extends Exception {
 
     /**
      * Creates a new instance of
      * <code>LoanDAOException</code> without detail message.
      */
-    public LoanDAOException() {}
+    public LoanDaoException() {}
 
     /**
      * Constructs an instance of
@@ -19,7 +19,7 @@ public class LoanDAOException extends Exception {
      *
      * @param msg the detail message.
      */
-    public LoanDAOException(String msg) {
+    public LoanDaoException(String msg) {
         super(msg);
     }
 
@@ -30,7 +30,7 @@ public class LoanDAOException extends Exception {
      * @param msg the detail message.
      * @param cause the cause of exception
      */
-    public LoanDAOException(String message, Throwable cause) {
+    public LoanDaoException(String message, Throwable cause) {
         super(message, cause);
     }
     

@@ -2,40 +2,44 @@ package cz.fi.muni.pa165.library.dao;
 
 import cz.fi.muni.pa165.library.entity.Book;
 import cz.fi.muni.pa165.library.entity.Impression;
-import cz.fi.muni.pa165.library.exceptions.BookDAOException;
+import cz.fi.muni.pa165.library.exceptions.BookDaoException;
 import java.util.Collection;
 import java.util.Date;
+import javax.persistence.EntityManagerFactory;
 
 /**
  * Data Access Object for managing entity Book.
  * 
  * @author Jaroslav Klech
  */
-public interface BookDAO {
+public interface BookDao {
+    
+    
+
     
     /**
      * Saves given book.
      * 
      * @param book book to be saved
-     * @throws BookDAOException is thrown when book is null or has ID
+     * @throws BookDaoException is thrown when book is null or has ID
      */
-    public void addBook(Book book) throws BookDAOException;
+    public void addBook(Book book) throws BookDaoException;
     
     /**
      * Updates given book
      * 
      * @param book book to be updated
-     * @throws BookDAOException is thrown when book is null or doesn't exist in DB
+     * @throws BookDaoException is thrown when book is null or doesn't exist in DB
      */
-    public void updateBook(Book book) throws BookDAOException;
+    public void updateBook(Book book) throws BookDaoException;
     
     /**
      * Deletes book
      * 
      * @param book book to be deleted
-     * @throws BookDAOException is thrown when book is null, book has null id or book doesn't exist in DB
+     * @throws BookDaoException is thrown when book is null, book has null id or book doesn't exist in DB
      */
-    public void deleteBook(Book book) throws BookDAOException;
+    public void deleteBook(Book book) throws BookDaoException;
     
     /**
      * Finds book with given ID.
@@ -43,7 +47,7 @@ public interface BookDAO {
      * @param id id of searched book
      * @return book with given id
      */    
-    public Book findBookById(Long id)throws BookDAOException;
+    public Book findBookById(Long id)throws BookDaoException;
     
     /**
      * Finds book with given ISBN.
@@ -92,5 +96,5 @@ public interface BookDAO {
      * @param impression impression to find book for
      * @return Book for given impression
      */
-    public Book findBookByImpression(Impression impression) throws BookDAOException;
+    public Book findBookByImpression(Impression impression) throws BookDaoException;
 }

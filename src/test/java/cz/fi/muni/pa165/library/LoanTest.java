@@ -1,7 +1,7 @@
 package cz.fi.muni.pa165.library;
 
-import cz.fi.muni.pa165.library.dao.LoanDAO;
-import cz.fi.muni.pa165.library.dao.LoanDAOImpl;
+import cz.fi.muni.pa165.library.dao.LoanDao;
+import cz.fi.muni.pa165.library.dao.LoanDaoImpl;
 import cz.fi.muni.pa165.library.entity.Customer;
 import cz.fi.muni.pa165.library.entity.Impression;
 import cz.fi.muni.pa165.library.entity.Loan;
@@ -20,7 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit test for LoanDAO implementation
+ * Unit test for LoanDao implementation
  *
  * @author Michal Sukupčák
  */
@@ -28,7 +28,7 @@ public class LoanTest {
     
     private EntityManagerFactory emf;
     private EntityManager em;
-    private LoanDAO loanDAO; 
+    private LoanDao loanDAO; 
     
     public LoanTest() {}
 
@@ -36,7 +36,7 @@ public class LoanTest {
     public void setUp() {
 	this.emf = Persistence.createEntityManagerFactory("LibraryPU");
 	this.em = emf.createEntityManager();
-	this.loanDAO = new LoanDAOImpl(this.em);
+	this.loanDAO = new LoanDaoImpl(this.em);
 	Date date1From = null;
 	Date date1To = null;
 	Date date2From = null;

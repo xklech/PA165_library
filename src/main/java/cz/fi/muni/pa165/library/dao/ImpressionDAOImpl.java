@@ -4,7 +4,7 @@ import cz.fi.muni.pa165.library.entity.Book;
 import cz.fi.muni.pa165.library.enums.DamageType;
 import cz.fi.muni.pa165.library.entity.Impression;
 import cz.fi.muni.pa165.library.enums.StatusType;
-import cz.fi.muni.pa165.library.exceptions.ImpressionDAOException;
+import cz.fi.muni.pa165.library.exceptions.ImpressionDaoException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -14,33 +14,33 @@ import javax.persistence.TypedQuery;
  *
  * @author Mask
  */
-public class ImpressionDAOImpl implements ImpressionDAO {
+public class ImpressionDaoImpl implements ImpressionDao {
 
     private EntityManager em;
     
-    public ImpressionDAOImpl(EntityManager em) {
+    public ImpressionDaoImpl(EntityManager em) {
         this.em = em;
     } 
     
     @Override
-    public Impression addImpression(Impression impression) throws ImpressionDAOException {
+    public Impression addImpression(Impression impression) throws ImpressionDaoException {
         if (impression == null)
-                throw new ImpressionDAOException("Trying to store NULL object");
+                throw new ImpressionDaoException("Trying to store NULL object");
         if (impression.getId() != null)
-                throw new ImpressionDAOException("Trying to store object that is already stored");        
+                throw new ImpressionDaoException("Trying to store object that is already stored");        
         em.persist(impression);
         return impression;
     }
 
     @Override
-    public Impression updateImpression(Impression impression) throws ImpressionDAOException {
+    public Impression updateImpression(Impression impression) throws ImpressionDaoException {
         if (impression == null)
-            throw new ImpressionDAOException("Trying to update NULL");
+            throw new ImpressionDaoException("Trying to update NULL");
         if (impression.getId() == null)
-            throw new ImpressionDAOException("Trying to update impression with null id");
+            throw new ImpressionDaoException("Trying to update impression with null id");
         Impression storedImpression = em.find(Impression.class, impression.getId());
         if (storedImpression == null)
-            throw new ImpressionDAOException("Given impression not found in the database");
+            throw new ImpressionDaoException("Given impression not found in the database");
         storedImpression.setBook(impression.getBook());
         storedImpression.setInitialDamage(impression.getInitialDamage());
         storedImpression.setDamage(impression.getDamage());
@@ -49,21 +49,21 @@ public class ImpressionDAOImpl implements ImpressionDAO {
     }
 
     @Override
-    public void deleteImpression(Impression impression) throws ImpressionDAOException  {
+    public void deleteImpression(Impression impression) throws ImpressionDaoException  {
         if (impression == null)
-            throw new ImpressionDAOException("Trying to delete NULL object");
+            throw new ImpressionDaoException("Trying to delete NULL object");
         if (impression.getId() == null)
-            throw new ImpressionDAOException ("Trying to delete unstored impression");
+            throw new ImpressionDaoException ("Trying to delete unstored impression");
         Impression storedImpression = em.find(Impression.class, impression.getId());
         if (storedImpression == null)
-            throw new ImpressionDAOException("Given impression not found in the database");
+            throw new ImpressionDaoException("Given impression not found in the database");
         em.remove(impression);
     }
     
     @Override
-    public Impression findImpressionById(Long id) throws ImpressionDAOException {
+    public Impression findImpressionById(Long id) throws ImpressionDaoException {
         if (id == null)
-            throw new ImpressionDAOException("Trying to find NULL");
+            throw new ImpressionDaoException("Trying to find NULL");
         return em.find(Impression.class, id);
     }
 
@@ -86,13 +86,13 @@ public class ImpressionDAOImpl implements ImpressionDAO {
     }
 
     @Override
-    public List<Impression> findImpressionsByBook(Book book) throws ImpressionDAOException {
+    public List<Impression> findImpressionsByBook(Book book) throws ImpressionDaoException {
         if (book == null) {
-            throw new ImpressionDAOException("Inputed book is NULL");
+            throw new ImpressionDaoException("Inputed book is NULL");
         }
         Long bookId = book.getId();
         if (bookId == null) {
-            throw new ImpressionDAOException("Inputed book has null ID");
+            throw new ImpressionDaoException("Inputed book has null ID");
         }
         TypedQuery<Impression> query 
                 = em.createNamedQuery("Impression.findImpressionsByBook",
