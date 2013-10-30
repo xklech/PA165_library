@@ -39,7 +39,7 @@ public class Loan implements Serializable {
 
     public Loan() {}
     
-    public Loan (Customer customer, Impression impression, Date fromDate, Date toDate, DamageType damageType) {
+    public Loan(Customer customer, Impression impression, Date fromDate, Date toDate, DamageType damageType) {
 	this.customer = customer;
 	this.impression = impression;
 	this.fromDate = fromDate;
