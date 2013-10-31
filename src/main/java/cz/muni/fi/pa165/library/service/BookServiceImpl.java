@@ -34,6 +34,16 @@ public class BookServiceImpl implements BookService{
     
     @Autowired
     private ImpressionDao impressionDao;
+
+    public void setBookDao(BookDao bookDao) {
+        this.bookDao = bookDao;
+    }
+
+    public void setImpressionDao(ImpressionDao impressionDao) {
+        this.impressionDao = impressionDao;
+    }
+    
+    
     
     @Transactional
     @Override
@@ -123,6 +133,9 @@ public class BookServiceImpl implements BookService{
             Logger.getLogger(BookServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ServiceDataAccesException("findBooksByAuthor",ex);
         }
+        if(books == null){
+            return null;
+        }
         List<BookTo> booksTo = new ArrayList<>();
         for(Book book : books){
             booksTo.add(EntityConvertor.convertFromBook(book));
@@ -133,6 +146,10 @@ public class BookServiceImpl implements BookService{
     @Override
     public List<BookTo> findBooksByPublishDate(Date publishDateFrom, Date publishDateTo) {
         Collection<Book> books = bookDao.findBooksByPublishDate(publishDateFrom, publishDateTo);
+        
+        if(books == null){
+            return null;
+        }
         List<BookTo> booksTo = new ArrayList<>();
         for(Book book : books){
             booksTo.add(EntityConvertor.convertFromBook(book));
@@ -150,6 +167,9 @@ public class BookServiceImpl implements BookService{
             Logger.getLogger(BookServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ServiceDataAccesException("findBooksByDepartment",ex);
         }
+        if(books == null){
+            return null;
+        }
         List<BookTo> booksTo = new ArrayList<>();
         for(Book book : books){
             booksTo.add(EntityConvertor.convertFromBook(book));
@@ -159,7 +179,12 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public BookTo findBookByImpression(ImpressionTO impressionTo) {
-
+        if(impressionTo == null){
+            throw new ServiceDataAccesException("findBookByImpression: impression is null");
+        }
+        if(impressionTo.getId() == null){
+            throw new ServiceDataAccesException("findBookByImpression: impressions id is null");
+        }
         Book book = null;
         try {
             Impression impression = impressionDao.findImpressionById(impressionTo.getId());
