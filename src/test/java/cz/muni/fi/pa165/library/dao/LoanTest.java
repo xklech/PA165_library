@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.library.dao;
 
-import cz.muni.fi.pa165.library.dao.LoanDao;
 import cz.muni.fi.pa165.library.AbstractIntegrationTest;
 import cz.muni.fi.pa165.library.entity.Customer;
 import cz.muni.fi.pa165.library.entity.Impression;
@@ -8,7 +7,6 @@ import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.enums.DamageType;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import org.junit.Assert;
@@ -29,9 +27,6 @@ public class LoanTest extends AbstractIntegrationTest{
     public void testAddLoan() throws Exception {
 	Customer customer = new Customer();
 	Loan loan = new Loan(customer,new Impression(),this.parseDate("01/01/2001"),this.parseDate("02/02/2002"),DamageType.DAMAGED);
-	Collection<Loan> loans = new ArrayList();
-	loans.add(loan);
-	customer.setLoans(loans);
 
 	loanDao.addLoan(loan);
 
@@ -43,9 +38,6 @@ public class LoanTest extends AbstractIntegrationTest{
     public void testUpdateLoan() throws Exception {
 	Customer customer = new Customer();
 	Loan loan = new Loan(customer,new Impression(),this.parseDate("03/03/2003"),null,null);
-	Collection<Loan> loans = new ArrayList();
-	loans.add(loan);
-	customer.setLoans(loans);
 
 	loanDao.addLoan(loan);
 
@@ -63,9 +55,6 @@ public class LoanTest extends AbstractIntegrationTest{
     public void testDeleteLoan() throws Exception {
 	Customer customer = new Customer();
 	Loan loan = new Loan(customer,new Impression(),this.parseDate("01/01/2001"),this.parseDate("02/02/2002"),DamageType.DAMAGED);
-	Collection<Loan> loans = new ArrayList();
-	loans.add(loan);
-	customer.setLoans(loans);
 
 	loanDao.addLoan(loan);
 
@@ -81,10 +70,7 @@ public class LoanTest extends AbstractIntegrationTest{
     public void testFindLoanById() throws Exception {
 	Long fakeId = new Long(Long.MAX_VALUE);
 	Customer customer = new Customer();
-	Loan loan = new Loan(customer,new Impression(),this.parseDate("05/05/2005"),null,null);
-	Collection<Loan> loans = new ArrayList();
-	loans.add(loan);
-	customer.setLoans(loans);
+	Loan loan = new Loan(customer,new Impression(),this.parseDate("05/05/2005"),null,null);;
 
 	loanDao.addLoan(loan);
 
@@ -99,9 +85,6 @@ public class LoanTest extends AbstractIntegrationTest{
     public void testFindAllActiveLoans() throws Exception {
 	Customer customer = new Customer();
 	Loan loan = new Loan(customer,new Impression(),this.parseDate("06/06/2006"),null,null);
-	Collection<Loan> loans = new ArrayList();
-	loans.add(loan);
-	customer.setLoans(loans);
 
 	loanDao.addLoan(loan);
 
@@ -114,9 +97,6 @@ public class LoanTest extends AbstractIntegrationTest{
     public void testFindLoansByCustomer() throws Exception {
 	Customer customer = new Customer();
 	Loan loan = new Loan(customer,new Impression(),this.parseDate("07/07/2007"),this.parseDate("08/08/2008"),DamageType.DAMAGED);
-	Collection<Loan> loans = new ArrayList();
-	loans.add(loan);
-	customer.setLoans(loans);
 
 	loanDao.addLoan(loan);
 

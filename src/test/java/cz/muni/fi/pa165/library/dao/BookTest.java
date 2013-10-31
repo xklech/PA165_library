@@ -1,13 +1,10 @@
 package cz.muni.fi.pa165.library.dao;
 
-import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.AbstractIntegrationTest;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Impression;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +18,14 @@ public class BookTest extends AbstractIntegrationTest{
     
     @Autowired
     private BookDao bookDao;
+    
+    @Autowired
+    private ImpressionDao impressionDao;
 
     @Test
     public void testAddBook() throws Exception
     {
-        Book book = new Book("Klokani", "1475-222-3333-741", null, "Zvířata", new Date(), "Pepa");
+        Book book = new Book("Klokani", "1475-222-3333-741", "Zvířata", new Date(), "Pepa");
         Book bookSaved;
         bookDao.addBook(book);
         bookSaved = bookDao.findBookById(book.getId());
@@ -37,11 +37,11 @@ public class BookTest extends AbstractIntegrationTest{
     @Test
     public void testUpdateBook() throws Exception
     {
-        Book book = new Book("Android", "1111-222-3333-44", null, "Mobil", new Date(), "Jaryn"); 
+        Book book = new Book("Android", "1111-222-3333-44", "Mobil", new Date(), "Jaryn"); 
         bookDao.addBook(book);
         Assert.assertNotNull(book.getId());
         
-        Book book2 = new Book("Android", "1111-222-3333-44", null, "Mobil", new Date(), "Jaryn"); 
+        Book book2 = new Book("Android", "1111-222-3333-44", "Mobil", new Date(), "Jaryn"); 
         book2.setId(book.getId());
         book2.setName("TestName007");
         bookDao.updateBook(book2);
@@ -52,7 +52,7 @@ public class BookTest extends AbstractIntegrationTest{
     @Test
     public void testDeleteBook() throws Exception
     {
-        Book book = new Book("Android", "1111-222-3333-44", null, "Mobil", new Date(), "Jaryn"); 
+        Book book = new Book("Android", "1111-222-3333-44", "Mobil", new Date(), "Jaryn"); 
 
         bookDao.addBook(book);
         Assert.assertNotNull(book.getId());
@@ -65,7 +65,7 @@ public class BookTest extends AbstractIntegrationTest{
     @Test
     public void testFindBookById() throws Exception
     {
-        Book book = new Book("Android", "1111-222-3333-44", null, "Mobil", new Date(), "Jaryn"); 
+        Book book = new Book("Android", "1111-222-3333-44", "Mobil", new Date(), "Jaryn"); 
         bookDao.addBook(book);
         Assert.assertNotNull(book.getId());
                 
@@ -79,7 +79,7 @@ public class BookTest extends AbstractIntegrationTest{
     @Test
     public void testFindBookByAuthor() throws Exception
     {
-        Book book = new Book("Android", "1111-222-3333-44", null, "Mobil", new Date(), "Jaryn"); 
+        Book book = new Book("Android", "1111-222-3333-44", "Mobil", new Date(), "Jaryn"); 
         bookDao.addBook(book);
         Assert.assertNotNull(book.getId());
         
@@ -94,10 +94,10 @@ public class BookTest extends AbstractIntegrationTest{
     @Test
     public void testFindBookByDepartment() throws Exception
     {
-        Book book = new Book("Android", "1111-222-3333-44", null, "Mobil", new Date(), "Jaryn"); 
+        Book book = new Book("Android", "1111-222-3333-44", "Mobil", new Date(), "Jaryn"); 
         bookDao.addBook(book);
         Assert.assertNotNull(book.getId());
-        Book book2 = new Book("Android Expert", "1111-222-334", null, "Mobil", new Date(), "Dezo");    
+        Book book2 = new Book("Android Expert", "1111-222-334", "Mobil", new Date(), "Dezo");    
         bookDao.addBook(book2);
         Assert.assertNotNull(book2.getId());
         
@@ -114,16 +114,15 @@ public class BookTest extends AbstractIntegrationTest{
     @Test
     public void testFindBookByImpression() throws Exception
     {
-        Book bookI = new Book("Klokani", "1475-222-3333-7414", null, "Zvířata", new Date(), "Pepa");
+        Book bookI = new Book("Klokani", "1475-222-3333-7414", "Zvířata", new Date(), "Pepa");
         Impression impression1 = new Impression();
         impression1.setBook(bookI);
+        impressionDao.addImpression(impression1);
         Impression impression2 = new Impression();
-        impression2.setBook(bookI);
-        List<Impression> impressions = new ArrayList<>();
-        impressions.add(impression1);
-        impressions.add(impression2);
-       
-        bookI.setImpressions(impressions);
+        impression2.setBook(bookI);       
+        impressionDao.addImpression(impression2);
+        
+        
         bookDao.addBook(bookI);
         
         Impression impr = new Impression();

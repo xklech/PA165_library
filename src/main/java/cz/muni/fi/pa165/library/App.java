@@ -1,29 +1,13 @@
 package cz.muni.fi.pa165.library;
 
-import cz.muni.fi.pa165.library.dao.BookDao;
-import cz.muni.fi.pa165.library.dao.BookDaoImpl;
-import cz.muni.fi.pa165.library.dao.LoanDao;
-import cz.muni.fi.pa165.library.dao.LoanDaoImpl;
 import cz.muni.fi.pa165.library.entity.Book;
-import cz.muni.fi.pa165.library.entity.Impression;
-import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.exceptions.BookDaoException;
 import cz.muni.fi.pa165.library.exceptions.LoanDaoException;
+import cz.muni.fi.pa165.library.service.BookService;
 import cz.muni.fi.pa165.library.service.BookServiceImpl;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import org.springframework.beans.factory.annotation.Autowired;
+import cz.muni.fi.pa165.library.to.BookTo;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 /**
  * Hello world!
@@ -65,16 +49,16 @@ public class App
 	}*/
         ApplicationContext ctx
                 = new ClassPathXmlApplicationContext("applicationContext.xml");
-        BookServiceImpl bookService = (BookServiceImpl) ctx.getBean("bookService");
+        BookService bookService = (BookService) ctx.getBean("bookService");
         System.out.println(" service: "+bookService);
         
 
-        Book book = new Book("Java", "123456789", null, "Skola", null, "Pepa");
+        BookTo bookTo = new BookTo("Java", "123456789", "Skola", null, "Pepa");
 
-        bookService.save(book);
+        bookService.save(bookTo);
         
 
 
-        System.err.println(bookService.findByName(book.getName()));
+        System.err.println(bookService.findBooksByName(bookTo.getName()));
     }
 }

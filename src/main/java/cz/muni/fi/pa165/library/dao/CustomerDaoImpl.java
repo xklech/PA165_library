@@ -50,7 +50,6 @@ public class CustomerDaoImpl implements CustomerDao {
 	customerToUpdate.setAddress(customer.getAddress());
 	customerToUpdate.setDateOfBirth(customer.getDateOfBirth());
 	customerToUpdate.setPid(customer.getPid());
-	customerToUpdate.setLoans(customer.getLoans());
     }
 
     @Override
@@ -103,7 +102,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	if (loan.getId() == null) {
 	    throw new CustomerDaoException("findCustomerByLoan: loan's id can't be null!");
 	}
-	TypedQuery q = this.entityManager.createQuery("SELECT c FROM Customer c LEFT JOIN c.loan l WHERE l.id = :id",Customer.class);
+	TypedQuery q = this.entityManager.createQuery("SELECT c FROM Loan l LEFT JOIN l.customer c WHERE l.id = :id",Customer.class);
 	q.setParameter("id",loan.getId());
 	return q.getResultList();
     }

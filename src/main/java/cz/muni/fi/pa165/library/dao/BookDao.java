@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.library.entity.Impression;
 import cz.muni.fi.pa165.library.exceptions.BookDaoException;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.EntityManagerFactory;
 
 /**
  * Data Access Object for managing entity Book.
@@ -46,6 +45,7 @@ public interface BookDao {
      * 
      * @param id id of searched book
      * @return book with given id
+     * @throws BookDaoException if id is null
      */    
     public Book findBookById(Long id)throws BookDaoException;
     
@@ -55,7 +55,7 @@ public interface BookDao {
      * @param isbn ISBN of searched book
      * @return book with given ISBN
      */
-    public Book findBookByISBN(String isbn);
+    public Book findBookByISBN(String isbn) throws BookDaoException;
     
     /**
      * Finds books with given author
@@ -63,7 +63,7 @@ public interface BookDao {
      * @param author author of the books
      * @return books with given author
      */
-    public Collection<Book> findBooksByAuthor(String author);
+    public Collection<Book> findBooksByAuthor(String author) throws BookDaoException;
     
     /**
      * Finds books by publish date.
@@ -80,7 +80,7 @@ public interface BookDao {
      * @param name name to find books with
      * @return books with given name
      */
-    public Collection<Book> findBooksByName(String name);
+    public Collection<Book> findBooksByName(String name) throws BookDaoException;
     
     /**
      * Finds books by department
@@ -88,7 +88,7 @@ public interface BookDao {
      * @param department department to find books by
      * @return books with given department
      */
-    public Collection<Book> findBooksByDepartment(String department);
+    public Collection<Book> findBooksByDepartment(String department) throws BookDaoException;
     
     /**
      * Finds books for given Impression

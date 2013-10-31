@@ -50,7 +50,6 @@ public class BookDaoImpl implements BookDao {
         savedBook.setAuthor(book.getAuthor());
         savedBook.setDepartment(book.getDepartment());
         savedBook.setISBN(book.getISBN());
-        savedBook.setImpressions(book.getImpressions());
         savedBook.setName(book.getName());
         savedBook.setPublishDate(book.getPublishDate());
     }
@@ -84,8 +83,10 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Book findBookByISBN(String isbn) {
-
+    public Book findBookByISBN(String isbn) throws BookDaoException{
+        if (isbn == null) {
+            throw new BookDaoException("findBookByISBN: given attribute isbn is null");
+        }
         TypedQuery query = entityManager.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn", Book.class);
         query.setParameter("isbn", isbn);
         List<Book> books = query.getResultList();
@@ -98,8 +99,10 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Collection<Book> findBooksByAuthor(String author) {
-
+    public Collection<Book> findBooksByAuthor(String author) throws BookDaoException{
+        if (author == null) {
+            throw new BookDaoException("findBooksByAuthor: given attribute author is null");
+        }
         TypedQuery query = entityManager.createQuery("SELECT b FROM Book b WHERE b.author LIKE :author", Book.class);
         query.setParameter("author", "%" + author + "%");
 
@@ -117,8 +120,10 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Collection<Book> findBooksByName(String name) {
-
+    public Collection<Book> findBooksByName(String name) throws BookDaoException{
+        if (name == null) {
+            throw new BookDaoException("findBooksByName: given attribute name is null");
+        }
         TypedQuery query = entityManager.createQuery("SELECT b FROM Book b WHERE b.name LIKE :name", Book.class);
         query.setParameter("name", "%" + name + "%");
         List<Book>list = query.getResultList();
@@ -127,8 +132,10 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Collection<Book> findBooksByDepartment(String department) {
-
+    public Collection<Book> findBooksByDepartment(String department) throws BookDaoException{
+        if (department == null) {
+            throw new BookDaoException("findBooksByDepartment: given attribute department is null");
+        }
         TypedQuery query = entityManager.createQuery("SELECT b FROM Book b WHERE b.department LIKE :department", Book.class);
         query.setParameter("department", "%" + department + "%");
 
@@ -137,17 +144,18 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Book findBookByImpression(Impression impression) throws BookDaoException {
- 
         if (impression == null) {
-            throw new BookDaoException("findBookByImpression: given impression atribute is null");
+            throw new BookDaoException("Impression: given attribute impression is null");
         }
-        if (impression.getId() == null) {
-            throw new BookDaoException("findBookByImpression: impressions id is null");
-        }
-        TypedQuery query = entityManager.createQuery("SELECT b FROM Book b LEFT JOIN b.impressions i WHERE i.id = :id", Book.class);
+        TypedQuery query = entityManager.createQuery("SELECT b FROM Impression i LEFT JOIN i.book b WHERE i.id = :id", Book.class);
         query.setParameter("id", impression.getId());
+        List<Book> books = query.getResultList();
+        if (books == null || books.isEmpty()) {
+            return null;
+        }
 
-        return (Book) query.getSingleResult();
+        return books.get(0);
     }
+
 
 }

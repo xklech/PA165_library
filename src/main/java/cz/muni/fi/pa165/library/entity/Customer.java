@@ -1,16 +1,13 @@
 package cz.muni.fi.pa165.library.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -38,20 +35,17 @@ public class Customer implements Serializable {
     
     @Column(length=11)
     private String pid;
-    
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private Collection<Loan> loans;
+
     
     public Customer() {}
 
-    public Customer(Long id, String firstName, String lastName, String address, Date dateOfBirth, String pid, Collection<Loan> loans) {
+    public Customer(Long id, String firstName, String lastName, String address, Date dateOfBirth, String pid) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.address = address;
 	this.dateOfBirth = dateOfBirth;
 	this.pid = pid;
-	this.loans = loans;
     }
     
     public Long getId() {
@@ -101,14 +95,6 @@ public class Customer implements Serializable {
     public void setPid(String pid) {
 	this.pid = pid;
     }
-    
-    public Collection<Loan> getLoans() {
-	return loans;
-    }
-
-    public void setLoans(Collection<Loan> loans) {
-	this.loans = loans;
-    }
 
     @Override
     public int hashCode() {
@@ -134,7 +120,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-	return "Customer{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", dateOfBirth=" + dateOfBirth + ", pid=" + pid + ", loans=" + loans + '}';
+	return "Customer{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", dateOfBirth=" + dateOfBirth + ", pid=" + pid  + '}';
     }
 
 }

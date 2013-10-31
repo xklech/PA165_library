@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.library.to;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -16,8 +15,6 @@ public class BookTo {
     private String name;
     
     private String isbn;
-    
-    private List<ImpressionTO> impressions;
 
     private String department;
 
@@ -28,15 +25,14 @@ public class BookTo {
     public BookTo() {
     }
     
-    public BookTo(String name, String isbn, List<ImpressionTO> impressions, String department, Date publishDate, String author) {
+    public BookTo(String name, String isbn, String department, Date publishDate, String author) {
         this.name = name;
         this.isbn = isbn;
-        this.impressions = impressions;
         this.department = department;
         this.publishDate = publishDate;
         this.author = author;
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -59,14 +55,6 @@ public class BookTo {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
-    }
-
-    public List<ImpressionTO> getImpressions() {
-        return impressions;
-    }
-
-    public void setImpressions(List<ImpressionTO> impressions) {
-        this.impressions = impressions;
     }
 
     public String getDepartment() {
@@ -114,7 +102,7 @@ public class BookTo {
 
     @Override
     public String toString() {
-        return "BookTo{" + "id=" + id + ", name=" + name + ", isbn=" + isbn + ", impressions=" + impressions + ", department=" + department + ", publishDate=" + publishDate + ", author=" + author + '}';
+        return "BookTo{" + "id=" + id + ", name=" + name + ", isbn=" + isbn + ", department=" + department + ", publishDate=" + publishDate + ", author=" + author + '}';
     }
     
     

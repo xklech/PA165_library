@@ -67,7 +67,7 @@ public interface ImpressionDao {
     /**
      * Finds all impressions of given books
      * 
-     * @param status status of impressions to find
+     * @param book status of impressions to find
      * @throws ImpressionDaoException is thrown, when inputed Book is null
      * @return List of all impressions of given book or empty list
      */

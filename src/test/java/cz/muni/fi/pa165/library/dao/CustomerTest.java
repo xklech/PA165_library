@@ -20,7 +20,7 @@ public class CustomerTest extends AbstractIntegrationTest{
     
     @Test
     public void testAddCustomer() throws Exception {
-	Customer customer = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973", null);
+	Customer customer = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
         Customer customerSaved;
  
         customerDao.addCustomer(customer);
@@ -31,14 +31,14 @@ public class CustomerTest extends AbstractIntegrationTest{
     
     @Test
     public void testUpdateCustomer() throws Exception {
-        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973", null);
+        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
         customerDao.addCustomer(customer1);
         
         
         Customer customer = customerDao.findCustomerById(customer1.getId());
         customer.setFirstName("George");
         
-        Customer customer2 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973", null);
+        Customer customer2 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
         customer2.setId(customer.getId());
         customer2.setFirstName("George");
         customerDao.updateCustomer(customer2);
@@ -50,7 +50,7 @@ public class CustomerTest extends AbstractIntegrationTest{
     
     @Test
     public void testDeleteCustomer() throws Exception {
-        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973", null);
+        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
 
         customerDao.addCustomer(customer1);
         
@@ -66,7 +66,7 @@ public class CustomerTest extends AbstractIntegrationTest{
     
     @Test
     public void testFindCustomerById() throws Exception {
-        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973", null);
+        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
 
         customerDao.addCustomer(customer1);
 

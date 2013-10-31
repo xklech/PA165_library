@@ -2,15 +2,12 @@ package cz.muni.fi.pa165.library.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -31,9 +28,6 @@ public class Book implements Serializable{
     @Column(length=20)
     private String isbn;
     
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    private List<Impression> impressions;
-    
     @Column(length=50)
     private String department;
     
@@ -46,15 +40,14 @@ public class Book implements Serializable{
     public Book() {
     }
 
-    public Book(String name, String isbn, List<Impression> impressions, String department, Date publishDate, String author) {
+    public Book(String name, String isbn, String department, Date publishDate, String author) {
         this.name = name;
         this.isbn = isbn;
-        this.impressions = impressions;
         this.department = department;
         this.publishDate = publishDate;
         this.author = author;
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -77,14 +70,6 @@ public class Book implements Serializable{
 
     public void setISBN(String isbn) {
         this.isbn = isbn;
-    }
-
-    public List<Impression> getImpressions() {
-        return impressions;
-    }
-
-    public void setImpressions(List<Impression> impressions) {
-        this.impressions = impressions;
     }
 
     public String getDepartment() {
@@ -135,7 +120,7 @@ public class Book implements Serializable{
 
     @Override
     public String toString() {
-        return "Book{" + "id=" + id + ", name=" + name + ", ISBN=" + isbn + ", impressions=" + ", department=" + department + ", publishDate=" + publishDate + ", author=" + author + '}';
+        return "Book{" + "id=" + id + ", name=" + name + ", ISBN=" + isbn + ", department=" + department + ", publishDate=" + publishDate + ", author=" + author + '}';
     }
 
 
