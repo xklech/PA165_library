@@ -103,7 +103,7 @@ public class EntityConvertor {
      * @param customer customer to be converted
      * @return customer transfer object
      */
-    public static CustomerTO convertFromCutomer(Customer customer){
+    public static CustomerTO convertFromCustomer(Customer customer){
         if(customer == null){
             return null;
         }
