@@ -23,7 +23,7 @@ public interface CustomerDao {
     public void addCustomer(Customer customer) throws CustomerDaoException;
     
     /**
-     * Update customer when he borrows or returns a book.
+     * Updates given customer.
      * 
      * @param customer to be updated
      * @throws CustomerDaoException thrown when customer parameter is null 
