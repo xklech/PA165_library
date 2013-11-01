@@ -4,10 +4,14 @@ import cz.muni.fi.pa165.library.dao.CustomerDao;
 import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.dao.LoanDao;
 import cz.muni.fi.pa165.library.entity.Customer;
+import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 
 import cz.muni.fi.pa165.library.to.CustomerTO;
+import cz.muni.fi.pa165.library.to.LoanTO;
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
+import java.util.Arrays;
+import java.util.Collection;
 
 import java.util.Date;
 
@@ -114,7 +118,7 @@ public class CustomerServiceTest {
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
 
         LoanTO loanTO = new LoanTO();
-        loanTO.setCustomer(customerTO);
+        loanTO.setCustomerTo(customerTO);
         loanTO.setId(12l);
         Loan loan = EntityConvertor.convertFromLoanTo(loanTO);
         
@@ -159,7 +163,7 @@ public class CustomerServiceTest {
 
         assertNull(customerService.findCustomerByName("George",""));
         
-        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).findCustomerByName(null);
+        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).findCustomerByName(null,null);
         customerService.findCustomerByName(null,null);
         
     }    

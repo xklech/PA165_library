@@ -42,19 +42,19 @@ public class LoanTO implements Serializable {
         this.id = id;
     }
         
-    public CustomerTO getCustomer() {
+    public CustomerTO getCustomerTo() {
 	return this.customer;
     }
 
-    public void setCustomer(CustomerTO customer) {
+    public void setCustomerTo(CustomerTO customer) {
 	this.customer = customer;
     }
 
-    public ImpressionTO getImpression() {
+    public ImpressionTO getImpressionTo() {
 	return this.impression;
     }
 
-    public void setImpression(ImpressionTO impression) {
+    public void setImpressionTo(ImpressionTO impression) {
 	this.impression = impression;
     }
     
@@ -103,7 +103,7 @@ public class LoanTO implements Serializable {
 
     @Override
     public String toString() {
-	return "Loan{" + "id=" + id + ", customer=" + customer + ", impression=" + impression + ", fromDate=" + fromDate + ", toDate=" + toDate + ", damageType=" + damageType + '}';
+	return "LoanTO{" + "id=" + id + ", customer=" + customer + ", impression=" + impression + ", fromDate=" + fromDate + ", toDate=" + toDate + ", damageType=" + damageType + '}';
     }
     
 }

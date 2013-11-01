@@ -17,11 +17,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Michal Sukupčák
  */
+@Service
 public class LoanServiceImpl implements LoanService {
 
     @Autowired
@@ -30,10 +32,19 @@ public class LoanServiceImpl implements LoanService {
     @Autowired
     private CustomerDao customerDao;
 
+    public void setLoanDao(LoanDao loanDao) {
+	this.loanDao = loanDao;
+    }
+    
+    public void setCustomerDao(CustomerDao customerDao) {
+	this.customerDao = customerDao;
+    }
+    
     @Override
     public void addLoan(LoanTO loanTo) {
 	Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
 	try {
+	    System.out.println(this.loanDao);
 	    this.loanDao.addLoan(loan);
 	} catch (LoanDaoException ex) {
 	    Logger.getLogger(LoanServiceImpl.class.getName()).log(Level.SEVERE, null, ex);

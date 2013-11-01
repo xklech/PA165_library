@@ -150,8 +150,8 @@ public class EntityConvertor {
 	}
 	LoanTO loanTo = new LoanTO();
 	loanTo.setId(loan.getId());
-	loanTo.setCustomer(EntityConvertor.convertFromCustomer(loan.getCustomer()));
-	loanTo.setImpression(EntityConvertor.convertFromImpression(loan.getImpression()));
+	loanTo.setCustomerTo(EntityConvertor.convertFromCustomer(loan.getCustomer()));
+	loanTo.setImpressionTo(EntityConvertor.convertFromImpression(loan.getImpression()));
 	loanTo.setFromDate(loan.getFromDate());
 	loanTo.setToDate(loan.getToDate());
 	loanTo.setDamageType(loan.getDamageType());
@@ -168,9 +168,9 @@ public class EntityConvertor {
 	    return null;
 	}
         Loan loan = new Loan();
-	loan.setId(loan.getId());
-	loan.setCustomer(EntityConvertor.convertFromCustomerTo(loanTo.getCustomer()));
-	loan.setImpression(EntityConvertor.convertFromImpressionTo(loanTo.getImpression()));
+	loan.setId(loanTo.getId());
+	loan.setCustomer(EntityConvertor.convertFromCustomerTo(loanTo.getCustomerTo()));
+	loan.setImpression(EntityConvertor.convertFromImpressionTo(loanTo.getImpressionTo()));
 	loan.setFromDate(loan.getFromDate());
 	loan.setToDate(loan.getToDate());
 	loan.setDamageType(loan.getDamageType());
