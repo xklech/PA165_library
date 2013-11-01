@@ -171,9 +171,9 @@ public class EntityConvertor {
 	loan.setId(loanTo.getId());
 	loan.setCustomer(EntityConvertor.convertFromCustomerTo(loanTo.getCustomerTo()));
 	loan.setImpression(EntityConvertor.convertFromImpressionTo(loanTo.getImpressionTo()));
-	loan.setFromDate(loan.getFromDate());
-	loan.setToDate(loan.getToDate());
-	loan.setDamageType(loan.getDamageType());
+	loan.setFromDate(loanTo.getFromDate());
+	loan.setToDate(loanTo.getToDate());
+	loan.setDamageType(loanTo.getDamageType());
         return loan;
     }
     

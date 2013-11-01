@@ -3,9 +3,11 @@ package cz.muni.fi.pa165.library.service;
 import cz.muni.fi.pa165.library.dao.CustomerDao;
 import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.dao.LoanDao;
+import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Customer;
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
+import cz.muni.fi.pa165.library.to.BookTo;
 
 import cz.muni.fi.pa165.library.to.CustomerTO;
 import cz.muni.fi.pa165.library.to.LoanTO;
@@ -99,7 +101,7 @@ public class CustomerServiceTest {
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
 
         when(mockedCustomerDao.findCustomerById(12l)).thenReturn(customer);
-        CustomerTO customerTO2 = customerService.findCustomerById(1l);
+        CustomerTO customerTO2 = customerService.findCustomerById(12l);
         assertEquals(customerTO, customerTO2);
 
         when(mockedCustomerDao.findCustomerById(1l)).thenReturn(null);
@@ -139,14 +141,40 @@ public class CustomerServiceTest {
         
     }
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test
     public void testFindAllCustomers() throws Exception {
+        CustomerTO customerTo1 = new CustomerTO(11l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        Customer customer1 = EntityConvertor.convertFromCustomerTo(customerTo1);
+
+        CustomerTO customerTo2 = new CustomerTO(12l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        Customer customer2 = EntityConvertor.convertFromCustomerTo(customerTo2);    
+        when(mockedCustomerDao.findAllCustomers()).thenReturn(null);      
+        assertNull(customerService.findAllCustomers());
+        
+        when(mockedCustomerDao.findAllCustomers()).thenReturn(Arrays.asList(customer1,customer2));      
+        Collection<CustomerTO> customers = customerService.findAllCustomers();
+        assertEquals(customers, Arrays.asList(customerTo1,customerTo2));
+        
         
     }
     
     @Test(expected=ServiceDataAccessException.class)
     public void testFindCustomersByBook() throws Exception {
+        CustomerTO customerTo1 = new CustomerTO(11l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        Customer customer1 = EntityConvertor.convertFromCustomerTo(customerTo1); 
+        CustomerTO customerTo2 = new CustomerTO(12l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        Customer customer2 = EntityConvertor.convertFromCustomerTo(customerTo2);    
         
+        Book book = new Book("Android", "1234-4569-874", "Mobil", null, "Jaryn");
+        book.setId(1l);
+        BookTo bookTo = EntityConvertor.convertFromBook(book);
+        when(mockedBookDao.findBookById(book.getId())).thenReturn(book);      
+        when(mockedCustomerDao.findCustomersByBook(book)).thenReturn(Arrays.asList(customer1,customer2));      
+        Collection<CustomerTO> customers = customerService.findCustomersByBook(bookTo);
+        assertEquals(customers, Arrays.asList(customerTo1,customerTo2));
+        
+        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).findCustomersByBook(null);
+        customerService.findCustomerByLoan(null);
     }
     
     @Test(expected=ServiceDataAccessException.class)
