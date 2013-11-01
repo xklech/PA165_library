@@ -4,7 +4,7 @@ import cz.muni.fi.pa165.library.dao.CustomerDao;
 import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.dao.LoanDao;
 import cz.muni.fi.pa165.library.entity.Customer;
-import cz.muni.fi.pa165.library.exceptions.ServiceDataAccesException;
+import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 
 import cz.muni.fi.pa165.library.to.CustomerTO;
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
@@ -63,32 +63,32 @@ public class CustomerServiceTest {
         assertNotNull(customerTO.getId());
     }
    
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testDeleteCustomer() throws Exception {
         CustomerTO customerTO= new CustomerTO(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
-        doThrow(ServiceDataAccesException.class).when(mockedCustomerDao).deleteCustomer(customer);        
+        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).deleteCustomer(customer);        
         customerService.deleteCustomer(customerTO);
 
         
-        doThrow(ServiceDataAccesException.class).when(mockedCustomerDao).deleteCustomer(null);
+        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).deleteCustomer(null);
         customerService.deleteCustomer(null);
     }
     
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testUpdateCustomer() throws Exception {
         CustomerTO customerTO= new CustomerTO(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
-        doThrow(ServiceDataAccesException.class).when(mockedCustomerDao).updateCustomer(customer);        
+        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).updateCustomer(customer);        
         customerService.updateCustomer(customerTO);
 
         
-        doThrow(ServiceDataAccesException.class).when(mockedCustomerDao).updateCustomer(null);
+        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).updateCustomer(null);
         customerService.updateCustomer(null);
     }
     
     
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testFindCustomerById() throws Exception {
         CustomerTO customerTO= new CustomerTO(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         customerTO.setId(12l);
@@ -102,12 +102,12 @@ public class CustomerServiceTest {
 
         assertNull(customerService.findCustomerById(1l));
         
-        doThrow(ServiceDataAccesException.class).when(mockedCustomerDao).findCustomerById(null);
+        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).findCustomerById(null);
         customerService.findCustomerById(null);
     }    
     
     
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testFindCustomerByLoan()throws Exception { 
         CustomerTO customerTO = new CustomerTO(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         customerTO.setId(12l);
@@ -130,22 +130,22 @@ public class CustomerServiceTest {
         when(mockedCustomerDao.findCustomerByLoan(loan2)).thenReturn(null);
         assertNull(customerService.findCustomerByLoan(loanTO2));
         
-        doThrow(ServiceDataAccesException.class).when(mockedCustomerDao).findCustomerByLoan(null);
+        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).findCustomerByLoan(null);
         customerService.findCustomerByLoan(null);
         
     }
     
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testFindAllCustomers() throws Exception {
         
     }
     
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testFindCustomersByBook() throws Exception {
         
     }
     
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testFindCustomerByName()throws Exception {
         CustomerTO customerTO = new CustomerTO(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         customerTO.setId(12l);
@@ -159,7 +159,7 @@ public class CustomerServiceTest {
 
         assertNull(customerService.findCustomerByName("George",""));
         
-        doThrow(ServiceDataAccesException.class).when(mockedCustomerDao).findCustomerByName(null);
+        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).findCustomerByName(null);
         customerService.findCustomerByName(null,null);
         
     }    
