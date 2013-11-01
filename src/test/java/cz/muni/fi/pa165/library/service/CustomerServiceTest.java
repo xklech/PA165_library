@@ -87,6 +87,26 @@ public class CustomerServiceTest {
         customerService.updateCustomer(null);
     }
     
+    
+    @Test(expected=ServiceDataAccesException.class)
+    public void testFindCustomerById() throws Exception {
+        CustomerTO customerTO= new CustomerTO(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        customerTO.setId(12l);
+        Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
+
+        when(mockedCustomerDao.findCustomerById(12l)).thenReturn(customer);
+        CustomerTO customerTO2 = customerService.findCustomerById(1l);
+        assertEquals(customerTO, customerTO2);
+
+        when(mockedCustomerDao.findCustomerById(1l)).thenReturn(null);
+
+        assertNull(customerService.findCustomerById(1l));
+        
+        doThrow(ServiceDataAccesException.class).when(mockedCustomerDao).findCustomerById(null);
+        customerService.findCustomerById(null);
+    }    
+    
+    
     @Test(expected=ServiceDataAccesException.class)
     public void testFindCustomerByLoan()throws Exception { 
         CustomerTO customerTO = new CustomerTO(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
@@ -114,5 +134,34 @@ public class CustomerServiceTest {
         customerService.findCustomerByLoan(null);
         
     }
+    
+    @Test(expected=ServiceDataAccesException.class)
+    public void testFindAllCustomers() throws Exception {
+        
+    }
+    
+    @Test(expected=ServiceDataAccesException.class)
+    public void testFindCustomersByBook() throws Exception {
+        
+    }
+    
+    @Test(expected=ServiceDataAccesException.class)
+    public void testFindCustomerByName()throws Exception {
+        CustomerTO customerTO = new CustomerTO(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        customerTO.setId(12l);
+        Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
+
+        when(mockedCustomerDao.findCustomerByName("George", "White")).thenReturn(Arrays.asList(customer));
+        Collection<CustomerTO> customersTO = customerService.findCustomerByName("George", "White");
+        assertEquals(Arrays.asList(customerTO), customersTO);
+
+        when(mockedCustomerDao.findCustomerByName("George","")).thenReturn(null);
+
+        assertNull(customerService.findCustomerByName("George",""));
+        
+        doThrow(ServiceDataAccesException.class).when(mockedCustomerDao).findCustomerByName(null);
+        customerService.findCustomerByName(null,null);
+        
+    }    
  
 }
