@@ -44,6 +44,10 @@ public class CustomerServiceImpl implements CustomerService {
     
     @Autowired
     private LoanDao loanDao;
+    
+    public void setCustomerDao(CustomerDao customerDao) {
+        this.customerDao = customerDao;
+    }
 
     public void setBookDao(BookDao bookDao) {
         this.bookDao = bookDao;
