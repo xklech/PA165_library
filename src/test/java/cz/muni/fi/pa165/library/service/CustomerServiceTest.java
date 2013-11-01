@@ -86,5 +86,33 @@ public class CustomerServiceTest {
         doThrow(ServiceDataAccesException.class).when(mockedCustomerDao).updateCustomer(null);
         customerService.updateCustomer(null);
     }
+    
+    @Test(expected=ServiceDataAccesException.class)
+    public void testFindCustomerByLoan()throws Exception { 
+        CustomerTO customerTO = new CustomerTO(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        customerTO.setId(12l);
+        Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
+
+        LoanTO loanTO = new LoanTO();
+        loanTO.setCustomer(customerTO);
+        loanTO.setId(12l);
+        Loan loan = EntityConvertor.convertFromLoanTo(loanTO);
+        
+        when(mockedCustomerDao.findCustomerByLoan(loan)).thenReturn(Arrays.asList(customer));
+        when(mockedLoanDao.findLoanById(loan.getId())).thenReturn(loan);
+        
+        Collection<CustomerTO> customersTO = customerService.findCustomerByLoan(loanTO);
+        assertEquals(Arrays.asList(customerTO), customersTO);
+        
+        LoanTO loanTO2 = new LoanTO();
+        Loan loan2 = EntityConvertor.convertFromLoanTo(loanTO2);
+
+        when(mockedCustomerDao.findCustomerByLoan(loan2)).thenReturn(null);
+        assertNull(customerService.findCustomerByLoan(loanTO2));
+        
+        doThrow(ServiceDataAccesException.class).when(mockedCustomerDao).findCustomerByLoan(null);
+        customerService.findCustomerByLoan(null);
+        
+    }
  
 }
