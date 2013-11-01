@@ -107,7 +107,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Collection<CustomerTO> findAllCustomers() {
         Collection <Customer> customers = customerDao.findAllCustomers(); 
-        
+        if(customers == null){
+            return null;
+        }
         List<CustomerTO> customersTO = new ArrayList<>();
         for(Customer customer : customers){
             customersTO.add(EntityConvertor.convertFromCustomer(customer));
@@ -131,6 +133,9 @@ public class CustomerServiceImpl implements CustomerService {
             Logger.getLogger(CustomerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ServiceDataAccesException("findCustomerByBook",ex);
         }        
+        if(customers == null){
+            return null;
+        }
         List<CustomerTO> customersTO = new ArrayList<>();
         for(Customer customer : customers){
             customersTO.add(EntityConvertor.convertFromCustomer(customer));
@@ -154,6 +159,9 @@ public class CustomerServiceImpl implements CustomerService {
             Logger.getLogger(CustomerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ServiceDataAccesException("findCustomerByLoan",ex);
         }        
+        if(customers == null){
+            return null;
+        }
         List<CustomerTO> customersTO = new ArrayList<>();
         for(Customer customer : customers){
             customersTO.add(EntityConvertor.convertFromCustomer(customer));

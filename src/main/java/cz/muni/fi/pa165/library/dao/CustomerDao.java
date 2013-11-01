@@ -44,6 +44,7 @@ public interface CustomerDao {
      * Finds customer with given id.
      * 
      * @param id of searched customer
+     * @return customer
      * @throws CustomerDaoException thrown when customers id is null
      */
     public Customer findCustomerById(Long id) throws CustomerDaoException;
@@ -51,12 +52,15 @@ public interface CustomerDao {
     /**
      * Finds all customers database.
      * 
+     * @return customers
      */
     public Collection<Customer> findAllCustomers();
     
     /**
      * Finds all customers which have borrowed given book
      * 
+     * @param book
+     * @return customers
      * @throws CustomerDaoException thrown when book parameter is null 
      *                              or its id is null
      */
@@ -65,6 +69,8 @@ public interface CustomerDao {
     /**
      * Finds customer with given loan
      * 
+     * @param loan
+     * @return customers
      * @throws CustomerDaoException thrown when loan parameter is null 
      *                              or its id is null
      */
@@ -73,6 +79,9 @@ public interface CustomerDao {
     /**
      * Finds customer with given name
      * 
+     * @param firstName
+     * @param lastName
+     * @return customers
      * @throws CustomerDaoException thrown when firstName parameter or lastName 
      *                              parameter is null
      */

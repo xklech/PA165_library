@@ -37,30 +37,39 @@ public interface CustomerService {
      * Finds customer with given id.
      * 
      * @param id of searched customer
+     * @return  CustomerTO
      */
     public CustomerTO findCustomerById(Long id);
     
     /**
      * Finds all customers database.
      * 
+     * @return customers
      */
     public Collection<CustomerTO> findAllCustomers();
     
     /**
      * Finds all customers which have borrowed given book
      * 
+     * @param bookTO
+     * @return customers
      */
     public Collection<CustomerTO> findCustomersByBook(BookTo bookTO);
     
     /**
      * Finds customer with given loan
      * 
+     * @param loan
+     * @return customers
      */
     public Collection<CustomerTO> findCustomerByLoan(LoanTO loan);
     
     /**
      * Finds customer with given name
      * 
+     * @param firstName
+     * @param lastName
+     * @return customers
      */
     public Collection<CustomerTO> findCustomerByName(String firstName, String lastName);    
 }
