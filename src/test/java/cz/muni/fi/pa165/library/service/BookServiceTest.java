@@ -11,7 +11,7 @@ import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.dao.ImpressionDao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Impression;
-import cz.muni.fi.pa165.library.exceptions.ServiceDataAccesException;
+import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.to.BookTo;
 import cz.muni.fi.pa165.library.to.ImpressionTO;
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
@@ -68,7 +68,7 @@ public class BookServiceTest extends AbstractIntegrationTest{
         assertNotNull(bookTo.getId());
     }
     
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testFindBookById() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -77,11 +77,11 @@ public class BookServiceTest extends AbstractIntegrationTest{
         when(mockedBookDao.findBookById(1l)).thenReturn(book);
         BookTo bookTo1 = bookService.findBookById(1l);
         assertEquals(bookTo, bookTo1);
-        when(mockedBookDao.findBookById(null)).thenThrow(ServiceDataAccesException.class);
+        when(mockedBookDao.findBookById(null)).thenThrow(ServiceDataAccessException.class);
         bookService.findBookById(null);
     }
    
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testFindBooksByName() throws Exception
     {
         Book book1= new Book("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -94,37 +94,37 @@ public class BookServiceTest extends AbstractIntegrationTest{
         Collection<BookTo> books= bookService.findBooksByName("Mobil");
         assertEquals(books.size(), 2);
         
-        when(mockedBookDao.findBooksByName(null)).thenThrow(ServiceDataAccesException.class);
+        when(mockedBookDao.findBooksByName(null)).thenThrow(ServiceDataAccessException.class);
         bookService.findBooksByName(null);
     }
  
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testUpdateBook() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
         Book book1 = EntityConvertor.convertFromBookTo(bookTo);
-        doThrow(ServiceDataAccesException.class).when(mockedBookDao).updateBook(book1);        
+        doThrow(ServiceDataAccessException.class).when(mockedBookDao).updateBook(book1);        
         bookService.updateBook(bookTo);
 
         
-        doThrow(ServiceDataAccesException.class).when(mockedBookDao).updateBook(null);
+        doThrow(ServiceDataAccessException.class).when(mockedBookDao).updateBook(null);
         bookService.updateBook(null);
     }
     
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testDeleteBook() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
         Book book1 = EntityConvertor.convertFromBookTo(bookTo);
-        doThrow(ServiceDataAccesException.class).when(mockedBookDao).deleteBook(book1);        
+        doThrow(ServiceDataAccessException.class).when(mockedBookDao).deleteBook(book1);        
         bookService.deleteBook(bookTo);
 
         
-        doThrow(ServiceDataAccesException.class).when(mockedBookDao).deleteBook(null);
+        doThrow(ServiceDataAccessException.class).when(mockedBookDao).deleteBook(null);
         bookService.deleteBook(null);
     }
     
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testFindBookByISBN() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -139,11 +139,11 @@ public class BookServiceTest extends AbstractIntegrationTest{
 
         assertNull(bookService.findBookByISBN("1234"));
         
-        doThrow(ServiceDataAccesException.class).when(mockedBookDao).findBookByISBN(null);
+        doThrow(ServiceDataAccessException.class).when(mockedBookDao).findBookByISBN(null);
         bookService.findBookByISBN(null);
     }
     
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testFindBooksByAuthor() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -158,7 +158,7 @@ public class BookServiceTest extends AbstractIntegrationTest{
 
         assertNull(bookService.findBookByISBN("1234"));
         
-        doThrow(ServiceDataAccesException.class).when(mockedBookDao).findBooksByAuthor(null);
+        doThrow(ServiceDataAccessException.class).when(mockedBookDao).findBooksByAuthor(null);
         bookService.findBooksByAuthor(null);
     }
    
@@ -179,7 +179,7 @@ public class BookServiceTest extends AbstractIntegrationTest{
 
     }
     
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testFindBooksByDepartment() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -194,12 +194,12 @@ public class BookServiceTest extends AbstractIntegrationTest{
         when(mockedBookDao.findBooksByDepartment("1234")).thenReturn(null);
         assertNull(bookService.findBooksByDepartment("1234"));
         
-        doThrow(ServiceDataAccesException.class).when(mockedBookDao).findBooksByDepartment(null);
+        doThrow(ServiceDataAccessException.class).when(mockedBookDao).findBooksByDepartment(null);
         bookService.findBooksByDepartment(null);
 
     } 
    
-    @Test(expected=ServiceDataAccesException.class)
+    @Test(expected=ServiceDataAccessException.class)
     public void testFindBookByImpression() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -221,7 +221,7 @@ public class BookServiceTest extends AbstractIntegrationTest{
         when(mockedBookDao.findBookByImpression(impression2)).thenReturn(null);
         assertNull(bookService.findBookByImpression(impressionTo2));
         
-        doThrow(ServiceDataAccesException.class).when(mockedBookDao).findBookByImpression(null);
+        doThrow(ServiceDataAccessException.class).when(mockedBookDao).findBookByImpression(null);
         bookService.findBookByImpression(null);
 
     } 

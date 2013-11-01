@@ -12,13 +12,13 @@ import org.springframework.dao.DataAccessException;
  *
  * @author Jaroslav Klech 
  */
-public class ServiceDataAccesException extends DataAccessException{
+public class ServiceDataAccessException extends DataAccessException{
 
-    public ServiceDataAccesException(String msg) {
+    public ServiceDataAccessException(String msg) {
         super(msg);
     }
 
-    public ServiceDataAccesException(String msg, Throwable cause) {
+    public ServiceDataAccessException(String msg, Throwable cause) {
         super(msg, cause);
     }
     

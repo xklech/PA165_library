@@ -11,7 +11,7 @@ import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.exceptions.BookDaoException;
 import cz.muni.fi.pa165.library.exceptions.CustomerDaoException;
 import cz.muni.fi.pa165.library.exceptions.LoanDaoException;
-import cz.muni.fi.pa165.library.exceptions.ServiceDataAccesException;
+import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 
 import cz.muni.fi.pa165.library.to.BookTo;
 import cz.muni.fi.pa165.library.to.CustomerTO;
@@ -66,7 +66,7 @@ public class CustomerServiceImpl implements CustomerService {
             customerTO.setId(customer.getId());
         } catch (CustomerDaoException ex) {
             Logger.getLogger(BookServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("Save customer",ex);
+            throw new ServiceDataAccessException("Save customer",ex);
         }
     }
 
@@ -77,7 +77,7 @@ public class CustomerServiceImpl implements CustomerService {
             customerDao.deleteCustomer(customer);
         } catch (CustomerDaoException ex) {
             Logger.getLogger(CustomerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("Delete customer",ex);
+            throw new ServiceDataAccessException("Delete customer",ex);
         }        
     }
 
@@ -88,7 +88,7 @@ public class CustomerServiceImpl implements CustomerService {
            customerDao.updateCustomer(customer);
         } catch (CustomerDaoException ex) {
             Logger.getLogger(CustomerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("Update customer",ex);
+            throw new ServiceDataAccessException("Update customer",ex);
         }
     }
 
@@ -99,7 +99,7 @@ public class CustomerServiceImpl implements CustomerService {
             customer = customerDao.findCustomerById(id);
         } catch (CustomerDaoException ex) {
             Logger.getLogger(CustomerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("findCustomerById",ex);
+            throw new ServiceDataAccessException("findCustomerById",ex);
         }
         return EntityConvertor.convertFromCustomer(customer);
     }
@@ -120,10 +120,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Collection<CustomerTO> findCustomersByBook(BookTo bookTO) {
         if(bookTO == null){
-            throw new ServiceDataAccesException("findCustomerByBook: book is null");
+            throw new ServiceDataAccessException("findCustomerByBook: book is null");
         }
         if(bookTO.getId() == null){
-            throw new ServiceDataAccesException("findCustomerByBook: book's id is null");
+            throw new ServiceDataAccessException("findCustomerByBook: book's id is null");
         }
         Collection <Customer> customers;
         try {
@@ -131,7 +131,7 @@ public class CustomerServiceImpl implements CustomerService {
             customers = customerDao.findCustomersByBook(book); 
         } catch (CustomerDaoException | BookDaoException ex) {
             Logger.getLogger(CustomerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("findCustomerByBook",ex);
+            throw new ServiceDataAccessException("findCustomerByBook",ex);
         }        
         if(customers == null){
             return null;
@@ -146,10 +146,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Collection<CustomerTO> findCustomerByLoan(LoanTO loanTO) {
         if(loanTO == null){
-            throw new ServiceDataAccesException("findCustomerByLoan: loan is null");
+            throw new ServiceDataAccessException("findCustomerByLoan: loan is null");
         }
         if(loanTO.getId() == null){
-            throw new ServiceDataAccesException("findCustomerByLoan: loan's id is null");
+            throw new ServiceDataAccessException("findCustomerByLoan: loan's id is null");
         }
         Collection <Customer> customers;
         try {
@@ -157,7 +157,7 @@ public class CustomerServiceImpl implements CustomerService {
             customers = customerDao.findCustomerByLoan(loan); 
         } catch (CustomerDaoException | LoanDaoException ex) {
             Logger.getLogger(CustomerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("findCustomerByLoan",ex);
+            throw new ServiceDataAccessException("findCustomerByLoan",ex);
         }        
         if(customers == null){
             return null;
@@ -176,7 +176,7 @@ public class CustomerServiceImpl implements CustomerService {
             customers = customerDao.findCustomerByName(firstName, lastName);
         } catch (CustomerDaoException ex) {
             Logger.getLogger(CustomerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("findCustomerByName",ex);
+            throw new ServiceDataAccessException("findCustomerByName",ex);
         }
         if(customers == null){
             return null;

@@ -72,9 +72,9 @@ public interface LoanDao {
      * Finds and returns all loans limited satisfying fromDate and toDate
      * limitations.
      * 
-     * Method allows null values as parameters. Null value represents no
- limitation on fromDate and/or toDate parameters. (ie.
- LoanDao.findLoansByFromTo(null,null) returns ALL loans from database.)
+     * Method allows null values as parameters. Null value represents no 
+     * limitation on fromDate and/or toDate parameters. (ie.
+     * LoanDao.findLoansByFromTo(null,null) returns ALL loans from database.)
      * 
      * @param fromDate date at which loan started
      * @param toDate date at which loan ended (or is going to end)

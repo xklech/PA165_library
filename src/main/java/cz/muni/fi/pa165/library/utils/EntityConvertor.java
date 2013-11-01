@@ -145,7 +145,17 @@ public class EntityConvertor {
      * @return loan transfer object
      */
     public static LoanTO convertFromLoan(Loan loan) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	if (loan == null) {
+	    return null;
+	}
+	LoanTO loanTo = new LoanTO();
+	loanTo.setId(loan.getId());
+	loanTo.setCustomer(EntityConvertor.convertFromCustomer(loan.getCustomer()));
+	loanTo.setImpression(EntityConvertor.convertFromImpression(loan.getImpression()));
+	loanTo.setFromDate(loan.getFromDate());
+	loanTo.setToDate(loan.getToDate());
+	loanTo.setDamageType(loan.getDamageType());
+        return loanTo;
     }
 
         /**
@@ -154,7 +164,17 @@ public class EntityConvertor {
      * @return Loan
      */
     public static Loan convertFromLoanTo(LoanTO loanTo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	if (loanTo == null) {
+	    return null;
+	}
+        Loan loan = new Loan();
+	loan.setId(loan.getId());
+	loan.setCustomer(EntityConvertor.convertFromCustomerTo(loanTo.getCustomer()));
+	loan.setImpression(EntityConvertor.convertFromImpressionTo(loanTo.getImpression()));
+	loan.setFromDate(loan.getFromDate());
+	loan.setToDate(loan.getToDate());
+	loan.setDamageType(loan.getDamageType());
+        return loan;
     }
     
     

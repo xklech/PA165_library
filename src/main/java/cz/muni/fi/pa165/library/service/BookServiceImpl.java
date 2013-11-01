@@ -7,7 +7,7 @@ import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Impression;
 import cz.muni.fi.pa165.library.exceptions.BookDaoException;
 import cz.muni.fi.pa165.library.exceptions.ImpressionDaoException;
-import cz.muni.fi.pa165.library.exceptions.ServiceDataAccesException;
+import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.to.BookTo;
 import cz.muni.fi.pa165.library.to.ImpressionTO;
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
@@ -54,7 +54,7 @@ public class BookServiceImpl implements BookService{
             bookTo.setId(book.getId());
         } catch (BookDaoException ex) {
             Logger.getLogger(BookServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("Save book",ex);
+            throw new ServiceDataAccessException("Save book",ex);
         }
     }
     
@@ -66,7 +66,7 @@ public class BookServiceImpl implements BookService{
             book = bookDao.findBookById(id);
         } catch (BookDaoException ex) {
             Logger.getLogger(BookServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("findBookById",ex);
+            throw new ServiceDataAccessException("findBookById",ex);
         }
         return EntityConvertor.convertFromBook(book);
     }
@@ -78,7 +78,7 @@ public class BookServiceImpl implements BookService{
             books = bookDao.findBooksByName(name);
         } catch (BookDaoException ex) {
             Logger.getLogger(BookServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("findBooksByName",ex);
+            throw new ServiceDataAccessException("findBooksByName",ex);
         }
        if(books == null){
            return null;
@@ -97,7 +97,7 @@ public class BookServiceImpl implements BookService{
             bookDao.updateBook(book);
         } catch (BookDaoException ex) {
             Logger.getLogger(BookServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("updateBook",ex);
+            throw new ServiceDataAccessException("updateBook",ex);
         }
     }
 
@@ -108,7 +108,7 @@ public class BookServiceImpl implements BookService{
             bookDao.deleteBook(book);
         } catch (BookDaoException ex) {
             Logger.getLogger(BookServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("updateBook",ex);
+            throw new ServiceDataAccessException("updateBook",ex);
         }
     }
 
@@ -119,7 +119,7 @@ public class BookServiceImpl implements BookService{
             book = bookDao.findBookByISBN(isbn);
         } catch (BookDaoException ex) {
             Logger.getLogger(BookServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("findBookByISBN",ex);
+            throw new ServiceDataAccessException("findBookByISBN",ex);
         }
         return EntityConvertor.convertFromBook(book);
     }
@@ -131,7 +131,7 @@ public class BookServiceImpl implements BookService{
             books = bookDao.findBooksByAuthor(author);
         } catch (BookDaoException ex) {
             Logger.getLogger(BookServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("findBooksByAuthor",ex);
+            throw new ServiceDataAccessException("findBooksByAuthor",ex);
         }
         if(books == null){
             return null;
@@ -165,7 +165,7 @@ public class BookServiceImpl implements BookService{
             books = bookDao.findBooksByDepartment(department);
         } catch (BookDaoException ex) {
             Logger.getLogger(BookServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("findBooksByDepartment",ex);
+            throw new ServiceDataAccessException("findBooksByDepartment",ex);
         }
         if(books == null){
             return null;
@@ -180,10 +180,10 @@ public class BookServiceImpl implements BookService{
     @Override
     public BookTo findBookByImpression(ImpressionTO impressionTo) {
         if(impressionTo == null){
-            throw new ServiceDataAccesException("findBookByImpression: impression is null");
+            throw new ServiceDataAccessException("findBookByImpression: impression is null");
         }
         if(impressionTo.getId() == null){
-            throw new ServiceDataAccesException("findBookByImpression: impressions id is null");
+            throw new ServiceDataAccessException("findBookByImpression: impressions id is null");
         }
         Book book = null;
         try {
@@ -191,7 +191,7 @@ public class BookServiceImpl implements BookService{
             book = bookDao.findBookByImpression(impression);
         } catch (BookDaoException | ImpressionDaoException ex) {
             Logger.getLogger(BookServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccesException("findBookByImpression",ex);
+            throw new ServiceDataAccessException("findBookByImpression",ex);
         }
         return EntityConvertor.convertFromBook(book);
     }
