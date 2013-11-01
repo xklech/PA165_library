@@ -70,11 +70,11 @@ public interface CustomerDao {
      * Finds customer with given loan
      * 
      * @param loan
-     * @return customers
+     * @return customer
      * @throws CustomerDaoException thrown when loan parameter is null 
      *                              or its id is null
      */
-    public Collection<Customer> findCustomerByLoan(Loan loan) throws CustomerDaoException;
+    public Customer findCustomerByLoan(Loan loan) throws CustomerDaoException;
     
     /**
      * Finds customer with given name

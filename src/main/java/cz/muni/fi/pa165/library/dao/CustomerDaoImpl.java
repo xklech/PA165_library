@@ -89,13 +89,15 @@ public class CustomerDaoImpl implements CustomerDao {
 	if (book.getId() == null) {
 	    throw new CustomerDaoException("findCustomersByBook: book's id can't be null!");
 	}
-	TypedQuery q = this.entityManager.createQuery("SELECT c FROM Customer c LEFT JOIN c.book b WHERE b.id = :id",Customer.class);
+	TypedQuery q = 
+                this.entityManager.createQuery(""
+                        + "SELECT c FROM Loan l LEFT JOIN l.customer c LEFT JOIN l.impression i LEFT JOIN i.book b  WHERE b.id = :id",Customer.class);
 	q.setParameter("id",book.getId());
 	return q.getResultList();
     }
 
     @Override
-    public Collection<Customer> findCustomerByLoan(Loan loan) throws CustomerDaoException {
+    public Customer findCustomerByLoan(Loan loan) throws CustomerDaoException {
 	if (loan == null) {
 	    throw new CustomerDaoException("findCustomerByLoan: parameter loan can't be null!");
 	}
@@ -104,21 +106,25 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 	TypedQuery q = this.entityManager.createQuery("SELECT c FROM Loan l LEFT JOIN l.customer c WHERE l.id = :id",Customer.class);
 	q.setParameter("id",loan.getId());
-	return q.getResultList();
+	return (Customer) q.getSingleResult();
     }
 
     @Override
     public Collection<Customer> findCustomerByName(String firstName, String lastName) throws CustomerDaoException {
-	if (firstName == null) {
-	    throw new CustomerDaoException("firstName: parameter firstName can't be null!");
-	}
-	if (lastName == null) {
-	    throw new CustomerDaoException("lastName: parameter lastName can't be null!");
+	if (firstName == null && lastName == null) {
+	    throw new CustomerDaoException("firstName and lastName: parameter firstName and lastName can't be both null!");
 	}
 	CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 	CriteriaQuery<Customer> cq = cb.createQuery(Customer.class);
 	Root r = cq.from(Customer.class);
-	cq.where(cb.like(r.get("firstName"),firstName),cb.like(r.get("lastName"),lastName));
+        if(firstName != null && lastName != null){
+            cq.where(cb.like(r.get("firstName"),firstName),cb.like(r.get("lastName"),lastName));
+        }else if(firstName == null){
+            cq.where(cb.like(r.get("lastName"),lastName));
+        }else {
+            cq.where(cb.like(r.get("firstName"),firstName));
+        }
+        
 	TypedQuery q = this.entityManager.createQuery(cq);
 	return q.getResultList();
     }

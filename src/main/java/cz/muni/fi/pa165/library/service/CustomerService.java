@@ -62,7 +62,7 @@ public interface CustomerService {
      * @param loan
      * @return customers
      */
-    public Collection<CustomerTO> findCustomerByLoan(LoanTO loan);
+    public CustomerTO findCustomerByLoan(LoanTO loan);
     
     /**
      * Finds customer with given name

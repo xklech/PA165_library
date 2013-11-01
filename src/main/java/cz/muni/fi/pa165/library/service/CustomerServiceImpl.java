@@ -144,29 +144,22 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Collection<CustomerTO> findCustomerByLoan(LoanTO loanTO) {
+    public CustomerTO findCustomerByLoan(LoanTO loanTO) {
         if(loanTO == null){
             throw new ServiceDataAccessException("findCustomerByLoan: loan is null");
         }
         if(loanTO.getId() == null){
             throw new ServiceDataAccessException("findCustomerByLoan: loan's id is null");
         }
-        Collection <Customer> customers;
+
         try {
             Loan loan = loanDao.findLoanById(loanTO.getId());
-            customers = customerDao.findCustomerByLoan(loan); 
+            Customer customers = customerDao.findCustomerByLoan(loan); 
+            return EntityConvertor.convertFromCustomer(customers);
         } catch (CustomerDaoException | LoanDaoException ex) {
             Logger.getLogger(CustomerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ServiceDataAccessException("findCustomerByLoan",ex);
         }        
-        if(customers == null){
-            return null;
-        }
-        List<CustomerTO> customersTO = new ArrayList<>();
-        for(Customer customer : customers){
-            customersTO.add(EntityConvertor.convertFromCustomer(customer));
-        }
-        return customersTO;
     }
 
     @Override

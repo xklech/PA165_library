@@ -124,11 +124,11 @@ public class CustomerServiceTest {
         loanTO.setId(12l);
         Loan loan = EntityConvertor.convertFromLoanTo(loanTO);
         
-        when(mockedCustomerDao.findCustomerByLoan(loan)).thenReturn(Arrays.asList(customer));
+        when(mockedCustomerDao.findCustomerByLoan(loan)).thenReturn(customer);
         when(mockedLoanDao.findLoanById(loan.getId())).thenReturn(loan);
         
-        Collection<CustomerTO> customersTO = customerService.findCustomerByLoan(loanTO);
-        assertEquals(Arrays.asList(customerTO), customersTO);
+        CustomerTO customersTO = customerService.findCustomerByLoan(loanTO);
+        assertEquals(customerTO, customersTO);
         
         LoanTO loanTO2 = new LoanTO();
         Loan loan2 = EntityConvertor.convertFromLoanTo(loanTO2);
