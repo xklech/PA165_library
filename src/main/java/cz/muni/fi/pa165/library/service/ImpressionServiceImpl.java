@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mask
  */
 @Service
+@Transactional
 public class ImpressionServiceImpl implements ImpressionService {
 
     @Autowired
@@ -33,22 +34,19 @@ public class ImpressionServiceImpl implements ImpressionService {
     @Autowired
     private BookDao bookDao;
     
-    @Transactional
     @Override
     public ImpressionTO addImpression(ImpressionTO impressionTO) throws ServiceDataAccessException {        
         Impression entity = EntityConvertor.convertFromImpressionTo(impressionTO);
         try {
             entity = impDao.addImpression(entity);
-            System.err.println(entity);
             impressionTO.setId(entity.getId());
         } catch (ImpressionDaoException ex) {
             Logger.getLogger(ImpressionServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccessException("ImpressionService: addImpression", ex);
+            throw new ServiceDataAccessException(null, ex);
         }
         return EntityConvertor.convertFromImpression(entity);
     }
 
-    @Transactional
     @Override
     public ImpressionTO updateImpression(ImpressionTO impressionTO) throws ServiceDataAccessException {
         Impression entity = EntityConvertor.convertFromImpressionTo(impressionTO);
@@ -56,12 +54,11 @@ public class ImpressionServiceImpl implements ImpressionService {
             impDao.updateImpression(entity);
         } catch (ImpressionDaoException ex) {
             Logger.getLogger(ImpressionServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccessException("ImpressionService: updateImpression", ex);
+            throw new ServiceDataAccessException(null, ex);
         }
         return impressionTO;
     }
 
-    @Transactional
     @Override
     public void deleteImpression(ImpressionTO impressionTO) throws ServiceDataAccessException {
         Impression entity = EntityConvertor.convertFromImpressionTo(impressionTO);
@@ -69,7 +66,7 @@ public class ImpressionServiceImpl implements ImpressionService {
             impDao.deleteImpression(entity);
         } catch (ImpressionDaoException ex) {
             Logger.getLogger(ImpressionServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccessException("ImpressionService: deleteImpression", ex);
+            throw new ServiceDataAccessException(null, ex);
         }
     }
 
@@ -80,19 +77,16 @@ public class ImpressionServiceImpl implements ImpressionService {
             result = impDao.findImpressionById(id);
         } catch (ImpressionDaoException ex) {
             Logger.getLogger(ImpressionServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccessException("ImpressionService: findImpressionById", ex);
+            throw new ServiceDataAccessException(null, ex);
         }
         return EntityConvertor.convertFromImpression(result);
     }
 
     @Override
     public List<ImpressionTO> findImpressionsByDamage(DamageType damage) {
-        List<Impression> imprassions = impDao.findImpressionsByDamage(damage);
-         if(imprassions == null){
-            return null;
-        }
-        List<ImpressionTO> result = new ArrayList<>();      
-        for(Impression imp : imprassions) {
+        List<ImpressionTO> result = new ArrayList<ImpressionTO>();
+        List<Impression> supp = impDao.findImpressionsByDamage(damage);
+        for(Impression imp : supp) {
             result.add(EntityConvertor.convertFromImpression(imp));
         }
         return result;
@@ -100,12 +94,9 @@ public class ImpressionServiceImpl implements ImpressionService {
 
     @Override
     public List<ImpressionTO> findImpressionsByStatus(StatusType status) {
-        List<Impression> imprassions = impDao.findImpressionsByStatus(status);
-        if(imprassions == null){
-            return null;
-        }
-        List<ImpressionTO> result = new ArrayList<>();
-        for(Impression imp : imprassions) {
+        List<ImpressionTO> result = new ArrayList<ImpressionTO>();
+        List<Impression> supp = impDao.findImpressionsByStatus(status);
+        for(Impression imp : supp) {
             result.add(EntityConvertor.convertFromImpression(imp));
         }
         return result;
@@ -113,19 +104,20 @@ public class ImpressionServiceImpl implements ImpressionService {
 
     @Override
     public List<ImpressionTO> findImpressionsByBook(BookTo bookTo) throws ServiceDataAccessException {
-        List<Impression> impressions = null;        
+        List<Impression> supp;
+        List<ImpressionTO> result = new ArrayList<ImpressionTO>();
+        if (bookTo == null) {
+            Logger.getLogger(ImpressionServiceImpl.class.getName()).log(Level.SEVERE, "Inserted bookTo is null.");
+            throw new ServiceDataAccessException("Inserted bookTo is null.");                        
+        }
         try {
             Book book = bookDao.findBookById(bookTo.getId());
-            impressions = impDao.findImpressionsByBook(book);
+            supp = impDao.findImpressionsByBook(book);
         } catch (ImpressionDaoException | BookDaoException ex) {
             Logger.getLogger(ImpressionServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServiceDataAccessException("ImpressionService: findImpressionsByBook", ex);            
+            throw new ServiceDataAccessException(null, ex);            
         }
-        if(impressions == null){
-            return null;
-        }
-        List<ImpressionTO> result = new ArrayList<>();
-        for(Impression imp : impressions) {
+        for(Impression imp : supp) {
             result.add(EntityConvertor.convertFromImpression(imp));
         }
         return result;
@@ -134,7 +126,6 @@ public class ImpressionServiceImpl implements ImpressionService {
     public void setBookDao(BookDao bookDao) {
         this.bookDao = bookDao;
     }
-
 
     public void setImpDao(ImpressionDao impDao) {
         this.impDao = impDao;
