@@ -1,11 +1,16 @@
 package cz.muni.fi.pa165.library;
 
 import cz.muni.fi.pa165.library.entity.Book;
+import cz.muni.fi.pa165.library.entity.Impression;
 import cz.muni.fi.pa165.library.exceptions.BookDaoException;
 import cz.muni.fi.pa165.library.exceptions.LoanDaoException;
 import cz.muni.fi.pa165.library.service.BookService;
 import cz.muni.fi.pa165.library.service.BookServiceImpl;
+import cz.muni.fi.pa165.library.service.ImpressionService;
+import cz.muni.fi.pa165.library.service.LoanService;
 import cz.muni.fi.pa165.library.to.BookTo;
+import cz.muni.fi.pa165.library.to.ImpressionTO;
+import cz.muni.fi.pa165.library.to.LoanTO;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -49,16 +54,24 @@ public class App
 	}*/
         ApplicationContext ctx
                 = new ClassPathXmlApplicationContext("applicationContext.xml");
-        BookService bookService = (BookService) ctx.getBean("bookService");
+        /*BookService bookService = (BookService) ctx.getBean("bookService");
         System.out.println(" service: "+bookService);
         
 
         BookTo bookTo = new BookTo("Java", "123456789", "Skola", null, "Pepa");
 
-        bookService.save(bookTo);
+        bookService.save(bookTo);*/
         
-
-
-        System.err.println(bookService.findBooksByName(bookTo.getName()));
+        /*LoanService loanService = (LoanService) ctx.getBean("loanService");
+        LoanTO loanTo= new LoanTO();
+        loanService.addLoan(loanTo);
+                
+        System.err.println(loanService.findLoanById(loanTo.getId()));*/
+        ImpressionService impressionService = (ImpressionService) ctx.getBean("impressionService");
+        ImpressionTO impression= new ImpressionTO();
+        impressionService.addImpression(impression);
+                
+        System.err.println(impressionService.findImpressionById(impression.getId()));
+        
     }
 }

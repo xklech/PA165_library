@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.library.dao.LoanDao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Customer;
 import cz.muni.fi.pa165.library.entity.Loan;
+import cz.muni.fi.pa165.library.exceptions.CustomerDaoException;
 import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.to.BookTo;
 
@@ -73,11 +74,11 @@ public class CustomerServiceTest {
     public void testDeleteCustomer() throws Exception {
         CustomerTO customerTO= new CustomerTO(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
-        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).deleteCustomer(customer);        
+        doThrow(CustomerDaoException.class).when(mockedCustomerDao).deleteCustomer(customer);        
         customerService.deleteCustomer(customerTO);
 
         
-        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).deleteCustomer(null);
+        doThrow(CustomerDaoException.class).when(mockedCustomerDao).deleteCustomer(null);
         customerService.deleteCustomer(null);
     }
     
@@ -85,11 +86,11 @@ public class CustomerServiceTest {
     public void testUpdateCustomer() throws Exception {
         CustomerTO customerTO= new CustomerTO(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
-        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).updateCustomer(customer);        
+        doThrow(CustomerDaoException.class).when(mockedCustomerDao).updateCustomer(customer);        
         customerService.updateCustomer(customerTO);
 
         
-        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).updateCustomer(null);
+        doThrow(CustomerDaoException.class).when(mockedCustomerDao).updateCustomer(null);
         customerService.updateCustomer(null);
     }
     
@@ -108,7 +109,7 @@ public class CustomerServiceTest {
 
         assertNull(customerService.findCustomerById(1l));
         
-        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).findCustomerById(null);
+        doThrow(CustomerDaoException.class).when(mockedCustomerDao).findCustomerById(null);
         customerService.findCustomerById(null);
     }    
     
@@ -136,7 +137,7 @@ public class CustomerServiceTest {
         when(mockedCustomerDao.findCustomerByLoan(loan2)).thenReturn(null);
         assertNull(customerService.findCustomerByLoan(loanTO2));
         
-        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).findCustomerByLoan(null);
+        doThrow(CustomerDaoException.class).when(mockedCustomerDao).findCustomerByLoan(null);
         customerService.findCustomerByLoan(null);
         
     }
@@ -173,7 +174,7 @@ public class CustomerServiceTest {
         Collection<CustomerTO> customers = customerService.findCustomersByBook(bookTo);
         assertEquals(customers, Arrays.asList(customerTo1,customerTo2));
         
-        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).findCustomersByBook(null);
+        doThrow(CustomerDaoException.class).when(mockedCustomerDao).findCustomersByBook(null);
         customerService.findCustomerByLoan(null);
     }
     
@@ -191,7 +192,7 @@ public class CustomerServiceTest {
 
         assertNull(customerService.findCustomerByName("George",""));
         
-        doThrow(ServiceDataAccessException.class).when(mockedCustomerDao).findCustomerByName(null,null);
+        doThrow(CustomerDaoException.class).when(mockedCustomerDao).findCustomerByName(null,null);
         customerService.findCustomerByName(null,null);
         
     }    

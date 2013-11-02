@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Jaroslav Klech
  */
 @Service
+@Transactional
 public class BookServiceImpl implements BookService{
 
     @Autowired
@@ -43,9 +44,7 @@ public class BookServiceImpl implements BookService{
         this.impressionDao = impressionDao;
     }
     
-    
-    
-    @Transactional
+
     @Override
     public void save(BookTo bookTo){  
         try {

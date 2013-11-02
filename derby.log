@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Fri Nov 01 23:48:16 CET 2013:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0142-15da-454a-000006e40908 
-on database directory /home/bloodspell/Development/java/PA165-Library/PA165_library/target/database/message with class loader sun.misc.Launcher$AppClassLoader@65499154 
-Loaded from file:/home/bloodspell/.m2/repository/org/apache/derby/derby/10.10.1.1/derby-10.10.1.1.jar
+Sat Nov 02 00:54:07 CET 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0142-1616-910d-000006dd9390 
+on database directory C:\Users\Jarek\Documents\GitHub\PA165_library\target\database\message with class loader sun.misc.Launcher$AppClassLoader@4ec57f88 
+Loaded from file:/C:/Users/Jarek/.m2/repository/org/apache/derby/derby/10.10.1.1/derby-10.10.1.1.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_25-b30
-user.dir=/home/bloodspell/Development/java/PA165-Library/PA165_library
-os.name=Linux
+java.runtime.version=1.7.0_25-b17
+user.dir=C:\Users\Jarek\Documents\GitHub\PA165_library
+os.name=Windows 7
 os.arch=amd64
-os.version=3.8.0-32-generic
+os.version=6.1
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

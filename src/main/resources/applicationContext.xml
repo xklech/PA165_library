@@ -62,5 +62,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     
     <bean id="bookService" class="cz.muni.fi.pa165.library.service.BookServiceImpl"/>
     <bean id="loanService" class="cz.muni.fi.pa165.library.service.LoanServiceImpl"/>
-
+    <bean id="impressionService" class="cz.muni.fi.pa165.library.service.ImpressionServiceImpl"/>
+    <bean id="customerService" class="cz.muni.fi.pa165.library.service.CustomerServiceImpl"/>
 </beans>
