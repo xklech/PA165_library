@@ -10,13 +10,13 @@ import java.util.Objects;
  *
  * @author Michal Sukupčák
  */
-public class LoanTO implements Serializable {
+public class LoanTo implements Serializable {
     
     private Long id;
     
-    private CustomerTO customer;
+    private CustomerTo customer;
     
-    private ImpressionTO impression;
+    private ImpressionTo impression;
     
     private Date fromDate;
     
@@ -24,9 +24,9 @@ public class LoanTO implements Serializable {
     
     private DamageType damageType;
 
-    public LoanTO() {}
+    public LoanTo() {}
     
-    public LoanTO(CustomerTO customer, ImpressionTO impression, Date fromDate, Date toDate, DamageType damageType) {
+    public LoanTo(CustomerTo customer, ImpressionTo impression, Date fromDate, Date toDate, DamageType damageType) {
 	this.customer = customer;
 	this.impression = impression;
 	this.fromDate = fromDate;
@@ -42,19 +42,19 @@ public class LoanTO implements Serializable {
         this.id = id;
     }
         
-    public CustomerTO getCustomerTo() {
+    public CustomerTo getCustomerTo() {
 	return this.customer;
     }
 
-    public void setCustomerTo(CustomerTO customer) {
+    public void setCustomerTo(CustomerTo customer) {
 	this.customer = customer;
     }
 
-    public ImpressionTO getImpressionTo() {
+    public ImpressionTo getImpressionTo() {
 	return this.impression;
     }
 
-    public void setImpressionTo(ImpressionTO impression) {
+    public void setImpressionTo(ImpressionTo impression) {
 	this.impression = impression;
     }
     
@@ -97,7 +97,7 @@ public class LoanTO implements Serializable {
 	if (getClass() != obj.getClass()) {
 	    return false;
 	}
-	final LoanTO other = (LoanTO) obj;
+	final LoanTo other = (LoanTo) obj;
 	return Objects.equals(this.id, other.id);
     }
 

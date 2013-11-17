@@ -1,9 +1,9 @@
 package cz.muni.fi.pa165.library.service;
 
 
-import cz.muni.fi.pa165.library.to.CustomerTO;
+import cz.muni.fi.pa165.library.to.CustomerTo;
 import cz.muni.fi.pa165.library.to.BookTo;
-import cz.muni.fi.pa165.library.to.LoanTO;
+import cz.muni.fi.pa165.library.to.LoanTo;
 import java.util.Collection;
 
 /**
@@ -17,36 +17,36 @@ public interface CustomerService {
      * 
      * @param customerTO 
      */
-    public void addCustomer(CustomerTO customerTO);
+    public void addCustomer(CustomerTo customerTO);
     
     /**
      * Delets given customer.
      * 
      * @param customerTO 
      */
-    public void deleteCustomer(CustomerTO customerTO);
+    public void deleteCustomer(CustomerTo customerTO);
     
     /**
      * Updates given customer.
      * 
      * @param customerTO 
      */
-    public void updateCustomer(CustomerTO customerTO);
+    public void updateCustomer(CustomerTo customerTO);
 
     /**
      * Finds customer with given id.
      * 
      * @param id of searched customer
-     * @return  CustomerTO
+     * @return  CustomerTo
      */
-    public CustomerTO findCustomerById(Long id);
+    public CustomerTo findCustomerById(Long id);
     
     /**
      * Finds all customers database.
      * 
      * @return customers
      */
-    public Collection<CustomerTO> findAllCustomers();
+    public Collection<CustomerTo> findAllCustomers();
     
     /**
      * Finds all customers which have borrowed given book
@@ -54,7 +54,7 @@ public interface CustomerService {
      * @param bookTO
      * @return customers
      */
-    public Collection<CustomerTO> findCustomersByBook(BookTo bookTO);
+    public Collection<CustomerTo> findCustomersByBook(BookTo bookTO);
     
     /**
      * Finds customer with given loan
@@ -62,7 +62,7 @@ public interface CustomerService {
      * @param loan
      * @return customers
      */
-    public CustomerTO findCustomerByLoan(LoanTO loan);
+    public CustomerTo findCustomerByLoan(LoanTo loan);
     
     /**
      * Finds customer with given name
@@ -71,5 +71,5 @@ public interface CustomerService {
      * @param lastName
      * @return customers
      */
-    public Collection<CustomerTO> findCustomerByName(String firstName, String lastName);    
+    public Collection<CustomerTo> findCustomerByName(String firstName, String lastName);    
 }

@@ -14,7 +14,7 @@ import cz.muni.fi.pa165.library.entity.Impression;
 import cz.muni.fi.pa165.library.exceptions.BookDaoException;
 import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.to.BookTo;
-import cz.muni.fi.pa165.library.to.ImpressionTO;
+import cz.muni.fi.pa165.library.to.ImpressionTo;
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
 import java.util.Arrays;
 import java.util.Collection;
@@ -210,7 +210,7 @@ public class BookServiceTest extends AbstractIntegrationTest{
         bookTo.setId(1l);
         Book book1 = EntityConvertor.convertFromBookTo(bookTo);
 
-        ImpressionTO impressionTo = new ImpressionTO();
+        ImpressionTo impressionTo = new ImpressionTo();
         impressionTo.setBookTo(bookTo);
         impressionTo.setId(1l);
         Impression impression = EntityConvertor.convertFromImpressionTo(impressionTo);
@@ -219,7 +219,7 @@ public class BookServiceTest extends AbstractIntegrationTest{
         BookTo bookTo2 = bookService.findBookByImpression(impressionTo);
         assertEquals(bookTo, bookTo2);
 
-        ImpressionTO impressionTo2 = new ImpressionTO();
+        ImpressionTo impressionTo2 = new ImpressionTo();
         Impression impression2 = EntityConvertor.convertFromImpressionTo(impressionTo2);
         
         when(mockedBookDao.findBookByImpression(impression2)).thenReturn(null);

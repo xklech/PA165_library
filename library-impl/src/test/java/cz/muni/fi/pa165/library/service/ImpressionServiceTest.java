@@ -9,7 +9,7 @@ import cz.muni.fi.pa165.library.enums.StatusType;
 import cz.muni.fi.pa165.library.exceptions.ImpressionDaoException;
 import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.to.BookTo;
-import cz.muni.fi.pa165.library.to.ImpressionTO;
+import cz.muni.fi.pa165.library.to.ImpressionTo;
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +26,10 @@ public class ImpressionServiceTest {
     
     private ImpressionServiceImpl impService;
     private ImpressionDao mockedImpDao;
-    private ImpressionTO impTO;
+    private ImpressionTo impTO;
     private BookDao mockedBookDao;
     private List<Impression> emptyImp = new ArrayList<Impression>();
-    private List<ImpressionTO> emptyImpTO = new ArrayList<ImpressionTO>();
+    private List<ImpressionTo> emptyImpTO = new ArrayList<ImpressionTo>();
     
     public ImpressionServiceTest() {
     }
@@ -54,7 +54,7 @@ public class ImpressionServiceTest {
         catch (ServiceDataAccessException ex) {}
         
         //try something with ID
-        impTO = new ImpressionTO(666l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
+        impTO = new ImpressionTo(666l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression imp = EntityConvertor.convertFromImpressionTo(impTO);
         when(mockedImpDao.addImpression(imp)).thenThrow(new ImpressionDaoException());
         try {
@@ -64,12 +64,12 @@ public class ImpressionServiceTest {
         catch (ServiceDataAccessException ex) {}
         
         //try some valid input
-        ImpressionTO impTO2pre = new ImpressionTO(Long.MIN_VALUE, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
+        ImpressionTo impTO2pre = new ImpressionTo(Long.MIN_VALUE, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression imp2pre = EntityConvertor.convertFromImpressionTo(impTO2pre);
-        ImpressionTO impTO2post = new ImpressionTO(666l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
+        ImpressionTo impTO2post = new ImpressionTo(666l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression imp2post = EntityConvertor.convertFromImpressionTo(impTO2post);
         when(mockedImpDao.addImpression(imp2pre)).thenReturn(imp2post);
-        ImpressionTO result = impService.addImpression(impTO2pre);
+        ImpressionTo result = impService.addImpression(impTO2pre);
         assertEquals(impTO2post, result);
     }
     
@@ -84,7 +84,7 @@ public class ImpressionServiceTest {
         catch (ServiceDataAccessException ex) {}
         
         //try something with null ID
-        impTO = new ImpressionTO(null, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
+        impTO = new ImpressionTo(null, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression imp = EntityConvertor.convertFromImpressionTo(impTO);
         when(mockedImpDao.updateImpression(imp)).thenThrow(new ImpressionDaoException());
         try {
@@ -94,7 +94,7 @@ public class ImpressionServiceTest {
         catch (ServiceDataAccessException ex) {}
         
         //simulate object not present in the DB
-        ImpressionTO impTO2 = new ImpressionTO(1010l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
+        ImpressionTo impTO2 = new ImpressionTo(1010l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression imp2 = EntityConvertor.convertFromImpressionTo(impTO2);
         when(mockedImpDao.updateImpression(imp2)).thenThrow(new ImpressionDaoException());
         try {
@@ -104,10 +104,10 @@ public class ImpressionServiceTest {
         catch (ServiceDataAccessException ex) {}        
         
         //try some valid input
-        ImpressionTO impTO3 = new ImpressionTO(666l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
+        ImpressionTo impTO3 = new ImpressionTo(666l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression imp3 = EntityConvertor.convertFromImpressionTo(impTO3);        
         when(mockedImpDao.updateImpression(imp3)).thenReturn(imp3);
-        ImpressionTO result = impService.updateImpression(impTO3);
+        ImpressionTo result = impService.updateImpression(impTO3);
         assertEquals(impTO3, result);
     }
     
@@ -122,7 +122,7 @@ public class ImpressionServiceTest {
         catch (ServiceDataAccessException ex) {}
         
         //try something with null ID
-        impTO = new ImpressionTO(null, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
+        impTO = new ImpressionTo(null, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression imp = EntityConvertor.convertFromImpressionTo(impTO);
         doThrow(new ImpressionDaoException()).when(mockedImpDao).deleteImpression(imp);
         try {
@@ -132,7 +132,7 @@ public class ImpressionServiceTest {
         catch (ServiceDataAccessException ex) {}
         
         //simulate something not in the DB.
-        ImpressionTO impTO2 = new ImpressionTO(2020l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
+        ImpressionTo impTO2 = new ImpressionTo(2020l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression imp2 = EntityConvertor.convertFromImpressionTo(impTO2);
         doThrow(new ImpressionDaoException()).when(mockedImpDao).deleteImpression(imp2);
         try {
@@ -158,7 +158,7 @@ public class ImpressionServiceTest {
         imp.setId(id);
         impTO = EntityConvertor.convertFromImpression(imp);
         when(mockedImpDao.findImpressionById(id)).thenReturn(imp);
-        ImpressionTO result = impService.findImpressionById(id);
+        ImpressionTo result = impService.findImpressionById(id);
         assertEquals(impTO, result);
         
     }
@@ -167,21 +167,21 @@ public class ImpressionServiceTest {
     public void findImpressionsByDamageTest() {
         //simulate no impressions with inputed damage level
         when(mockedImpDao.findImpressionsByDamage(DamageType.NEW)).thenReturn(new ArrayList<Impression>());
-        List<ImpressionTO> result1 = impService.findImpressionsByDamage(DamageType.NEW);
+        List<ImpressionTo> result1 = impService.findImpressionsByDamage(DamageType.NEW);
         assertEquals(emptyImpTO, result1);
         
         //simulate two impressions with inputed damage level
-        List<ImpressionTO> expectedTO = new ArrayList<ImpressionTO>();
-        ImpressionTO imp1 = new ImpressionTO(11l, null, DamageType.NEW, DamageType.USED, StatusType.LOANED);
-        ImpressionTO imp2 = new ImpressionTO(22l, null, DamageType.NEW, DamageType.USED, StatusType.LOANED);
+        List<ImpressionTo> expectedTO = new ArrayList<ImpressionTo>();
+        ImpressionTo imp1 = new ImpressionTo(11l, null, DamageType.NEW, DamageType.USED, StatusType.LOANED);
+        ImpressionTo imp2 = new ImpressionTo(22l, null, DamageType.NEW, DamageType.USED, StatusType.LOANED);
         expectedTO.add(imp1);
         expectedTO.add(imp2);
         List<Impression> result = new ArrayList<Impression>();
-        for (ImpressionTO supp: expectedTO) {
+        for (ImpressionTo supp: expectedTO) {
             result.add(EntityConvertor.convertFromImpressionTo(supp));
         }
         when(mockedImpDao.findImpressionsByDamage(DamageType.USED)).thenReturn(result);
-        List<ImpressionTO> resultTO = impService.findImpressionsByDamage(DamageType.USED);
+        List<ImpressionTo> resultTO = impService.findImpressionsByDamage(DamageType.USED);
         
         assertEquals(expectedTO, resultTO);
     }
@@ -190,21 +190,21 @@ public class ImpressionServiceTest {
     public void findImpressionsByStatusTest() {
         //simulate no impressions with inputed status
         when(mockedImpDao.findImpressionsByStatus(StatusType.AVAILIBLE)).thenReturn(new ArrayList<Impression>());
-        List<ImpressionTO> result1 = impService.findImpressionsByStatus(StatusType.AVAILIBLE);
+        List<ImpressionTo> result1 = impService.findImpressionsByStatus(StatusType.AVAILIBLE);
         assertEquals(emptyImpTO, result1);
         
         //simulate two impressions with inputed status
-        List<ImpressionTO> expectedTO = new ArrayList<ImpressionTO>();
-        ImpressionTO imp1 = new ImpressionTO(11l, null, DamageType.NEW, DamageType.USED, StatusType.LOANED);
-        ImpressionTO imp2 = new ImpressionTO(22l, null, DamageType.NEW, DamageType.USED, StatusType.LOANED);
+        List<ImpressionTo> expectedTO = new ArrayList<ImpressionTo>();
+        ImpressionTo imp1 = new ImpressionTo(11l, null, DamageType.NEW, DamageType.USED, StatusType.LOANED);
+        ImpressionTo imp2 = new ImpressionTo(22l, null, DamageType.NEW, DamageType.USED, StatusType.LOANED);
         expectedTO.add(imp1);
         expectedTO.add(imp2);
         List<Impression> result = new ArrayList<Impression>();
-        for (ImpressionTO supp: expectedTO) {
+        for (ImpressionTo supp: expectedTO) {
             result.add(EntityConvertor.convertFromImpressionTo(supp));
         }
         when(mockedImpDao.findImpressionsByStatus(StatusType.LOANED)).thenReturn(result);
-        List<ImpressionTO> resultTO = impService.findImpressionsByStatus(StatusType.LOANED);
+        List<ImpressionTo> resultTO = impService.findImpressionsByStatus(StatusType.LOANED);
         
         assertEquals(expectedTO, resultTO);
     }
@@ -221,7 +221,7 @@ public class ImpressionServiceTest {
         //try null book
         when(mockedImpDao.findImpressionsByBook(null)).thenThrow(new ImpressionDaoException());
         try {
-            List<ImpressionTO> result1 = impService.findImpressionsByBook(null);
+            List<ImpressionTo> result1 = impService.findImpressionsByBook(null);
             fail("Null bookTO passed. Should throw ServiceDataAccessException");
         }
         catch (ServiceDataAccessException ex) {}
@@ -231,25 +231,25 @@ public class ImpressionServiceTest {
         bookTO1.setId(11l);
         Book book1 = EntityConvertor.convertFromBookTo(bookTO1);
         when(mockedImpDao.findImpressionsByBook(book1)).thenReturn(new ArrayList<Impression>());
-        List<ImpressionTO> result2 = impService.findImpressionsByStatus(StatusType.AVAILIBLE);
+        List<ImpressionTo> result2 = impService.findImpressionsByStatus(StatusType.AVAILIBLE);
         assertEquals(emptyImpTO, result2);
         
         //simulate two impressions with inputed status
-        List<ImpressionTO> expectedTO = new ArrayList<ImpressionTO>();
+        List<ImpressionTo> expectedTO = new ArrayList<ImpressionTo>();
         BookTo bookTO2 = new BookTo("Dědeček", "80-204-1634-X", "próza", null, "Vítězslav Jareš");
         bookTO2.setId(22l);
         Book book2 = EntityConvertor.convertFromBookTo(bookTO2);
-        ImpressionTO imp1 = new ImpressionTO(11l, bookTO2, DamageType.NEW, DamageType.USED, StatusType.LOANED);
-        ImpressionTO imp2 = new ImpressionTO(22l, bookTO2, DamageType.NEW, DamageType.USED, StatusType.LOANED);
+        ImpressionTo imp1 = new ImpressionTo(11l, bookTO2, DamageType.NEW, DamageType.USED, StatusType.LOANED);
+        ImpressionTo imp2 = new ImpressionTo(22l, bookTO2, DamageType.NEW, DamageType.USED, StatusType.LOANED);
         expectedTO.add(imp1);
         expectedTO.add(imp2);
         List<Impression> result = new ArrayList<Impression>();
-        for (ImpressionTO supp: expectedTO) {
+        for (ImpressionTo supp: expectedTO) {
             result.add(EntityConvertor.convertFromImpressionTo(supp));
         }
         when(mockedImpDao.findImpressionsByBook(book2)).thenReturn(result);
         when(mockedBookDao.findBookById(bookTO2.getId())).thenReturn(book2);
-        List<ImpressionTO> resultTO = impService.findImpressionsByBook(bookTO2);
+        List<ImpressionTo> resultTO = impService.findImpressionsByBook(bookTO2);
         
         assertEquals(expectedTO, resultTO);
     }

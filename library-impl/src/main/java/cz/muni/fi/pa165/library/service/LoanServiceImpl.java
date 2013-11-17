@@ -7,8 +7,8 @@ import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.exceptions.CustomerDaoException;
 import cz.muni.fi.pa165.library.exceptions.LoanDaoException;
 import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
-import cz.muni.fi.pa165.library.to.CustomerTO;
-import cz.muni.fi.pa165.library.to.LoanTO;
+import cz.muni.fi.pa165.library.to.CustomerTo;
+import cz.muni.fi.pa165.library.to.LoanTo;
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,7 +43,7 @@ public class LoanServiceImpl implements LoanService {
     }
     
     @Override
-    public void addLoan(LoanTO loanTo) {
+    public void addLoan(LoanTo loanTo) {
 	Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
 	try {
 	    this.loanDao.addLoan(loan);                
@@ -55,7 +55,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public void updateLoan(LoanTO loanTo) {
+    public void updateLoan(LoanTo loanTo) {
 	Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
 	try {
 	    this.loanDao.updateLoan(loan);
@@ -66,7 +66,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public void deleteLoan(LoanTO loanTo) {
+    public void deleteLoan(LoanTo loanTo) {
 	Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
 	try {
 	    this.loanDao.deleteLoan(loan);
@@ -77,7 +77,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public LoanTO findLoanById(Long id) {
+    public LoanTo findLoanById(Long id) {
 	try {
 	    Loan loan = this.loanDao.findLoanById(id);
 	    return EntityConvertor.convertFromLoan(loan);
@@ -88,12 +88,12 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<LoanTO> findAllActiveLoans() {
+    public List<LoanTo> findAllActiveLoans() {
 	Collection<Loan> loans = this.loanDao.findAllActiveLoans();
         if(loans == null){
             return null;
         }
-	List<LoanTO> loanTos = new ArrayList();
+	List<LoanTo> loanTos = new ArrayList();
 	for (Loan loan : loans) {
 	    loanTos.add(EntityConvertor.convertFromLoan(loan));
 	}
@@ -101,7 +101,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<LoanTO> findLoansByCustomer(CustomerTO customerTo) {
+    public List<LoanTo> findLoansByCustomer(CustomerTo customerTo) {
 	if (customerTo == null) {
 	    throw new ServiceDataAccessException("Parameter customerTo can't be null!");
 	} else if (customerTo.getId() == null) {
@@ -113,7 +113,7 @@ public class LoanServiceImpl implements LoanService {
             if(loans == null){
                 return null;
             }
-	    List<LoanTO> loanTos = new ArrayList();
+	    List<LoanTo> loanTos = new ArrayList();
 	    for (Loan loan : loans) {
 		loanTos.add(EntityConvertor.convertFromLoan(loan));
 	    }
@@ -125,12 +125,12 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<LoanTO> findLoansByFromTo(Date fromDate, Date toDate) {
+    public List<LoanTo> findLoansByFromTo(Date fromDate, Date toDate) {
 	Collection<Loan> loans = this.loanDao.findLoansByFromTo(fromDate,toDate);
         if(loans == null){
             return null;
         }
-	List<LoanTO> loanTos = new ArrayList();
+	List<LoanTo> loanTos = new ArrayList();
 	for (Loan loan : loans) {
 	    loanTos.add(EntityConvertor.convertFromLoan(loan));
 	}

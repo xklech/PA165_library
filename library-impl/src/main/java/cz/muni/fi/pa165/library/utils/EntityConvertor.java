@@ -11,9 +11,9 @@ import cz.muni.fi.pa165.library.entity.Customer;
 import cz.muni.fi.pa165.library.entity.Impression;
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.to.BookTo;
-import cz.muni.fi.pa165.library.to.CustomerTO;
-import cz.muni.fi.pa165.library.to.ImpressionTO;
-import cz.muni.fi.pa165.library.to.LoanTO;
+import cz.muni.fi.pa165.library.to.CustomerTo;
+import cz.muni.fi.pa165.library.to.ImpressionTo;
+import cz.muni.fi.pa165.library.to.LoanTo;
 
 /**
  *
@@ -65,11 +65,11 @@ public class EntityConvertor {
      * @param impr impression to be converted
      * @return impression transfer object
      */
-    public static ImpressionTO convertFromImpression(Impression impr) {
+    public static ImpressionTo convertFromImpression(Impression impr) {
         if(impr == null){
             return null;
         }
-        ImpressionTO impressionTo = new ImpressionTO();
+        ImpressionTo impressionTo = new ImpressionTo();
         
         impressionTo.setId(impr.getId());
         impressionTo.setBookTo(EntityConvertor.convertFromBook(impr.getBook()));
@@ -85,7 +85,7 @@ public class EntityConvertor {
      * @param imprTo impressionTo to be converted
      * @return Impression
      */
-    public static Impression convertFromImpressionTo(ImpressionTO imprTo) {
+    public static Impression convertFromImpressionTo(ImpressionTo imprTo) {
         if(imprTo == null){
             return null;
         }
@@ -103,11 +103,11 @@ public class EntityConvertor {
      * @param customer customer to be converted
      * @return customer transfer object
      */
-    public static CustomerTO convertFromCustomer(Customer customer){
+    public static CustomerTo convertFromCustomer(Customer customer){
         if(customer == null){
             return null;
         }
-        CustomerTO customerTo = new CustomerTO();
+        CustomerTo customerTo = new CustomerTo();
         customerTo.setId(customer.getId());
         customerTo.setFirstName(customer.getFirstName());
         customerTo.setLastName(customer.getLastName());
@@ -120,10 +120,10 @@ public class EntityConvertor {
     
     /**
      * Converts Customer transfer object into Customer
-     * @param customerTo CustomerTO to be converted
+     * @param customerTo CustomerTo to be converted
      * @return Customer
      */
-    public static Customer convertFromCustomerTo(CustomerTO customerTo){
+    public static Customer convertFromCustomerTo(CustomerTo customerTo){
         if(customerTo == null){
             return null;
         }
@@ -144,11 +144,11 @@ public class EntityConvertor {
      * @param loan loan to be converted
      * @return loan transfer object
      */
-    public static LoanTO convertFromLoan(Loan loan) {
+    public static LoanTo convertFromLoan(Loan loan) {
 	if (loan == null) {
 	    return null;
 	}
-	LoanTO loanTo = new LoanTO();
+	LoanTo loanTo = new LoanTo();
 	loanTo.setId(loan.getId());
 	loanTo.setCustomerTo(EntityConvertor.convertFromCustomer(loan.getCustomer()));
 	loanTo.setImpressionTo(EntityConvertor.convertFromImpression(loan.getImpression()));
@@ -160,10 +160,10 @@ public class EntityConvertor {
 
         /**
      * Converts Loan transfer object into Loan
-     * @param loanTo LoanTO to be converted
+     * @param loanTo LoanTo to be converted
      * @return Loan
      */
-    public static Loan convertFromLoanTo(LoanTO loanTo) {
+    public static Loan convertFromLoanTo(LoanTo loanTo) {
 	if (loanTo == null) {
 	    return null;
 	}

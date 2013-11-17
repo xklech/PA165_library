@@ -10,7 +10,7 @@ import cz.muni.fi.pa165.library.exceptions.BookDaoException;
 import cz.muni.fi.pa165.library.exceptions.ImpressionDaoException;
 import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.to.BookTo;
-import cz.muni.fi.pa165.library.to.ImpressionTO;
+import cz.muni.fi.pa165.library.to.ImpressionTo;
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +35,11 @@ public class ImpressionServiceImpl implements ImpressionService {
     private BookDao bookDao;
     
     @Override
-    public ImpressionTO addImpression(ImpressionTO impressionTO) throws ServiceDataAccessException {        
-        Impression entity = EntityConvertor.convertFromImpressionTo(impressionTO);
+    public ImpressionTo addImpression(ImpressionTo impressionTo) throws ServiceDataAccessException {        
+        Impression entity = EntityConvertor.convertFromImpressionTo(impressionTo);
         try {
             entity = impDao.addImpression(entity);
-            impressionTO.setId(entity.getId());
+            impressionTo.setId(entity.getId());
         } catch (ImpressionDaoException ex) {
             Logger.getLogger(ImpressionServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ServiceDataAccessException(null, ex);
@@ -48,20 +48,20 @@ public class ImpressionServiceImpl implements ImpressionService {
     }
 
     @Override
-    public ImpressionTO updateImpression(ImpressionTO impressionTO) throws ServiceDataAccessException {
-        Impression entity = EntityConvertor.convertFromImpressionTo(impressionTO);
+    public ImpressionTo updateImpression(ImpressionTo impressionTo) throws ServiceDataAccessException {
+        Impression entity = EntityConvertor.convertFromImpressionTo(impressionTo);
         try {
             impDao.updateImpression(entity);
         } catch (ImpressionDaoException ex) {
             Logger.getLogger(ImpressionServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ServiceDataAccessException(null, ex);
         }
-        return impressionTO;
+        return impressionTo;
     }
 
     @Override
-    public void deleteImpression(ImpressionTO impressionTO) throws ServiceDataAccessException {
-        Impression entity = EntityConvertor.convertFromImpressionTo(impressionTO);
+    public void deleteImpression(ImpressionTo impressionTo) throws ServiceDataAccessException {
+        Impression entity = EntityConvertor.convertFromImpressionTo(impressionTo);
         try {
             impDao.deleteImpression(entity);
         } catch (ImpressionDaoException ex) {
@@ -71,7 +71,7 @@ public class ImpressionServiceImpl implements ImpressionService {
     }
 
     @Override
-    public ImpressionTO findImpressionById(Long id) throws ServiceDataAccessException {
+    public ImpressionTo findImpressionById(Long id) throws ServiceDataAccessException {
         Impression result;
         try {
             result = impDao.findImpressionById(id);
@@ -83,8 +83,8 @@ public class ImpressionServiceImpl implements ImpressionService {
     }
 
     @Override
-    public List<ImpressionTO> findImpressionsByDamage(DamageType damage) {
-        List<ImpressionTO> result = new ArrayList<ImpressionTO>();
+    public List<ImpressionTo> findImpressionsByDamage(DamageType damage) {
+        List<ImpressionTo> result = new ArrayList<ImpressionTo>();
         List<Impression> supp = impDao.findImpressionsByDamage(damage);
         for(Impression imp : supp) {
             result.add(EntityConvertor.convertFromImpression(imp));
@@ -93,8 +93,8 @@ public class ImpressionServiceImpl implements ImpressionService {
     }
 
     @Override
-    public List<ImpressionTO> findImpressionsByStatus(StatusType status) {
-        List<ImpressionTO> result = new ArrayList<ImpressionTO>();
+    public List<ImpressionTo> findImpressionsByStatus(StatusType status) {
+        List<ImpressionTo> result = new ArrayList<ImpressionTo>();
         List<Impression> supp = impDao.findImpressionsByStatus(status);
         for(Impression imp : supp) {
             result.add(EntityConvertor.convertFromImpression(imp));
@@ -103,9 +103,9 @@ public class ImpressionServiceImpl implements ImpressionService {
     }
 
     @Override
-    public List<ImpressionTO> findImpressionsByBook(BookTo bookTo) throws ServiceDataAccessException {
+    public List<ImpressionTo> findImpressionsByBook(BookTo bookTo) throws ServiceDataAccessException {
         List<Impression> supp;
-        List<ImpressionTO> result = new ArrayList<ImpressionTO>();
+        List<ImpressionTo> result = new ArrayList<ImpressionTo>();
         if (bookTo == null) {
             Logger.getLogger(ImpressionServiceImpl.class.getName()).log(Level.SEVERE, "Inserted bookTo is null.");
             throw new ServiceDataAccessException("Inserted bookTo is null.");                        

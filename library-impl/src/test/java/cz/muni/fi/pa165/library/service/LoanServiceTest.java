@@ -9,9 +9,9 @@ import cz.muni.fi.pa165.library.enums.StatusType;
 import cz.muni.fi.pa165.library.exceptions.LoanDaoException;
 import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.to.BookTo;
-import cz.muni.fi.pa165.library.to.CustomerTO;
-import cz.muni.fi.pa165.library.to.ImpressionTO;
-import cz.muni.fi.pa165.library.to.LoanTO;
+import cz.muni.fi.pa165.library.to.CustomerTo;
+import cz.muni.fi.pa165.library.to.ImpressionTo;
+import cz.muni.fi.pa165.library.to.LoanTo;
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,7 +55,7 @@ public class LoanServiceTest extends AbstractIntegrationTest{
     
     @Test
     public void testAddLoan() throws Exception {
-	CustomerTO customerTo = new CustomerTO();
+	CustomerTo customerTo = new CustomerTo();
 	customerTo.setId(1l);
 	customerTo.setFirstName("Cheesus");
 	customerTo.setLastName("Crist");
@@ -69,13 +69,13 @@ public class LoanServiceTest extends AbstractIntegrationTest{
 	bookTo.setDepartment("Religious studies");
 	bookTo.setPublishDate(this.parseDate("1/1/1"));
 	bookTo.setAuthor("God");
-	ImpressionTO impressionTo = new ImpressionTO();
+	ImpressionTo impressionTo = new ImpressionTo();
 	impressionTo.setId(1l);
 	impressionTo.setBookTo(bookTo);
 	impressionTo.setInitialDamage(DamageType.NEW);
 	impressionTo.setDamage(DamageType.HEAVILY_DAMAGED);
 	impressionTo.setStatus(StatusType.LOANED);
-	LoanTO loanTo = new LoanTO();
+	LoanTo loanTo = new LoanTo();
 	loanTo.setId(1l);
 	loanTo.setCustomerTo(customerTo);
 	loanTo.setImpressionTo(impressionTo);
@@ -98,7 +98,7 @@ public class LoanServiceTest extends AbstractIntegrationTest{
     
     @Test(expected=ServiceDataAccessException.class)
     public void testUpdateLoan() throws Exception {
-        LoanTO loanTo = new LoanTO(new CustomerTO(),new ImpressionTO(),this.parseDate("08/08/2008"),null,DamageType.USED);
+        LoanTo loanTo = new LoanTo(new CustomerTo(),new ImpressionTo(),this.parseDate("08/08/2008"),null,DamageType.USED);
         Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
         doThrow(LoanDaoException.class).when(this.loanDaoMock).updateLoan(loan);        
         this.loanService.updateLoan(loanTo);
@@ -108,7 +108,7 @@ public class LoanServiceTest extends AbstractIntegrationTest{
     
     @Test(expected=ServiceDataAccessException.class)
     public void testDeleteLoan() throws Exception {
-        LoanTO loanTo = new LoanTO(new CustomerTO(),new ImpressionTO(),this.parseDate("08/08/2008"),null,DamageType.USED);
+        LoanTo loanTo = new LoanTo(new CustomerTo(),new ImpressionTo(),this.parseDate("08/08/2008"),null,DamageType.USED);
         Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
         doThrow(LoanDaoException.class).when(this.loanDaoMock).deleteLoan(loan);        
         this.loanService.deleteLoan(loanTo);
@@ -118,15 +118,15 @@ public class LoanServiceTest extends AbstractIntegrationTest{
     
     @Test(expected=ServiceDataAccessException.class)
     public void testFindLoanById() throws Exception {
-        LoanTO loanTo = new LoanTO(new CustomerTO(),new ImpressionTO(),this.parseDate("08/08/2008"),null,DamageType.USED);
+        LoanTo loanTo = new LoanTo(new CustomerTo(),new ImpressionTo(),this.parseDate("08/08/2008"),null,DamageType.USED);
         loanTo.setId(1l);
         Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
         when(loanDaoMock.findLoanById(1l)).thenReturn(loan);
-        LoanTO loanTo2 = loanService.findLoanById(1l);
+        LoanTo loanTo2 = loanService.findLoanById(1l);
         Assert.assertEquals(loanTo, loanTo2);
         
         when(loanDaoMock.findLoanById(123l)).thenReturn(null);
-        LoanTO loanTo3 = loanService.findLoanById(123l);
+        LoanTo loanTo3 = loanService.findLoanById(123l);
         Assert.assertNull(loanTo3);
         when(loanDaoMock.findLoanById(null)).thenThrow(LoanDaoException.class);
         this.loanService.findLoanById(null);
@@ -134,15 +134,15 @@ public class LoanServiceTest extends AbstractIntegrationTest{
     
     @Test
     public void testFindAllActiveLoans() throws Exception {
-        LoanTO loanTo = new LoanTO(new CustomerTO(),new ImpressionTO(),this.parseDate("08/08/2008"),null,DamageType.USED);
+        LoanTo loanTo = new LoanTo(new CustomerTo(),new ImpressionTo(),this.parseDate("08/08/2008"),null,DamageType.USED);
         loanTo.setId(1l);
         Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
         when(loanDaoMock.findAllActiveLoans()).thenReturn(Arrays.asList(loan));
-        Collection<LoanTO> loanTo2 = loanService.findAllActiveLoans();
+        Collection<LoanTo> loanTo2 = loanService.findAllActiveLoans();
         Assert.assertEquals(Arrays.asList(loanTo), loanTo2);
         
         when(loanDaoMock.findAllActiveLoans()).thenReturn(null);
-        Collection<LoanTO> loanTo3 = loanService.findAllActiveLoans();
+        Collection<LoanTo> loanTo3 = loanService.findAllActiveLoans();
         Assert.assertNull(loanTo3);
     }
     

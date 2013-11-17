@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.library.service;
 
 
 import cz.muni.fi.pa165.library.to.BookTo;
-import cz.muni.fi.pa165.library.to.ImpressionTO;
+import cz.muni.fi.pa165.library.to.ImpressionTo;
 import java.util.Date;
 import java.util.List;
 
@@ -86,6 +86,6 @@ public interface BookService {
      * @param impressionTo impression to find book for
      * @return Book for given impression
      */
-    public BookTo findBookByImpression(ImpressionTO impressionTo);
+    public BookTo findBookByImpression(ImpressionTo impressionTo);
     
 }

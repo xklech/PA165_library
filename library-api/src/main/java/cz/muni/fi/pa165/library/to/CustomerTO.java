@@ -8,7 +8,7 @@ import java.util.Objects;
  *
  * @author Ivana Haraslínová
  */
-public class CustomerTO {
+public class CustomerTo {
     private Long id;
 
     private String firstName; 
@@ -21,10 +21,10 @@ public class CustomerTO {
 
     private String pid;
 
-    public CustomerTO() {
+    public CustomerTo() {
     }
 
-    public CustomerTO(Long id, String firstName, String lastName, String address, Date dateOfBirth, String pid) {
+    public CustomerTo(Long id, String firstName, String lastName, String address, Date dateOfBirth, String pid) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -97,7 +97,7 @@ public class CustomerTO {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final CustomerTO other = (CustomerTO) obj;
+        final CustomerTo other = (CustomerTo) obj;
         return Objects.equals(this.id, other.id);
     }
 

@@ -7,9 +7,9 @@ import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.enums.DamageType;
 import cz.muni.fi.pa165.library.enums.StatusType;
 import cz.muni.fi.pa165.library.to.BookTo;
-import cz.muni.fi.pa165.library.to.CustomerTO;
-import cz.muni.fi.pa165.library.to.ImpressionTO;
-import cz.muni.fi.pa165.library.to.LoanTO;
+import cz.muni.fi.pa165.library.to.CustomerTo;
+import cz.muni.fi.pa165.library.to.ImpressionTo;
+import cz.muni.fi.pa165.library.to.LoanTo;
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
 import java.util.Date;
 import static org.junit.Assert.*;
@@ -53,7 +53,7 @@ public class EntityConvertorTest {
         book.setId(1l);
         Impression impression = new Impression(book, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         impression.setId(1l);
-        ImpressionTO impressionTo = EntityConvertor.convertFromImpression(impression);
+        ImpressionTo impressionTo = EntityConvertor.convertFromImpression(impression);
         assertEquals(impression.getId(),impressionTo.getId());
         assertEquals(impression.getDamage(),impressionTo.getDamage());
         assertEquals(impression.getInitialDamage(),impressionTo.getInitialDamage());
@@ -65,7 +65,7 @@ public class EntityConvertorTest {
     public void fromImpressionToTest(){
         BookTo bookTo = new BookTo("Android", "1234-4569-874", "Mobil", new Date(), "Jaryn");
         bookTo.setId(1l);
-        ImpressionTO impressionTo = new ImpressionTO(1l,bookTo, DamageType.USED, DamageType.NEW, StatusType.LOANED);
+        ImpressionTo impressionTo = new ImpressionTo(1l,bookTo, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression impression = EntityConvertor.convertFromImpressionTo(impressionTo);
         assertEquals(impression.getId(),impressionTo.getId());
         assertEquals(impression.getDamage(),impressionTo.getDamage());
@@ -77,7 +77,7 @@ public class EntityConvertorTest {
     @Test
     public void fromCustomerTest(){
         Customer customer = new Customer(1l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
-        CustomerTO customerTo = EntityConvertor.convertFromCustomer(customer);
+        CustomerTo customerTo = EntityConvertor.convertFromCustomer(customer);
         assertEquals(customer.getId(),customerTo.getId());
         assertEquals(customer.getAddress(),customerTo.getAddress());
         assertEquals(customer.getDateOfBirth(),customerTo.getDateOfBirth());
@@ -88,7 +88,7 @@ public class EntityConvertorTest {
     
     @Test
     public void fromCustomerToTest(){
-        CustomerTO customerTo = new CustomerTO(1l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTo = new CustomerTo(1l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTo);
         assertEquals(customer.getId(),customerTo.getId());
         assertEquals(customer.getAddress(),customerTo.getAddress());
@@ -106,7 +106,7 @@ public class EntityConvertorTest {
         Impression impression = new Impression(book, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         impression.setId(123l);
         Loan loan = new Loan(customer, impression, new Date(123456), new Date(654321), DamageType.NEW);
-        LoanTO loanTo = EntityConvertor.convertFromLoan(loan);
+        LoanTo loanTo = EntityConvertor.convertFromLoan(loan);
         assertEquals(loan.getId(),loanTo.getId());
         assertEquals(loan.getDamageType(),loanTo.getDamageType());
         assertEquals(loan.getFromDate(),loanTo.getFromDate());
@@ -117,11 +117,11 @@ public class EntityConvertorTest {
 
     @Test
     public void fromLoanToTest(){
-        CustomerTO customerTo = new CustomerTO(1l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTo = new CustomerTo(1l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         BookTo bookTo = new BookTo("Android", "1234-4569-874", "Mobil", new Date(), "Jaryn");
         bookTo.setId(1l);
-        ImpressionTO impressionTo = new ImpressionTO(123l,bookTo, DamageType.USED, DamageType.NEW, StatusType.LOANED);
-        LoanTO loanTo = new LoanTO(customerTo, impressionTo, new Date(123456), new Date(654321), DamageType.NEW);
+        ImpressionTo impressionTo = new ImpressionTo(123l,bookTo, DamageType.USED, DamageType.NEW, StatusType.LOANED);
+        LoanTo loanTo = new LoanTo(customerTo, impressionTo, new Date(123456), new Date(654321), DamageType.NEW);
         Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
         assertEquals(loan.getId(),loanTo.getId());
         assertEquals(loan.getDamageType(),loanTo.getDamageType());

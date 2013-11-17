@@ -10,7 +10,7 @@ import java.util.Objects;
  * @author Petr Vacek
  */
 
-public class ImpressionTO {
+public class ImpressionTo {
     private Long id;
 
     private BookTo bookTo;
@@ -21,7 +21,7 @@ public class ImpressionTO {
     
     private StatusType status;
 
-    public ImpressionTO(Long id, BookTo bookTo, DamageType initialDamage, DamageType damage, StatusType status) {
+    public ImpressionTo(Long id, BookTo bookTo, DamageType initialDamage, DamageType damage, StatusType status) {
         this.id = id;
         this.bookTo = bookTo;
         this.initialDamage = initialDamage;
@@ -29,7 +29,7 @@ public class ImpressionTO {
         this.status = status;
     }
 
-    public ImpressionTO() {
+    public ImpressionTo() {
     }
     
     
@@ -89,7 +89,7 @@ public class ImpressionTO {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ImpressionTO other = (ImpressionTO) obj;
+        final ImpressionTo other = (ImpressionTo) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

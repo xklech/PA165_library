@@ -14,8 +14,8 @@ import cz.muni.fi.pa165.library.exceptions.LoanDaoException;
 import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 
 import cz.muni.fi.pa165.library.to.BookTo;
-import cz.muni.fi.pa165.library.to.CustomerTO;
-import cz.muni.fi.pa165.library.to.LoanTO;
+import cz.muni.fi.pa165.library.to.CustomerTo;
+import cz.muni.fi.pa165.library.to.LoanTo;
 
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
 
@@ -62,11 +62,11 @@ public class CustomerServiceImpl implements CustomerService {
     
     @Transactional
     @Override
-    public void addCustomer(CustomerTO customerTO) {
+    public void addCustomer(CustomerTo customerTo) {
         try {
-            Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
+            Customer customer = EntityConvertor.convertFromCustomerTo(customerTo);
             customerDao.addCustomer(customer);
-            customerTO.setId(customer.getId());
+            customerTo.setId(customer.getId());
         } catch (CustomerDaoException ex) {
             Logger.getLogger(BookServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ServiceDataAccessException("Save customer",ex);
@@ -74,8 +74,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void deleteCustomer(CustomerTO customerTO) {
-        Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
+    public void deleteCustomer(CustomerTo customerTo) {
+        Customer customer = EntityConvertor.convertFromCustomerTo(customerTo);
         try {
             customerDao.deleteCustomer(customer);
         } catch (CustomerDaoException ex) {
@@ -85,8 +85,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateCustomer(CustomerTO customerTO) {
-        Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
+    public void updateCustomer(CustomerTo customerTo) {
+        Customer customer = EntityConvertor.convertFromCustomerTo(customerTo);
         try {
            customerDao.updateCustomer(customer);
         } catch (CustomerDaoException ex) {
@@ -96,7 +96,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerTO findCustomerById(Long id) {
+    public CustomerTo findCustomerById(Long id) {
         Customer customer = null;
         try{
             customer = customerDao.findCustomerById(id);
@@ -108,29 +108,29 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Collection<CustomerTO> findAllCustomers() {
+    public Collection<CustomerTo> findAllCustomers() {
         Collection <Customer> customers = customerDao.findAllCustomers(); 
         if(customers == null){
             return null;
         }
-        List<CustomerTO> customersTO = new ArrayList<>();
+        List<CustomerTo> customerTo = new ArrayList<>();
         for(Customer customer : customers){
-            customersTO.add(EntityConvertor.convertFromCustomer(customer));
+            customerTo.add(EntityConvertor.convertFromCustomer(customer));
         }
-        return customersTO;
+        return customerTo;
     }
 
     @Override
-    public Collection<CustomerTO> findCustomersByBook(BookTo bookTO) {
-        if(bookTO == null){
+    public Collection<CustomerTo> findCustomersByBook(BookTo bookTo) {
+        if(bookTo == null){
             throw new ServiceDataAccessException("findCustomerByBook: book is null");
         }
-        if(bookTO.getId() == null){
+        if(bookTo.getId() == null){
             throw new ServiceDataAccessException("findCustomerByBook: book's id is null");
         }
         Collection <Customer> customers;
         try {
-            Book book = bookDao.findBookById(bookTO.getId());
+            Book book = bookDao.findBookById(bookTo.getId());
             customers = customerDao.findCustomersByBook(book); 
         } catch (CustomerDaoException | BookDaoException ex) {
             Logger.getLogger(CustomerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -139,24 +139,24 @@ public class CustomerServiceImpl implements CustomerService {
         if(customers == null){
             return null;
         }
-        List<CustomerTO> customersTO = new ArrayList<>();
+        List<CustomerTo> customersTo = new ArrayList<>();
         for(Customer customer : customers){
-            customersTO.add(EntityConvertor.convertFromCustomer(customer));
+            customersTo.add(EntityConvertor.convertFromCustomer(customer));
         }
-        return customersTO;
+        return customersTo;
     }
 
     @Override
-    public CustomerTO findCustomerByLoan(LoanTO loanTO) {
-        if(loanTO == null){
+    public CustomerTo findCustomerByLoan(LoanTo loanTo) {
+        if(loanTo == null){
             throw new ServiceDataAccessException("findCustomerByLoan: loan is null");
         }
-        if(loanTO.getId() == null){
+        if(loanTo.getId() == null){
             throw new ServiceDataAccessException("findCustomerByLoan: loan's id is null");
         }
 
         try {
-            Loan loan = loanDao.findLoanById(loanTO.getId());
+            Loan loan = loanDao.findLoanById(loanTo.getId());
             Customer customers = customerDao.findCustomerByLoan(loan); 
             return EntityConvertor.convertFromCustomer(customers);
         } catch (CustomerDaoException | LoanDaoException ex) {
@@ -166,7 +166,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Collection<CustomerTO> findCustomerByName(String firstName, String lastName) {
+    public Collection<CustomerTo> findCustomerByName(String firstName, String lastName) {
         Collection<Customer> customers;
         try {
             customers = customerDao.findCustomerByName(firstName, lastName);
@@ -177,11 +177,11 @@ public class CustomerServiceImpl implements CustomerService {
         if(customers == null){
             return null;
         }
-        List<CustomerTO> customersTO = new ArrayList<>();
+        List<CustomerTo> customersTo = new ArrayList<>();
         for(Customer customer : customers){
-            customersTO.add(EntityConvertor.convertFromCustomer(customer));
+            customersTo.add(EntityConvertor.convertFromCustomer(customer));
         }
-        return customersTO;
+        return customersTo;
     }
     
 }

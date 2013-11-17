@@ -9,7 +9,7 @@ import cz.muni.fi.pa165.library.exceptions.BookDaoException;
 import cz.muni.fi.pa165.library.exceptions.ImpressionDaoException;
 import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.to.BookTo;
-import cz.muni.fi.pa165.library.to.ImpressionTO;
+import cz.muni.fi.pa165.library.to.ImpressionTo;
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -177,7 +177,7 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public BookTo findBookByImpression(ImpressionTO impressionTo) {
+    public BookTo findBookByImpression(ImpressionTo impressionTo) {
         if(impressionTo == null){
             throw new ServiceDataAccessException("findBookByImpression: impression is null");
         }
