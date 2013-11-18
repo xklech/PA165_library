@@ -15,8 +15,6 @@ public interface LoanService {
      * Saves loan supplied as parameter into database.
      * 
      * @param loanTo loan to be saved
-     * @throws LoanDaoException thrown when loan parameter is null, or has id
-     *				with non-null value
      */
     public void addLoan(LoanTo loanTo);
     
@@ -24,9 +22,6 @@ public interface LoanService {
      * Updates data of loan supplied as parameter in database.
      * 
      * @param loanTo loan to be updated
-     * @throws LoanDaoException thrown when loan parameter is null or loan has
-				null id parameter or loan with given id doesn't
-				exist in database
      */
     public void updateLoan(LoanTo loanTo);
     
@@ -34,9 +29,6 @@ public interface LoanService {
      * Deletes loan supplied as parameter from database.
      * 
      * @param loanTo loan to be deleted
-     * @throws LoanDaoException thrown when loan parameter is null or loan has
-				null id parameter or loan with given id doesn't
-				exist in database
      */
     public void deleteLoan(LoanTo loanTo);
     
@@ -45,7 +37,6 @@ public interface LoanService {
      * 
      * @param id id of loan to be returned
      * @return loan with given id
-     * @throws LoanDaoException thrown when id parameter is null
      */
     public LoanTo findLoanById(Long id);
     
@@ -62,7 +53,6 @@ public interface LoanService {
      * 
      * @param customerTo customer who's loans are looked up
      * @return loan loans assigned to given customer
-     * @throws LoanDaoException thrown when customer or customer's id null
      */
     public List<LoanTo> findLoansByCustomer(CustomerTo customerTo);
     
