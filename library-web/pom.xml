@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>PA165-Library</artifactId>
-    <groupId>cz.muni.fi.pa165</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>cz.muni.fi.pa165.library</groupId>
+    <version>1.0</version>
   </parent>
   
-    <groupId>cz.muni.fi</groupId>
+    <groupId>cz.muni.fi.library</groupId>
     <artifactId>library-web</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>war</packaging>
 
     <name>PA165-library web</name>
@@ -19,7 +19,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.test.skip>true</maven.test.skip>
         <org.springframework.version>3.2.4.RELEASE</org.springframework.version>
-        <tomcat.version>7.0.33</tomcat.version>
+        <tomcat.version>7.0.34</tomcat.version>
         <slf4j.version>1.7.5</slf4j.version>
         <jetty.version>9.0.6.v20130930</jetty.version>
     </properties>
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>cz.muni.fi.pa165.library</groupId>
             <artifactId>library_impl</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
 
         <!-- servlet, JSP, JSTL -->
@@ -76,18 +76,29 @@
             <version>1.0.13</version>
         </dependency>
         <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.0.13</version>
+        </dependency>
+        <dependency>
             <groupId>org.codehaus.janino</groupId>
             <artifactId>janino</artifactId>
             <version>2.6.1</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>jcl-over-slf4j</artifactId>-->
-            <!--<version>${slf4j.version}</version>-->
-        <!--</dependency>-->
+        <!--<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
         <!-- spring -->
@@ -95,6 +106,17 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+		<groupId>org.apache.tomcat</groupId>
+		<artifactId>tomcat-servlet-api</artifactId>
+		<version>${tomcat.version}</version>
+		<scope>provided</scope>
+	</dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
         </dependency>
     </dependencies>
 
@@ -116,9 +138,9 @@
                 <version>${jetty.version}</version>
             </plugin>
             <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.1</version>
+              <groupId>org.apache.tomcat.maven</groupId>
+              <artifactId>tomcat7-maven-plugin</artifactId>
+              <version>2.1</version>
             </plugin>
         </plugins>
     </build>

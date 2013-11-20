@@ -11,18 +11,23 @@
   <s:layout-component name="header"/>
 </head>
 <body>
-   <h1><f:message key="${titlekey}"/></h1>
-   <div id="navigation">
-     <ul>
-       <li><s:link href="/index.jsp"><f:message key="navigation.index"/></s:link></li>
-       <li><s:link href="/praha.jsp"><f:message key="navigation.praha"/></s:link></li>
-       <li><s:link href="/podoli.jsp"><f:message key="navigation.podoli"/></s:link></li>
-       <li><s:link href="/pharmacy.jsp"><f:message key="navigation.pharmacy"/></s:link></li>
-     </ul>
-   </div>
-   <div id="content">
-       <s:messages/>
-       <s:layout-component name="body"/>
+    <div id="page">
+        <div id="header"> 
+            <div id="header_title"> <a href="index.html" title="Home page"> <f:message key="library.header" /> </a> </div> 
+        </div>
+   
+        <div id="menu">
+            <s:link href="/index.jsp" title="${navigation.customers}"><div class="odkaz_prvni"><f:message key="navigation.customers"/></div></s:link>
+            
+            <s:link beanclass="cz.muni.fi.pa165.library.BooksActionBean"><div class="odkaz_druhy"><f:message key="navigation.books"/></div></s:link>
+            <s:link href="/loan.jsp" title="${navigation.impressions}"><div class="odkaz_treti"><f:message key="navigation.impressions"/></div></s:link>
+        </div>
+        
+        <div id="content">   
+            <h1><f:message key="${titlekey}" /></h1>
+            <s:messages/>
+            <s:layout-component name="body"/>
+        </div>
     </div>
 </body>
 </html>

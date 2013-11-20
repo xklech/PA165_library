@@ -8,7 +8,7 @@ import java.util.Objects;
  *
  * @author Jaroslav Klech
  */
-public class BookTo {
+public class BookTo implements Cloneable{
     
     private Long id;
 
@@ -105,7 +105,14 @@ public class BookTo {
         return "BookTo{" + "id=" + id + ", name=" + name + ", isbn=" + isbn + ", department=" + department + ", publishDate=" + publishDate + ", author=" + author + '}';
     }
     
-    
+    @Override
+    public Object clone()  {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    } 
     
     
 }
