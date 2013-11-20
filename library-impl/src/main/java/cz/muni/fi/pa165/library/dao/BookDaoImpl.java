@@ -9,6 +9,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -113,12 +116,22 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Collection<Book> findBooksByPublishDate(Date publishDateFrom, Date publishDateTo) {
-
-        TypedQuery query = entityManager.createQuery("SELECT b FROM Book b WHERE b.publishDate > :publishDateFrom AND b.publishDate < :publishDateTo", Book.class);
-        query.setParameter("publishDateFrom", publishDateFrom);
-        query.setParameter("publishDateTo", publishDateTo);
-
-        return query.getResultList();
+	CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+	CriteriaQuery<Book> cq = cb.createQuery(Book.class);
+	Root r = cq.from(Book.class);
+	if (publishDateFrom == null && publishDateTo == null) {
+	    cq.select(r);
+	} else {
+	    if (publishDateFrom == null) {
+		cq.where(cb.lessThanOrEqualTo(r.get("publishDate"),publishDateTo));
+	    } else if (publishDateTo == null) {
+		cq.where(cb.greaterThanOrEqualTo(r.get("publishDate"),publishDateFrom));
+	    } else {
+		cq.where(cb.greaterThanOrEqualTo(r.get("publishDate"),publishDateFrom),cb.lessThanOrEqualTo(r.get("publishDate"),publishDateTo));
+	    }
+	}
+	TypedQuery q = this.entityManager.createQuery(cq);
+        return q.getResultList();
     }
 
     @Override

@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Wed Nov 20 11:51:12 CET 2013:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0142-7522-9b02-0000077b46f8 
+Wed Nov 20 23:45:38 CET 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0142-77b0-af95-00000a73e310 
 on database directory C:\Users\Jarek\Documents\GitHub\PA165_library\library-web\target\database\message with class loader WebappClassLoader
   context: /library-web
   delegate: false

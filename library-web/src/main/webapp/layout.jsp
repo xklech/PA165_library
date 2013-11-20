@@ -8,6 +8,11 @@
 <head>
   <title><f:message key="${titlekey}"/></title>
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/style.css" />
+  <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="${pageContext.request.contextPath}/js/js.js"></script>
+  <script src="${pageContext.request.contextPath}/js/<f:message key="datepicker.localization.file" />"></script>
   <s:layout-component name="header"/>
 </head>
 <body>
@@ -26,6 +31,7 @@
         <div id="content">   
             <h1><f:message key="${titlekey}" /></h1>
             <s:messages/>
+            <s:messages key="error"/>
             <s:layout-component name="body"/>
         </div>
     </div>

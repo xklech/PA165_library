@@ -56,7 +56,7 @@ public class ImpressionDaoImpl implements ImpressionDao {
         Impression storedImpression = entityManager.find(Impression.class, impression.getId());
         if (storedImpression == null)
             throw new ImpressionDaoException("Given impression not found in the database");
-        entityManager.remove(impression);
+        entityManager.remove(storedImpression);
     }
     
     @Override

@@ -89,3 +89,52 @@ h1{color:black}
 	top:10px;
 	float:right;
 }
+
+.table_display{
+    border:1px solid black;
+    margin-top:30px;
+    border-collapse: collapse;
+}
+.table_display td{
+    border: solid 1px black;
+}
+table{
+    border:0px;
+}
+table td input{
+    margin-right:5px;
+}
+td{
+    padding: 4px;
+}
+
+
+.c {text-align: center;}
+.l {text-align: left;}
+.r {text-align: right;}
+.j {text-align: justify}
+.b {font-weight: bold;}
+.fl {float: left;}
+.fr {float: right;}
+.i {font-style: italic}
+.u {text-decoration: underline}
+.w5 {width: 5%;}
+.w10 {width: 10%;}
+.w15 {width: 15%;}
+.w20 {width: 20%;}
+.w25 {width: 25%;}
+.w30 {width: 30%;}
+.w35 {width: 35%;}
+.w40 {width: 40%;}
+.w45 {width: 45%;}
+.w50 {width: 50%;}
+.w55 {width: 55%;}
+.w60 {width: 60%;}
+.w65 {width: 65%;}
+.w70 {width: 70%;}
+.w75 {width: 75%;}
+.w80 {width: 80%;}
+.w85 {width: 85%;}
+.w90 {width: 90%;}
+.w95 {width: 95%;}
+.w100 {width: 100%;}
