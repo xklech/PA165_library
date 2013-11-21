@@ -1,93 +1,306 @@
+/* -------------------------------------------------------------------------- */
+/* --- CSS reset --- */
+/* http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126 License: none (public domain) */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    border: 0;
+    font: inherit;
+    font: normal normal normal 1em 'Ubuntu';
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Body */
+
+body {
+    background: #E5E5E5;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Wrapper */
+
+#wrapper {
+    margin: auto;
+    width: 100%;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Header */
+
+#wrapper #headerWrapper {
+    background: #333;
+    border-bottom: 1px solid #999;
+    margin: auto;
+    padding: 20px 0;
+    width: 100%;
+}
+
+#wrapper #headerWrapper #header {
+    text-align: center;
+    margin: auto;
+    width: 960px;
+}
+#wrapper #headerWrapper #header h1 {}
+#wrapper #headerWrapper #header h1 a {
+    color: white;
+    font-size: 1.8em;
+    font-weight: bold;
+    padding: 15px;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px black;
+}
+#wrapper #headerWrapper #header h1 a:hover {
+    text-decoration: underline;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Content */
+
+#wrapper #contentWrapper {
+    color: #333;
+    margin: auto;
+    width: 100%;
+}
+
+#wrapper #contentWrapper nav {
+    margin: auto;
+    padding: 20px 0;
+    text-align: center;
+    width: 960px;
+}
+#wrapper #contentWrapper nav a {
+    background: white;
+    border: none;
+    border-bottom: 4px solid transparent;
+    box-shadow: 0 4px 4px -4px #666;
+    color: #222;
+    padding: 5px 10px 3px 10px;
+    text-decoration: none;
+}
+#wrapper #contentWrapper nav a:hover {
+    border-bottom: 4px solid #8FC400;
+}
+
+#wrapper #contentWrapper #content {
+    margin: auto;
+    width: 960px;
+}
+#wrapper #contentWrapper #content a {
+    color: #333;
+    text-decoration: underline;
+}
+#wrapper #contentWrapper #content a:hover {
+    text-decoration: none;
+}
+#wrapper #contentWrapper #content h1 {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+#wrapper #contentWrapper #content h2 {
+    font-size: 1em;
+    font-weight: bold;
+}
+#wrapper #contentWrapper #content form {
+    margin: 10px 0;
+}
+#wrapper #contentWrapper #content form fieldset {
+    border: 1px solid #CCC;
+    box-shadow: 0 4px 4px -4px #666;
+    background: #EEE;
+    padding: 10px 15px;
+}
+#wrapper #contentWrapper #content form fieldset legend {
+    background: white;
+    box-shadow: 0 4px 4px -4px #CCC;
+    border: 1px solid #CCC;
+    padding: 5px 10px;
+}
+#wrapper #contentWrapper #content form input {
+    border: 1px solid #666;
+    box-sizing: border-box;
+    font-size: .9em;
+    padding: 5px 10px;
+    width: 100%;
+}
+#wrapper #contentWrapper #content form input[type="submit"] {
+    background: #8fc400; /* Old browsers */
+    background: -moz-linear-gradient(top,  #8fc400 0%, #68a000 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8fc400), color-stop(100%,#68a000)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #8fc400 0%,#68a000 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #8fc400 0%,#68a000 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #8fc400 0%,#68a000 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #8fc400 0%,#68a000 100%); /* W3C */
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', endColorstr='#68a000',GradientType=0 ); /* IE6-9 */
+    font-size: .8em;
+    font-weight: bold;
+    width: auto;
+}
+#wrapper #contentWrapper #content form input[type="submit"]:hover {
+    background: #68a000; /* Old browsers */
+    background: -moz-linear-gradient(top,  #68a000 0%, #8fc400 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#68a000), color-stop(100%,#8fc400)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #68a000 0%,#8fc400 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #68a000 0%,#8fc400 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #68a000 0%,#8fc400 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #68a000 0%,#8fc400 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#68a000', endColorstr='#8fc400',GradientType=0 ); /* IE6-9 */
+}
+#wrapper #contentWrapper #content table {}
+#wrapper #contentWrapper #content table thead {}
+#wrapper #contentWrapper #content table thead tr {}
+#wrapper #contentWrapper #content table thead tr th {}
+#wrapper #contentWrapper #content table thead tr td {}
+#wrapper #contentWrapper #content table tbody {}
+#wrapper #contentWrapper #content table tbody tr {}
+#wrapper #contentWrapper #content table tbody tr th {}
+#wrapper #contentWrapper #content table tbody tr td {
+    padding: 5px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Footer */
+
+#wrapper #footerWrapper {
+    margin: auto;
+    width: 100%;
+}
+#wrapper #footerWrapper #footer {
+    border-top: 1px solid #CCC;
+    color: #666;
+    font-size: .8em;
+    margin: 10px auto auto auto;
+    padding: 10px 0;
+    text-align: center;
+    width: 960px;
+}
+
+/*
 input.error {
     background-color: yellow;
 }
 
-
-
-/* CSS Document */
-
+/*
 body{	
-	margin:0px;
-	padding:0px;}
-	
+    margin:0px;
+    padding:0px;
+}
+
 a:link, a:active, a:visited {
-	color:black;
-	text-decoration:none;
-	}
+    color:black;
+    text-decoration:none;
+}
 a:hover{
-	text-decoration:underline}
+    text-decoration:underline}
 
 #page{	
-	margin:0px auto;
-	width:960px;
-	position:relative;
-	}
+    margin:0px auto;
+    width:960px;
+    position:relative;
+}
 
 #header{
-	width:100%;
-	height:100px;
-	background:url(images/header.png) no-repeat;
-	position:absolute;
-	}
-	
+    width:100%;
+    height:100px;
+    background:url(images/header.png) no-repeat;
+    position:absolute;
+}
+
 #header_title{
-	font-size:36px;
-	margin:27px 0px 0px 30px;
-	font-family:Arial, Helvetica, sans-serif
+    font-size:36px;
+    margin:27px 0px 0px 30px;
+    font-family:Arial, Helvetica, sans-serif
 }
 
 #menu{
-	width:100%;
-	height:50px;
-	background:green;
-	position:relative;
-	top:105px;
+    width:100%;
+    height:50px;
+    background:green;
+    position:relative;
+    top:105px;
 
-	}
+}
 
 h1{color:black}
 
 #content
 {
-	width:920px;
-	padding:20px;
-	background:lightblue;
-	position:absolute;
-	top:160px;
-	}
+    width:920px;
+    padding:20px;
+    background:lightblue;
+    position:absolute;
+    top:160px;
+}
 .odkaz_prvni{
-	width:200px;
-	text-align:center;
-	background:red;
-	position:relative;
-	top:10px;
-	margin-left:40px;
-	border-top:5px solid;
-	border-bottom: 5px solid;
-	border-color:yellow;
-	float:left;
+    width:200px;
+    text-align:center;
+    background:red;
+    position:relative;
+    top:10px;
+    margin-left:40px;
+    border-top:5px solid;
+    border-bottom: 5px solid;
+    border-color:yellow;
+    float:left;
 }
 .odkaz_prvni:hover{
-	background:pink;
-	border-color:black;
-	}
-	
+    background:pink;
+    border-color:black;
+}
+
 .odkaz_druhy{
-	width:200px;
-	text-align:center;
-	background:orange;
-	position:relative;
-	margin-left:40px;
-	top:10px;
-	float:left;
+    width:200px;
+    text-align:center;
+    background:orange;
+    position:relative;
+    margin-left:40px;
+    top:10px;
+    float:left;
 }
 .odkaz_treti{
-	width:34%;
-	text-align:center;
-	background:red;
-	position:relative;
-	top:10px;
-	float:right;
+    width:34%;
+    text-align:center;
+    background:red;
+    position:relative;
+    top:10px;
+    float:right;
 }
 
 .table_display{
@@ -107,7 +320,7 @@ table td input{
 td{
     padding: 4px;
 }
-
+*/
 
 .c {text-align: center;}
 .l {text-align: left;}
