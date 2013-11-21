@@ -149,7 +149,9 @@ body {
     border: 1px solid #CCC;
     padding: 5px 10px;
 }
-#wrapper #contentWrapper #content form input {
+#wrapper #contentWrapper #content form input,
+#wrapper #contentWrapper #content form select {
+    background: white;
     border: 1px solid #666;
     box-sizing: border-box;
     font-size: .9em;
@@ -190,9 +192,12 @@ body {
 #wrapper #contentWrapper #content table thead tr td {}
 #wrapper #contentWrapper #content table tbody {}
 #wrapper #contentWrapper #content table tbody tr {}
-#wrapper #contentWrapper #content table tbody tr th {}
+#wrapper #contentWrapper #content table tbody tr th {
+    text-align: left;
+}
 #wrapper #contentWrapper #content table tbody tr td {
     padding: 5px;
+    text-align: left;
 }
 
 /* -------------------------------------------------------------------------- */

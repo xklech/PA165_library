@@ -27,9 +27,9 @@
 	    <div id="contentWrapper">
 		<nav>
 		    <s:link href="/index.jsp" title="${navigation.customers}"><f:message key="navigation.customers"/></s:link>
-		    <s:link href="/index.jsp" title="${navigation.customers}"><f:message key="navigation.customers"/></s:link>
+		    <s:link beanclass="cz.muni.fi.pa165.library.LoansActionBean"><f:message key="navigation.loans"/></s:link>
 		    <s:link beanclass="cz.muni.fi.pa165.library.BooksActionBean"><f:message key="navigation.books"/></s:link>
-		    <s:link href="/loan.jsp" title="${navigation.impressions}"><f:message key="navigation.impressions"/></s:link>
+		    <s:link href="/index.jsp" title="${navigation.impressions}"><f:message key="navigation.impressions"/></s:link>
 		</nav>
 		<div id="content">   
 		    <h1>
