@@ -5,11 +5,13 @@ import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.dao.ImpressionDao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Impression;
+import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.exceptions.BookDaoException;
 import cz.muni.fi.pa165.library.exceptions.ImpressionDaoException;
 import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.to.BookTo;
 import cz.muni.fi.pa165.library.to.ImpressionTo;
+import cz.muni.fi.pa165.library.to.LoanTo;
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,6 +60,18 @@ public class BookServiceImpl implements BookService{
         }
     }
     
+    @Override
+    public List<BookTo> findAllBooks() {
+	Collection<Book> books = this.bookDao.findAllBooks();
+        if(books == null){
+            return null;
+        }
+	List<BookTo> bookTos = new ArrayList();
+	for (Book book : books) {
+	    bookTos.add(EntityConvertor.convertFromBook(book));
+	}
+	return bookTos;
+    }
 
     @Override
     public BookTo findBookById(Long id){

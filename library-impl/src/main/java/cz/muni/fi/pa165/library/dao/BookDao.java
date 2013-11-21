@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.library.entity.Impression;
 import cz.muni.fi.pa165.library.exceptions.BookDaoException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Data Access Object for managing entity Book.
@@ -39,6 +40,13 @@ public interface BookDao {
      * @throws BookDaoException is thrown when book is null, book has null id or book doesn't exist in DB
      */
     public void deleteBook(Book book) throws BookDaoException;
+    
+    /**
+     * Finds all books in database
+     * 
+     * @return list of all books
+     */
+    public Collection<Book> findAllBooks();
     
     /**
      * Finds book with given ID.

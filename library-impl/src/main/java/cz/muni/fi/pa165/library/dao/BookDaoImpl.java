@@ -77,6 +77,12 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    public List<Book> findAllBooks() {
+        TypedQuery query = entityManager.createQuery("SELECT b FROM Book b", Book.class);
+        return query.getResultList();
+    }
+    
+    @Override
     public Book findBookById(Long id) throws BookDaoException {
 
         if (id == null) {

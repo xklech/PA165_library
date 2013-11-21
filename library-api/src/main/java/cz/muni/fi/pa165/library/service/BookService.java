@@ -33,6 +33,13 @@ public interface BookService {
     public void deleteBook(BookTo bookTo);
     
     /**
+     * Finds all books in database
+     * 
+     * @return list of books
+     */
+    public List<BookTo> findAllBooks();
+    
+    /**
      * Finds book with given ISBN.
      * 
      * @param isbn ISBN of searched book
