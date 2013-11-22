@@ -31,9 +31,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver" />
         <property name="url"
-                value="jdbc:derby:target/database/message;create=true" />
-        <property name="username" value="app" />
-        <property name="password" value="app" />
+                value="jdbc:derby:pa165;create=true" />
+        <property name="username" value="pa165" />
+        <property name="password" value="pa165" />
     </bean>
 
     <bean id="entityManagerFactory"
