@@ -23,10 +23,10 @@ public class Loan implements Serializable {
     @GeneratedValue
     private Long id;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Customer customer;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Impression impression;
     
     @Temporal(javax.persistence.TemporalType.DATE)

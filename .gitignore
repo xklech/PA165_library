@@ -4,8 +4,9 @@
 *.jar
 *.war
 *.ear
-*.log
+*/*.log
 */target/*
+*/pa165/*
 /PA165_library bussines logic API/target/
 /PA165-Library/PA165_library bussines logic API/target/
 /PA165-Library/library-api/target/

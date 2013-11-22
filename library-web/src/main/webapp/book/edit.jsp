@@ -10,7 +10,7 @@
             <s:hidden name="book.id"/>
             <fieldset><legend><f:message key="book.edit.edit"/></legend>
                 <%@include file="form.jsp"%>
-                <s:submit name="add"><f:message key="book.edit.add"/></s:submit>
+                <s:submit name="save"><f:message key="book.edit.save"/></s:submit>
             </fieldset>
         </s:form>
 
