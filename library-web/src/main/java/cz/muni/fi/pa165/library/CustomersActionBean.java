@@ -13,7 +13,7 @@ import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@UrlBinding("/customer/{$event}/{customer.id}")
+@UrlBinding("/customers/{$event}/{customer.id}")
 public class CustomersActionBean extends BaseActionBean {
 
     static final Logger log = LoggerFactory.getLogger(BooksActionBean.class);
@@ -78,7 +78,14 @@ public class CustomersActionBean extends BaseActionBean {
         getContext().getMessages().add(new LocalizableMessage("customer.add.message",escapeHTML(customer.getFirstName()),escapeHTML(customer.getLastName()),customer.getId()));
         return new RedirectResolution(this.getClass());
     }
-  
+/*  
+   public Resolution save() {
+        log.debug("save() custmoer={}", customer);
+        customerService.updateCustomer(customer);
+        getContext().getMessages().add(new LocalizableMessage("customer.save.message",escapeHTML(book.getName()),escapeHTML(book.getAuthor()),book.getId()));
+        return new RedirectResolution(this.getClass());
+    }
+*/    
     public Resolution delete() {
         return new ForwardResolution("/customers.jsp");
     }
