@@ -2,6 +2,7 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <s:layout-render name="/layout.jsp" titlekey="loans.title">
     <s:layout-component name="body">
         <s:useActionBean beanclass="cz.muni.fi.pa165.library.LoansActionBean" var="actionBean"/>
@@ -17,12 +18,12 @@
 		<legend><f:message key="loans.findById"/></legend>
 		<table>
 		    <tr>
-			<th><s:label for="id" name="findId"/></th>
+			<th><s:label for="id" name="findId"><f:message key="loans.findById.id"/></s:label></th>
 			<td><s:text id="id" name="findId"/><s:errors field="findId"/></td>
 		    </tr>
 		</table>
 		<s:submit name="findById">
-		    <f:message key="loans.submit"/>
+		    <f:message key="loans.search"/>
 		</s:submit>
 	    </fieldset>
 	</s:form>
@@ -32,7 +33,7 @@
 	    <fieldset>
 		<legend><f:message key="loans.findAllActive"/></legend>
 		<s:submit name="findAllActive">
-		    <f:message key="loans.submit"/>
+		    <f:message key="loans.search"/>
 		</s:submit>
 	    </fieldset>
 	</s:form>
@@ -43,7 +44,7 @@
 		<legend><f:message key="loans.findByCustomer"/></legend>
 		<table>
 		    <tr>
-			<th><s:label for="id" name="findCustomer"/></th>
+			<th><s:label for="id" name="findCustomer"><f:message key="loans.findByCustomer.customer"/></s:label></th>
 			<td>
 			    <s:select name="findCustomer">
 				<c:forEach var="customer" items="${actionBean.customers}">
@@ -55,7 +56,7 @@
 		    </tr>
 		</table>
 		<s:submit name="findByCustomer">
-		    <f:message key="loans.submit"/>
+		    <f:message key="loans.search"/>
 		</s:submit>
 	    </fieldset>
 	</s:form>
@@ -66,22 +67,26 @@
 		<legend><f:message key="loans.findByFromTo"/></legend>
 		<table>
 		    <tr>
-			<th><s:label for="from" name="findFrom"/></th>
+			<th><s:label for="from" name="findFrom"><f:message key="loans.findByFromTo.from"/></s:label></th>
 			<td><s:text id="from" name="findFrom"/><s:errors field="findFrom"/></td>
 		    </tr>
 		    <tr>
-			<th><s:label for="to" name="findTo"/></th>
+			<th><s:label for="to" name="findTo"><f:message key="loans.findByFromTo.to"/></s:label></th>
 			<td><s:text id="to" name="findTo"/><s:errors field="findTo"/></td>
 		    </tr>
 		</table>
 		<s:submit name="findByFromTo">
-		    <f:message key="loans.submit"/>
+		    <f:message key="loans.search"/>
 		</s:submit>
 	    </fieldset>
 	</s:form>
 	
-	<!-- Add loan form ------------------------------------------------- -->
-	<%@include file="loan/add.jsp"%>
+	<!-- Prepare/add loan form ----------------------------------------- -->
+	<s:form beanclass="cz.muni.fi.pa165.library.LoansActionBean">
+	    <fieldset><legend><f:message key="loans.prepare"/></legend>
+	    <%@include file="/loan/form.jsp"%>
+	    <s:submit name="prepare"><f:message key="loans.prepare.prepareLoan"/></s:submit>
+	</s:form>
 	
 	<script type="text/javascript">
 	    $(document).ready(function () {

@@ -4,6 +4,9 @@
  */
 package cz.muni.fi.pa165.library;
 
+import cz.muni.fi.pa165.library.enums.DamageType;
+import cz.muni.fi.pa165.library.enums.StatusType;
+import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.service.BookService;
 import cz.muni.fi.pa165.library.service.CustomerService;
 import cz.muni.fi.pa165.library.service.ImpressionService;
@@ -15,18 +18,20 @@ import cz.muni.fi.pa165.library.to.LoanTo;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
+import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
-import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,11 +43,21 @@ import org.slf4j.LoggerFactory;
 public class LoansActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     /* ---------------------------------------------------------------------- */
+    /* DATA AND VARIABLES */
+        
+    /* ------------------------------ */
     /* Logger */
     
-    final static Logger log = LoggerFactory.getLogger(BooksActionBean.class);   
+    final static Logger log = LoggerFactory.getLogger(LoansActionBean.class);   
     
-    /* ---------------------------------------------------------------------- */
+    /* ------------------------------ */
+    /* Class attributes */
+    
+    private CustomerTo customerTo;
+    private BookTo bookTo;
+    private ImpressionTo impressionTo;
+    
+    /* ------------------------------ */
     /* Spring beans */
     
     @SpringBean
@@ -57,8 +72,8 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     @SpringBean
     protected BookService bookService;
     
-    /* ---------------------------------------------------------------------- */
-    /* Validation errors */
+    /* ------------------------------ */
+    /* Validation errors & error handler */
     
     private Boolean validationError;
     
@@ -66,85 +81,88 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
 	return this.validationError;
     }
     
-    public void setValidationError(boolean validationError) {
-        this.validationError = validationError;
+    public void setValidationError (boolean validationError) {
+	this.validationError = validationError;
     }
     
-    /* ---------------------------------------------------------------------- */
+    @Override
+    public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
+        log.debug("errors() {}",errors);
+        return null;
+    }  
+    
+    /* ------------------------------ */
     /* Loan */
     
-    @ValidateNestedProperties(value = {
-	@Validate(on = {"add","save"}, field = "customer", required = true),
-	@Validate(on = {"add","save"}, field = "impression", required = true),
-	@Validate(on = {"add","save"}, field = "fromDate", required = true),
-	@Validate(on = {"add","save"}, field = "toDate", required = true)
-    })
     private LoanTo loan;
-    
+
     public LoanTo getLoan() {
 	return this.loan;
     }
-    
+
     public void setLoan(LoanTo loan) {
 	this.loan = loan;
     }
     
-    /* ---------------------------------------------------------------------- */
-    /* Loan list */
+    /* ------------------------------ */
+    /* Loan collection */
     
     private Collection<LoanTo> loans;
-    
+
     public Collection<LoanTo> getLoans() {
 	return this.loans;
     }
     
-    /* ---------------------------------------------------------------------- */
-    /* Customer list */
+    /* ------------------------------ */
+    /* Customer collection */
     
     private Collection<CustomerTo> customers;
-    
+
     public Collection<CustomerTo> getCustomers() {
 	return this.customers;
     }
     
-    /* ---------------------------------------------------------------------- */
-    /* Book list */
-    
-    private List<BookTo> books;
-    
-    public List<BookTo> getBooks() {
-	return this.books;
-    }
-    
-    /* ---------------------------------------------------------------------- */
-    /* Impression list */
+    /* ------------------------------ */
+    /* Impression collection */
     
     private Collection<ImpressionTo> impressions;
-    
+
     public Collection<ImpressionTo> getImpressions() {
 	return this.impressions;
     }
     
+    /* ------------------------------ */
+    /* Book collection */
+    
+    private Collection<BookTo> books;
+
+    public Collection<BookTo> getBooks() {
+	return this.books;
+    }
+    
     /* ---------------------------------------------------------------------- */
+    /* POST FIELDS */
+    
+    /* ------------------------------ */
     /* Find loan by id */
     
-    @Validate(on = {"findById"}, required = true, minvalue = 0)
+    @Validate(on = {"findById"}, required = true, minvalue = 1)
     private Long findId;
-    
+
     public Long getFindById() {
 	return this.findId;
     }
-    
+
     public void setFindById(Long findId) {
 	this.findId = findId;
     }
     
-    /* ---------------------------------------------------------------------- */
+    /* ------------------------------ */
     /* Find loans by customer */
     
-    @Validate(on = {"findByCustomer"}, required = true, minvalue = 0)
+    @Validate(on = {"findByCustomer"}, required = true, minvalue = 1)
     private Long findCustomer;
-    
+
     public Long getFindByCustomer() {
 	return this.findCustomer;
     }
@@ -153,12 +171,12 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
 	this.findCustomer = findCustomer;
     }
     
-    /* ---------------------------------------------------------------------- */
+    /* ------------------------------ */
     /* Find loans by from date */
     
     @Validate(on = {"findByFromTo"})
     private Date findFrom;
-    
+
     public Date getFindByFrom() {
 	return this.findFrom;
     }
@@ -167,12 +185,11 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
 	this.findFrom = findFrom;
     }
     
-    /* ---------------------------------------------------------------------- */
+    /* ------------------------------ */
     /* Find loans by to date */
-    
-    @Validate(on = {"findByFromTo"})
+    @Validate(on = "findByFromTo")
     private Date findTo;
-    
+
     public Date getFindByTo() {
 	return this.findTo;
     }
@@ -181,35 +198,104 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
 	this.findTo = findTo;
     }
     
-    /* ---------------------------------------------------------------------- */
-    /* Error handler */
+    /* ------------------------------ */
+    /* Customer id */
     
-    @Override
-    public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-        log.debug("errors() {}",errors);
-        if ("add".equals(getContext().getEventName())){
-	    log.debug("add() validationError =true ");
-            this.validationError = true;
-        }
-        return null;
+    @Validate(on = {"prepare","add"}, required = true, minvalue = 1)
+    private Long customerId;
+    
+    public void setCustomerId(Long customerId) {
+	this.customerId = customerId;
+    }
+    
+    public Long getCustomerId() {
+	return this.customerId;
+    }
+    
+    /* ------------------------------ */
+    /* Book id */
+    
+    @Validate(on = {"prepare","add"}, required = true, minvalue = 1)
+    private Long bookId;
+    
+    public void setBookId(Long bookId) {
+	this.bookId = bookId;
+    }
+    
+    public Long getBookId() {
+	return this.bookId;
+    }
+    
+    /* ------------------------------ */
+    /* Impression id */
+    
+    @Validate(on = "add", required = true, minvalue = 1)
+    private Long impressionId;
+    
+    public void setImpressionId(Long impressionId) {
+	this.impressionId = customerId;
+    }
+    
+    public Long getImpressionId() {
+	return this.impressionId;
     }
     
     /* ---------------------------------------------------------------------- */
-    /* Action handlers */
+    /* INITIALIZATION */
+    
+    @Before(stages = LifecycleStage.BindingAndValidation)
+    public void loadLists() {
+	this.customerService.addCustomer(new CustomerTo(null,"John","Bon Jovi","ffdp",new Date(),"123456789"));
+	this.bookService.save(new BookTo("Bible","123456789012","Fiction",new Date(),"Jesus & God"));
+	this.customers = this.customerService.findAllCustomers();
+	this.books = this.bookService.findAllBooks();
+	this.impressions = this.impressionService.findImpressionsByStatus(StatusType.AVAILIBLE);
+    }
+    
+    /* ---------------------------------------------------------------------- */
+    /* VALIDATION METHODS */
+    
+    @ValidationMethod(on = {"prepare","add","findByCustomer"})
+    public void validateCustomerId() {
+	try {
+	    this.customerTo = this.customerService.findCustomerById(this.customerId);
+	} catch (ServiceDataAccessException ex) {
+	    getContext().getValidationErrors().add("customerId",new LocalizableError("loans.customerId.invalid",this.customerId));
+	}
+    }
+    
+    @ValidationMethod(on = {"prepare","add"})
+    public void validateBookId() {
+	try {
+	    this.bookTo = this.bookService.findBookById(this.bookId);
+	} catch (ServiceDataAccessException ex) {
+	    getContext().getValidationErrors().add("bookId",new LocalizableError("loans.bookId.invalid",this.bookId));
+	}
+    }
+    
+    @ValidationMethod(on = "add")
+    public void validateImpressionId() {
+	try {
+	    this.impressionTo = this.impressionService.findImpressionById(this.impressionId);
+	} catch (ServiceDataAccessException ex) {
+	    getContext().getValidationErrors().add("impressionId",new LocalizableError("loans.impressionId.invalid",this.impressionId));
+	}
+    }
+    
+    /* ---------------------------------------------------------------------- */
+    /* ACTION HANDLERS */
     
     @DefaultHandler
     public Resolution defaultHandler() {
 	log.debug("defaultHandler()");
-	this.init();
         return new ForwardResolution("/loans.jsp");
     }
     
     public Resolution findById() {
-	log.debug("findById()");
-	this.init();
 	this.loans = Arrays.asList(this.loanService.findLoanById(this.findId));
+	log.debug("findById()",this.loans);
 	if (this.loans.isEmpty()) {
-	    getContext().getMessages().add(new LocalizableMessage("loans.findById.message",this.findId));  
+	    getContext().getMessages().add(new LocalizableMessage("loans.findById.error",this.findId));  
 	    return getContext().getSourcePageResolution();
 	} else {
 	    return new RedirectResolution("/loan/list.jsp");
@@ -217,37 +303,41 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     }
     
     public Resolution findAllActive() {
-	log.debug("findAllActive()",this.loans);
-	this.init();
 	this.loans = this.loanService.findAllActiveLoans();
+	log.debug("findAllActive()",this.loans);
 	if (this.loans.isEmpty()) {
-	    getContext().getMessages().add(new LocalizableMessage("loans.findAllActive.message",this.findId));  
+	    getContext().getMessages().add(new LocalizableMessage("loans.findAllActive.empty",this.findId));  
 	    return getContext().getSourcePageResolution();
 	} else {
-	    return new RedirectResolution("/loan/list.jsp");
+	    return new ForwardResolution("/loan/list.jsp");
 	}
     }
     
     public Resolution findByCustomer() {
-	this.init();
-	throw new UnsupportedOperationException("findByCustomer");
+	this.loans = this.loanService.findLoansByCustomer(this.customerTo);
+	if (this.loans.isEmpty()) {
+	    getContext().getMessages().add(new LocalizableMessage("loans.findByCustomer.empty",this.customerId));
+	    return getContext().getSourcePageResolution();
+	} else {
+	    return new ForwardResolution("/loan/list.jsp");
+	}
     }
     
     public Resolution findByFromTo() {
-	this.init();
 	throw new UnsupportedOperationException("findByFromTo");
     }
- 
+    
     public Resolution prepare() {
-	throw new UnsupportedOperationException("add");
+	return new ForwardResolution("/loan/add.jsp");
     }
     
     public Resolution add() {
-	throw new UnsupportedOperationException("add");
-    }
-    
-    public Resolution save() {
-	throw new UnsupportedOperationException("save");
+	this.loan = new LoanTo(this.customerTo,this.impressionTo,new Date(),null,DamageType.NEW);
+	this.loanService.addLoan(this.loan);
+	this.impressionTo.setStatus(StatusType.LOANED);
+	//this.impressionService.updateImpression(this.impressionTo);
+	getContext().getMessages().add(new LocalizableMessage("loans.add.confirm",escapeHTML(this.customerTo.getFirstName()),escapeHTML(this.customerTo.getLastName()),escapeHTML(this.bookTo.getAuthor()),escapeHTML(this.bookTo.getName())));
+	return new RedirectResolution(this.getClass());
     }
     
     public Resolution edit() {
@@ -256,15 +346,6 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     
     public Resolution delete() {
 	throw new UnsupportedOperationException("delete");
-    }
-    
-    /* ---------------------------------------------------------------------- */
- 
-    private void init() {
-	this.customerService.addCustomer(new CustomerTo(null,"John","Bon Jovi","ffdp",new Date(),"123456789"));
-	this.customers = this.customerService.findAllCustomers();
-	this.impressions = null;
-	this.books = this.bookService.findAllBooks();
     }
     
 }
