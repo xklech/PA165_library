@@ -7,19 +7,14 @@
     <s:layout-component name="body">
         <s:useActionBean beanclass="cz.muni.fi.pa165.library.LoansActionBean" var="actionBean"/>
 	
-	<!-- Loan search result -------------------------------------------- -->
-	<c:if test="${not empty actionBean.loans}">
-	    ${actionBean.loans}
-	</c:if>
-	
 	<!-- Find by ID ---------------------------------------------------- -->
 	<s:form beanclass="cz.muni.fi.pa165.library.LoansActionBean">
 	    <fieldset>
 		<legend><f:message key="loans.findById"/></legend>
 		<table>
 		    <tr>
-			<th><s:label for="id" name="findId"><f:message key="loans.findById.id"/></s:label></th>
-			<td><s:text id="id" name="findId"/><s:errors field="findId"/></td>
+			<th><s:label for="fId" name="findId"><f:message key="loans.findById.id"/></s:label></th>
+			<td><s:text id="fId" name="findId"/><s:errors field="findId" /></td>
 		    </tr>
 		</table>
 		<s:submit name="findById">
@@ -32,7 +27,7 @@
 	<s:form beanclass="cz.muni.fi.pa165.library.LoansActionBean">
 	    <fieldset>
 		<legend><f:message key="loans.findAllActive"/></legend>
-		<s:submit name="findAllActive">
+		<s:submit name="findByAllActive">
 		    <f:message key="loans.search"/>
 		</s:submit>
 	    </fieldset>
@@ -44,11 +39,11 @@
 		<legend><f:message key="loans.findByCustomer"/></legend>
 		<table>
 		    <tr>
-			<th><s:label for="id" name="findCustomer"><f:message key="loans.findByCustomer.customer"/></s:label></th>
+			<th><s:label for="cId" name="findCustomer"><f:message key="loans.findByCustomer.customer"/></s:label></th>
 			<td>
-			    <s:select name="findCustomer">
-				<c:forEach var="customer" items="${actionBean.customers}">
-				    <s:option value="${customer.id}">${customer.firstName} ${customer.lastName}</s:option>
+			    <s:select id="cId" name="findCustomer">
+				<c:forEach var="fCustomer" items="${actionBean.customers}">
+				    <s:option value="${fCustomer.id}">${fCustomer.firstName} ${fCustomer.lastName}</s:option>
 				</c:forEach>
 			    </s:select>
 			    <s:errors field="findCustomer"/>
@@ -67,12 +62,12 @@
 		<legend><f:message key="loans.findByFromTo"/></legend>
 		<table>
 		    <tr>
-			<th><s:label for="from" name="findFrom"><f:message key="loans.findByFromTo.from"/></s:label></th>
-			<td><s:text id="from" name="findFrom"/><s:errors field="findFrom"/></td>
+			<th><s:label for="fFrom" name="findFrom"><f:message key="loans.findByFromTo.from"/></s:label></th>
+			<td><s:text id="fFrom" name="findFrom"/><s:errors field="findFrom"/></td>
 		    </tr>
 		    <tr>
-			<th><s:label for="to" name="findTo"><f:message key="loans.findByFromTo.to"/></s:label></th>
-			<td><s:text id="to" name="findTo"/><s:errors field="findTo"/></td>
+			<th><s:label for="fTo" name="findTo"><f:message key="loans.findByFromTo.to"/></s:label></th>
+			<td><s:text id="fTo" name="findTo"/><s:errors field="findTo"/></td>
 		    </tr>
 		</table>
 		<s:submit name="findByFromTo">
