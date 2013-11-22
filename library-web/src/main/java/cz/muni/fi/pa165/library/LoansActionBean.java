@@ -364,7 +364,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
 	    getContext().getMessages().add(new LocalizableMessage("loans.findByFromTo.empty",this.findFrom,this.findTo));
 	    return getContext().getSourcePageResolution();
 	} else {
-	    return new ForwardResolution("/loans.jsp");
+	    return new ForwardResolution("/loan/list.jsp");
 	}
     }
     

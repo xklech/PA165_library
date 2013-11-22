@@ -108,7 +108,7 @@
 	
 	<script type="text/javascript">
 	    $(document).ready(function () {
-		$('#findByFrom, #findByTo').datepicker($.datepicker.regional['cs']);
+		$('#fFrom, #fTo').datepicker({ dateFormat: 'mm/dd/yy' });
 	    });
 	</script>
     </s:layout-component>
