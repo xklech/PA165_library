@@ -4,6 +4,7 @@
  */
 package cz.muni.fi.pa165.library;
 
+import static cz.muni.fi.pa165.library.BaseActionBean.escapeHTML;
 import cz.muni.fi.pa165.library.enums.DamageType;
 import cz.muni.fi.pa165.library.enums.StatusType;
 import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
@@ -57,6 +58,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     private CustomerTo customerTo;
     private BookTo bookTo;
     private ImpressionTo impressionTo;
+    private LoanTo loanTo;
     
     /* ------------------------------ */
     /* Spring beans */
@@ -241,13 +243,27 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
 	return this.impressionId;
     }
     
+    /* ------------------------------ */
+    /* Loan id */
+    
+    @Validate(on = "restore", required = true, minvalue = 1)
+    private Long loanId;
+    
+    public void setLoanId(Long loanId) {
+	this.loanId = loanId;
+    }
+    
+    public Long getLoanId() {
+	return this.loanId;
+    }
+    
     /* ---------------------------------------------------------------------- */
     /* INITIALIZATION */
     
     @Before(stages = LifecycleStage.BindingAndValidation)
     public void loadLists() {
-	/*this.customerService.addCustomer(new CustomerTo(null,"John","Bon Jovi","ffdp",new Date(),"123456789"));
-	this.bookService.save(new BookTo("Bible","123456789012","Fiction",new Date(),"Jesus & God"));*/
+	this.customerService.addCustomer(new CustomerTo(null,"John","Bon Jovi","ffdp",new Date(),"123456789"));
+	this.bookService.save(new BookTo("Bible","123456789012","Fiction",new Date(),"Jesus & God"));
 	this.customers = new ArrayList(this.customerService.findAllCustomers());
 	this.books = this.bookService.findAllBooks();
 	this.impressions = this.impressionService.findImpressionsByStatus(StatusType.AVAILIBLE);
@@ -289,6 +305,15 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
 	    this.impressionTo = this.impressionService.findImpressionById(this.impressionId);
 	} catch (ServiceDataAccessException ex) {
 	    getContext().getValidationErrors().add("impressionId",new LocalizableError("loans.impressionId.invalid",this.impressionId));
+	}
+    }
+    
+    @ValidationMethod(on = {"restore","delete"})
+    public void validateLoanId() {
+	try {
+	    this.loanTo = this.loanService.findLoanById(this.loanId);
+	} catch (ServiceDataAccessException ex) {
+	    getContext().getValidationErrors().add("loanId",new LocalizableError("loans.loanId.invalid",this.loanId));
 	}
     }
     
@@ -334,7 +359,13 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     }
     
     public Resolution findByFromTo() {
-	throw new UnsupportedOperationException("findByFromTo");
+	this.loans = this.loanService.findLoansByFromTo(this.findFrom,this.findTo);
+	if (this.loans.isEmpty()) {
+	    getContext().getMessages().add(new LocalizableMessage("loans.findByFromTo.empty",this.findFrom,this.findTo));
+	    return getContext().getSourcePageResolution();
+	} else {
+	    return new ForwardResolution("/loans.jsp");
+	}
     }
     
     public Resolution prepare() {
@@ -350,12 +381,17 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
 	return new RedirectResolution(this.getClass());
     }
     
-    public Resolution edit() {
-	throw new UnsupportedOperationException("edit");
+    public Resolution restore() {
+	this.loanTo.setToDate(new Date());
+	this.loanTo.getImpressionTo().setStatus(StatusType.AVAILIBLE);
+	getContext().getMessages().add(new LocalizableMessage("loans.restore.confirm",escapeHTML(this.loanTo.getCustomerTo().getFirstName()),escapeHTML(this.loanTo.getCustomerTo().getLastName()),escapeHTML(this.loanTo.getImpressionTo().getBookTo().getAuthor()),escapeHTML(this.loanTo.getImpressionTo().getBookTo().getName())));
+	return new RedirectResolution(this.getClass());	
     }
     
     public Resolution delete() {
-	throw new UnsupportedOperationException("delete");
+	this.loanService.deleteLoan(this.loanTo);
+	getContext().getMessages().add(new LocalizableMessage("loans.delete.confirm",this.loanTo.getId()));
+	return new RedirectResolution(this.getClass());	
     }
     
 }
