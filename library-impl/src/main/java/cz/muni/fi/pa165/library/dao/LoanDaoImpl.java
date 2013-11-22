@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.entity.Customer;
+import cz.muni.fi.pa165.library.entity.Impression;
 import cz.muni.fi.pa165.library.entity.Loan;
 
 import cz.muni.fi.pa165.library.exceptions.LoanDaoException;
@@ -33,6 +34,18 @@ public class LoanDaoImpl implements LoanDao {
 	if (loan.getId() != null) {
 	    throw new LoanDaoException("addLoan: loan *can't* have a non-null id parameter!");
 	}
+	if (loan.getCustomer() == null) {
+	    throw new LoanDaoException("addLoan: loan customer *can't* be null!");
+	} else if (loan.getCustomer().getId() == null) {
+	    this.entityManager.persist(loan.getCustomer());
+	}
+	if (loan.getImpression() == null) {
+	    throw new LoanDaoException("addLoan: loan impression *can't* be null!");
+	} else if (loan.getImpression().getId() == null) {
+	    this.entityManager.persist(loan.getImpression());
+	}
+	loan.setCustomer(this.entityManager.find(Customer.class,loan.getCustomer().getId()));
+	loan.setImpression(this.entityManager.find(Impression.class,loan.getImpression().getId()));
 	this.entityManager.persist(loan);
     }
 
