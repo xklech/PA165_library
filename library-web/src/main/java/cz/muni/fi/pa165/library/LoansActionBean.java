@@ -262,8 +262,8 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     
     @Before(stages = LifecycleStage.BindingAndValidation)
     public void loadLists() {
-	this.customerService.addCustomer(new CustomerTo(null,"John","Bon Jovi","ffdp",new Date(),"123456789"));
-	this.bookService.save(new BookTo("Bible","123456789012","Fiction",new Date(),"Jesus & God"));
+	/*this.customerService.addCustomer(new CustomerTo(null,"John","Bon Jovi","ffdp",new Date(),"123456789"));
+	this.bookService.save(new BookTo("Bible","123456789012","Fiction",new Date(),"Jesus & God"));*/
 	this.customers = new ArrayList(this.customerService.findAllCustomers());
 	this.books = this.bookService.findAllBooks();
 	this.impressions = this.impressionService.findImpressionsByStatus(StatusType.AVAILIBLE);
