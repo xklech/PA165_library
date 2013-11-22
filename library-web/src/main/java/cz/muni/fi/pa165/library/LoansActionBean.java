@@ -384,6 +384,8 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public Resolution restore() {
 	this.loanTo.setToDate(new Date());
 	this.loanTo.getImpressionTo().setStatus(StatusType.AVAILIBLE);
+	this.loanService.updateLoan(this.loanTo);
+	this.impressionService.updateImpression(this.loanTo.getImpressionTo());
 	getContext().getMessages().add(new LocalizableMessage("loans.restore.confirm",escapeHTML(this.loanTo.getCustomerTo().getFirstName()),escapeHTML(this.loanTo.getCustomerTo().getLastName()),escapeHTML(this.loanTo.getImpressionTo().getBookTo().getAuthor()),escapeHTML(this.loanTo.getImpressionTo().getBookTo().getName())));
 	return new RedirectResolution(this.getClass());	
     }

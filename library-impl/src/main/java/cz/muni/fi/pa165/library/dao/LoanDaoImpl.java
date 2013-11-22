@@ -61,8 +61,18 @@ public class LoanDaoImpl implements LoanDao {
 	if (loanToUpdate == null) {
 	    throw new LoanDaoException("updateLoan: loan with given id *doesn't* exist in database!");
 	}
-	loanToUpdate.setCustomer(loan.getCustomer());
-	loanToUpdate.setImpression(loan.getImpression());
+	if (loan.getCustomer() == null) {
+	    throw new LoanDaoException("updateLoan: loan customer *can't* be null!");
+	} else if (loan.getCustomer().getId() == null) {
+	    this.entityManager.persist(loan.getCustomer());
+	}
+	if (loan.getImpression() == null) {
+	    throw new LoanDaoException("updateLoan: loan impression *can't* be null!");
+	} else if (loan.getImpression().getId() == null) {
+	    this.entityManager.persist(loan.getImpression());
+	}
+	loanToUpdate.setCustomer(this.entityManager.find(Customer.class,loan.getCustomer().getId()));
+	loanToUpdate.setImpression(this.entityManager.find(Impression.class,loan.getImpression().getId()));
 	loanToUpdate.setFromDate(loan.getFromDate());
 	loanToUpdate.setToDate(loan.getToDate());
 	loanToUpdate.setDamageType(loan.getDamageType());
