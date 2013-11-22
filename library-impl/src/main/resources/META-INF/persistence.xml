@@ -8,7 +8,7 @@
     <class>cz.muni.fi.pa165.library.entity.Customer</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/pa165"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:pa165"/>
       <property name="javax.persistence.jdbc.user" value="pa165"/>
       <property name="javax.persistence.jdbc.password" value="pa165"/>
       <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
