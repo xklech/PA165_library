@@ -2,17 +2,21 @@ package cz.muni.fi.pa165.library;
 
 import cz.muni.fi.pa165.library.service.CustomerService;
 import cz.muni.fi.pa165.library.to.CustomerTo;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 import net.sourceforge.stripes.action.*;
+import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
+import net.sourceforge.stripes.validation.ValidationErrorHandler;
+import net.sourceforge.stripes.validation.ValidationErrors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @UrlBinding("/customers/{$event}/{customer.id}")
-public class CustomersActionBean extends BaseActionBean {
+public class CustomersActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     static final Logger log = LoggerFactory.getLogger(BooksActionBean.class);
 
@@ -30,13 +34,14 @@ public class CustomersActionBean extends BaseActionBean {
     })
     private CustomerTo customer;
     
-    private List<CustomerTo> customers;
+    private Collection<CustomerTo> customers;
 
+    @Validate(on = {"findById"}, required = true, minvalue = 0)
     private Long findId;
+    @Validate(on = {"findByName"}, required = true, minlength = 1)
     private String findFirstName;
+    @Validate(on = {"findByName"}, required = true, minlength = 1)
     private String findLastName;
-    private String findAddress;
-    private String findPid;
 
     public CustomerTo getCustomer() {
         return customer;
@@ -44,31 +49,36 @@ public class CustomersActionBean extends BaseActionBean {
     public void setCustomer(CustomerTo customer) {
         this.customer = customer;
     }
-    public List<CustomerTo> getCustomers() {
+    public Collection<CustomerTo> getCustomers() {
         return customers;
     }
     
+    @Override
+    public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
+        //fill up the data for the table if validation errors occured
+        log.debug("errors() {}", errors);
+        if ("add".equals(getContext().getEventName())) {
+            log.debug("add() validationError =true ");
+            validationError = true;
+        }
+        //return null to let the event handling continue
+        return null;
+    }
+    
     @DefaultHandler
-    public Resolution list() {
+    public Resolution defaultHandler() {
         return new ForwardResolution("/customers.jsp");
     }
 
     public Resolution edit() {
+        log.debug("edit customer={}", customer);
+        if (customer == null || customer.getId() == null) {
+            getContext().getValidationErrors().addGlobalError(new LocalizableError("customer.list.missing", customer.getId()));
+            return new RedirectResolution(this.getClass());
+        }
         return new ForwardResolution("/customer/edit.jsp");
     }
 
-    /*
-    public Resolution findBy(){
-        log.debug("findBy() ");
-        customers = customerService.find();
-        if(customers == null || customers.isEmpty()){
-            DateFormat f = DateFormat.getDateInstance(DateFormat.LONG, getContext().getRequest().getLocale());
-            getContext().getMessages().add(new LocalizableMessage("book.findPublishDate.message",(findDateFrom==null?"neomezeno":f.format(findDateFrom)),(findDateTo==null?"neomezeno":f.format(findDateTo))));  
-            return getContext().getSourcePageResolution();
-        }
-        return new ForwardResolution("/customer/list.jsp");       
-    }
-    */
     public Resolution add() {
         log.debug("add() customer={}", customer);
         customerService.addCustomer(customer);
@@ -85,16 +95,52 @@ public class CustomersActionBean extends BaseActionBean {
     
     public Resolution delete() {
         log.debug("delete() book={}", customer);
-       try {
-           customer = customerService.findCustomerById(customer.getId());
-           customerService.deleteCustomer(customer);
-           getContext().getMessages().add(new LocalizableMessage("customer.delete.message",escapeHTML(customer.getFirstName()),escapeHTML(customer.getLastName()),customer.getId()));
-       } catch(Exception ex){
-           getContext().getValidationErrors().addGlobalError(new LocalizableError("books.list.missing", customer.getId()));
-       }
-       return new RedirectResolution(this.getClass());
+        try {
+            customer = customerService.findCustomerById(customer.getId());
+            customerService.deleteCustomer(customer);
+            getContext().getMessages().add(new LocalizableMessage("customer.delete.message",escapeHTML(customer.getFirstName()),escapeHTML(customer.getLastName()),customer.getId()));
+        } catch(Exception ex) {
+            getContext().getValidationErrors().addGlobalError(new LocalizableError("books.list.missing", customer.getId()));
+        }
+        return new RedirectResolution(this.getClass());
     }
 
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"delete","edit"})
+    public void loadCustomerFromDatabase() {
+        log.debug("before delete, edit");
+        String idStr = getContext().getRequest().getParameter("customer.id");
+        if (idStr == null) {
+            return;
+        }
+        try {
+            customer = customerService.findCustomerById(Long.parseLong(idStr));
+        } catch(NumberFormatException ex) {
+            log.debug("loadCustomerFromDatabase() number format exception - input:{}",idStr);
+        }
+    }
+
+    public Resolution findById() {
+        log.debug("findById() ");
+        CustomerTo supp = customerService.findCustomerById(findId);
+        if (supp != null) {
+            customers = Arrays.asList(supp);
+        } else {
+            getContext().getMessages().add(new LocalizableError("customer.findId.message",findId));  
+            return getContext().getSourcePageResolution();
+        }
+        return new ForwardResolution("/customer/list.jsp");                  
+    }
+
+    public Resolution findByName() {
+        log.debug("findByName(" + findFirstName + ", " + findLastName + ") ");
+        customers = customerService.findCustomerByName(findFirstName, findLastName);
+        if (customers == null || customers.isEmpty()) {
+            getContext().getMessages().add(new LocalizableError("customer.findName.message", findFirstName, findLastName));  
+            return getContext().getSourcePageResolution();
+        }
+        return new ForwardResolution("/customer/list.jsp");                  
+    }
+    
     public boolean isValidationError() {
         return validationError;
     }
@@ -125,22 +171,6 @@ public class CustomersActionBean extends BaseActionBean {
 
     public void setFindLastName(String findLastName) {
         this.findLastName = findLastName;
-    }
-
-    public String getFindAddress() {
-        return findAddress;
-    }
-
-    public void setFindAddress(String findAddress) {
-        this.findAddress = findAddress;
-    }
-
-    public String getFindPid() {
-        return findPid;
-    }
-
-    public void setFindPid(String findPid) {
-        this.findPid = findPid;
     }
 
 }

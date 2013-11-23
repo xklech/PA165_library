@@ -21,67 +21,20 @@
             </s:form>
             
             <s:form beanclass="cz.muni.fi.pa165.library.CustomersActionBean">
-                <fieldset><legend><f:message key="customer.list.findFirstName"/></legend>                 
+                <fieldset>
+                    <legend><f:message key="customer.list.findName"/></legend>                 
                     <table>
                         <tr>
                             <th><s:label for="f2" name="customer.firstName"/></th>
-                            <td><s:text id="f2" name="customer.firstName"/><s:errors field="customer.firstName" /></td>
-                            <td><s:submit name="findByFirstName"><f:message key="common.search" /></s:submit></td>
+                            <td><s:text id="f2" name="findFirstName"/><s:errors field="findFirstName" /></td>
                         </tr>                            
-                    </table>
-                </fieldset>
-            </s:form>
-            
-            <s:form beanclass="cz.muni.fi.pa165.library.CustomersActionBean">
-                <fieldset><legend><f:message key="customer.list.findLastName"/></legend>
-                    <table>
                         <tr>
                             <th><s:label for="f3" name="customer.lastName"/></th>
-                            <td><s:text id="f3" name="customer.lastName"/><s:errors field="customer.lastName" /></td>
-                            <td><s:submit name="findByLastName"><f:message key="common.search" /></s:submit></td>
-                        </tr>                            
-                    </table>
-                </fieldset>
-            </s:form>
-            
-            <s:form beanclass="cz.muni.fi.pa165.library.CustomersActionBean">
-                <fieldset><legend><f:message key="customer.list.findAddress"/></legend>
-                    <table>
+                            <td><s:text id="f3" name="findLastName"/><s:errors field="findLastName" /></td>
+                        </tr>
                         <tr>
-                            <th><s:label for="f4" name="customer.address"/></th>
-                            <td><s:text id="f4" name="customer.address"/><s:errors field="customer.address" /></td>
-                            <td><s:submit name="findByAddress"><f:message key="common.search" /></s:submit></td>
-                        </tr>                            
-                    </table>
-                </fieldset>
-            </s:form>
-            
-            <script>
-                $(function(){
-                    $("#findDatePicker").datepicker();
-                });
-                
-            </script>
-            <s:form beanclass="cz.muni.fi.pa165.library.CustomersActionBean">
-                <fieldset><legend><f:message key="customer.list.findDateOfBirth"/></legend>
-                    <table>
-                        <tr>
-                            <th><s:label for="findDatePicker" name="customer.dateOfBirth"/></th>
-                            <td><s:text id="findDatePicker" name="customer.dateOfBirth"/><s:errors field="customer.dateOfBirth" /></td>
-                            <td><s:submit name="findByDateOfBirth"><f:message key="common.search" /></s:submit></td>
-                        </tr>                            
-                    </table>
-                </fieldset>
-            </s:form>
-            
-            <s:form beanclass="cz.muni.fi.pa165.library.CustomersActionBean">
-                <fieldset><legend><f:message key="customer.list.findPid"/></legend>
-                    <table>
-                        <tr>
-                            <th><s:label for="f6" name="customer.pid"/></th>
-                            <td><s:text id="f6" name="customer.pid"/><s:errors field="customer.pid" /></td>
-                            <td><s:submit name="findByPid"><f:message key="common.search" /></s:submit></td>
-                        </tr>                            
+                            <td><s:submit name="findByName"><f:message key="common.search" /></s:submit></td>
+                        </tr>
                     </table>
                 </fieldset>
             </s:form>

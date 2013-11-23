@@ -4,13 +4,13 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <s:layout-render name="/layout.jsp" titlekey="customer.edit.title">
     <s:layout-component name="body">
-        <s:useActionBean beanclass="cz.muni.fi.pa165.library.CustomerActionBean" var="actionBean"/>
+        <s:useActionBean beanclass="cz.muni.fi.pa165.library.CustomersActionBean" var="actionBean"/>
 
-        <s:form beanclass="cz.muni.fi.pa165.library.CustomerActionBean">
+        <s:form beanclass="cz.muni.fi.pa165.library.CustomersActionBean">
             <s:hidden name="customer.id"/>
-            <fieldset><legend><f:message key="book.edit.edit"/></legend>
+            <fieldset><legend><f:message key="customer.edit.edit"/></legend>
                 <%@include file="form.jsp"%>
-                <s:submit name="add"><f:message key="book.edit.add"/></s:submit>
+                <s:submit name="save"><f:message key="common.save"/></s:submit>
             </fieldset>
         </s:form>
 
