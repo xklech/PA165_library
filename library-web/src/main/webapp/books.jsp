@@ -63,7 +63,7 @@
                 
             </script>
             <s:form beanclass="cz.muni.fi.pa165.library.BooksActionBean">
-                <fieldset><legend><f:message key="books.list.finddepartment"/></legend>
+                <fieldset><legend><f:message key="books.list.finddate"/></legend>
                     
                     <table>
                         <tr>
