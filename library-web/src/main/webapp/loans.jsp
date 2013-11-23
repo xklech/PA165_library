@@ -108,7 +108,7 @@
 	
 	<script type="text/javascript">
 	    $(document).ready(function () {
-		$('#fFrom, #fTo').datepicker({ dateFormat: 'mm/dd/yy' });
+		$('#fFrom, #fTo').datepicker();
 	    });
 	</script>
     </s:layout-component>
