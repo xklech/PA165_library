@@ -19,6 +19,34 @@
                     <s:submit name="findById"><f:message key="books.submit.find" /></s:submit>
                 </fieldset>
             </s:form>
+            <script>
+                $(function(){
+                    $( "#f2" ).autocomplete({
+                      source: "${pageContext.request.contextPath}/autoComplete/booksByName",
+                      minLength: 1,
+                      maxLength:15,
+                      select: function( event, ui ) {
+                        $( "#f2" ).val(ui.item.value);
+                      }
+                    });
+                    $( "#f3" ).autocomplete({
+                      source: "${pageContext.request.contextPath}/autoComplete/booksByAuthor",
+                      minLength: 1,
+                      maxLength:15,
+                      select: function( event, ui ) {
+                        $( "#f3" ).val(ui.item.value);
+                      }
+                    });
+                    $( "#f4" ).autocomplete({
+                      source: "${pageContext.request.contextPath}/autoComplete/booksByDepartment",
+                      minLength: 1,
+                      maxLength:15,
+                      select: function( event, ui ) {
+                        $( "#f4" ).val(ui.item.value);
+                      }
+                    });
+                  });   
+            </script>
             <s:form beanclass="cz.muni.fi.pa165.library.BooksActionBean">
                 <fieldset><legend><f:message key="books.list.findname"/></legend>
                     
@@ -57,8 +85,8 @@
             </s:form>
             <script>
                 $(function(){
-                    $("#findDateFromPicker").datepicker($.datepicker.regional[ "cs" ]);
-                    $("#findDateToPicker").datepicker($.datepicker.regional[ "cs" ]);
+                    $("#findDateFromPicker").datepicker();
+                    $("#findDateToPicker").datepicker();
                 });
                 
             </script>
