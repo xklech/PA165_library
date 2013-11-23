@@ -1,13 +1,11 @@
 package cz.muni.fi.pa165.library;
 
-import static cz.muni.fi.pa165.library.BooksActionBean.log;
 import cz.muni.fi.pa165.library.service.CustomerService;
 import cz.muni.fi.pa165.library.to.CustomerTo;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import org.slf4j.Logger;
@@ -39,8 +37,7 @@ public class CustomersActionBean extends BaseActionBean {
     private String findLastName;
     private String findAddress;
     private String findPid;
-    private Date findDateOfBirth;
-    
+
     public CustomerTo getCustomer() {
         return customer;
     }
@@ -78,16 +75,24 @@ public class CustomersActionBean extends BaseActionBean {
         getContext().getMessages().add(new LocalizableMessage("customer.add.message",escapeHTML(customer.getFirstName()),escapeHTML(customer.getLastName()),customer.getId()));
         return new RedirectResolution(this.getClass());
     }
-/*  
-   public Resolution save() {
-        log.debug("save() custmoer={}", customer);
+  
+    public Resolution save() {
+        log.debug("save() customer={}", customer);
         customerService.updateCustomer(customer);
-        getContext().getMessages().add(new LocalizableMessage("customer.save.message",escapeHTML(book.getName()),escapeHTML(book.getAuthor()),book.getId()));
+        getContext().getMessages().add(new LocalizableMessage("customer.save.message",escapeHTML(customer.getFirstName()),escapeHTML(customer.getLastName()),customer.getId()));
         return new RedirectResolution(this.getClass());
     }
-*/    
+    
     public Resolution delete() {
-        return new ForwardResolution("/customers.jsp");
+        log.debug("delete() book={}", customer);
+       try {
+           customer = customerService.findCustomerById(customer.getId());
+           customerService.deleteCustomer(customer);
+           getContext().getMessages().add(new LocalizableMessage("customer.delete.message",escapeHTML(customer.getFirstName()),escapeHTML(customer.getLastName()),customer.getId()));
+       } catch(Exception ex){
+           getContext().getValidationErrors().addGlobalError(new LocalizableError("books.list.missing", customer.getId()));
+       }
+       return new RedirectResolution(this.getClass());
     }
 
     public boolean isValidationError() {
@@ -138,12 +143,4 @@ public class CustomersActionBean extends BaseActionBean {
         this.findPid = findPid;
     }
 
-    public Date getFindDateOfBirth() {
-        return findDateOfBirth;
-    }
-
-    public void setFindDateOfBirth(Date findDateOfBirth) {
-        this.findDateOfBirth = findDateOfBirth;
-    }
-    
 }

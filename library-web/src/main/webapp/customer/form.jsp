@@ -1,7 +1,7 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <script>
     $(function(){
-        $("#c4").datepicker($.datepicker.regional[ "cs" ]);
+        $("#c4").datepicker();
     });
 
 </script>
