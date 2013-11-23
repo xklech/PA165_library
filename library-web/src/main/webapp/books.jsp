@@ -57,8 +57,8 @@
             </s:form>
             <script>
                 $(function(){
-                    $("#findDateFromPicker").datepicker($.datepicker.regional[ "cs" ]);
-                    $("#findDateToPicker").datepicker($.datepicker.regional[ "cs" ]);
+                    $("#findDateFromPicker").datepicker();
+                    $("#findDateToPicker").datepicker();
                 });
                 
             </script>

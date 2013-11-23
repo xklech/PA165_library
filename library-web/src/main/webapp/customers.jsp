@@ -58,7 +58,7 @@
             
             <script>
                 $(function(){
-                    $("#findDatePicker").datepicker($.datepicker.regional[ "cs" ]);
+                    $("#findDatePicker").datepicker();
                 });
                 
             </script>
