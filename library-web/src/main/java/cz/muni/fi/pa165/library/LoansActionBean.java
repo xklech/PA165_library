@@ -265,8 +265,12 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
 	/*this.customerService.addCustomer(new CustomerTo(null,"John","Bon Jovi","ffdp",new Date(),"123456789"));
 	this.bookService.save(new BookTo("Bible","123456789012","Fiction",new Date(),"Jesus & God"));*/
 	this.customers = new ArrayList(this.customerService.findAllCustomers());
-	this.books = this.bookService.findAllBooks();
-	this.impressions = this.impressionService.findImpressionsByStatus(StatusType.AVAILIBLE);
+	try {
+	    this.books = this.bookService.findAllBooks();
+	    this.impressions = this.impressionService.findImpressionsByStatus(StatusType.AVAILIBLE);
+	} catch (Exception ex) {
+	    /** @todo response to IllegalArgumentException */
+	}
     }
     
     /* ---------------------------------------------------------------------- */
@@ -276,7 +280,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public void validateFindByCustomer() {
 	try {
 	    this.customerTo = this.customerService.findCustomerById(this.findCustomer);
-	} catch (ServiceDataAccessException ex) {
+	} catch (Exception ex) {
 	    getContext().getValidationErrors().add("findCustomer",new LocalizableError("loans.customerId.invalid",this.findCustomer));
 	}
     }
@@ -285,7 +289,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public void validateCustomerId() {
 	try {
 	    this.customerTo = this.customerService.findCustomerById(this.customerId);
-	} catch (ServiceDataAccessException ex) {
+	} catch (Exception ex) {
 	    getContext().getValidationErrors().add("customerId",new LocalizableError("loans.customerId.invalid",this.customerId));
 	}
     }
@@ -294,7 +298,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public void validateBookId() {
 	try {
 	    this.bookTo = this.bookService.findBookById(this.bookId);
-	} catch (ServiceDataAccessException ex) {
+	} catch (Exception ex) {
 	    getContext().getValidationErrors().add("bookId",new LocalizableError("loans.bookId.invalid",this.bookId));
 	}
     }
@@ -303,7 +307,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public void validateImpressionId() {
 	try {
 	    this.impressionTo = this.impressionService.findImpressionById(this.impressionId);
-	} catch (ServiceDataAccessException ex) {
+	} catch (Exception ex) {
 	    getContext().getValidationErrors().add("impressionId",new LocalizableError("loans.impressionId.invalid",this.impressionId));
 	}
     }
@@ -312,7 +316,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public void validateLoanId() {
 	try {
 	    this.loanTo = this.loanService.findLoanById(this.loanId);
-	} catch (ServiceDataAccessException ex) {
+	} catch (Exception ex) {
 	    getContext().getValidationErrors().add("loanId",new LocalizableError("loans.loanId.invalid",this.loanId));
 	}
     }
@@ -327,7 +331,11 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     }
     
     public Resolution findById() {
-	this.loans = Arrays.asList(this.loanService.findLoanById(this.findId));
+	try {
+	    this.loans = Arrays.asList(this.loanService.findLoanById(this.findId));
+	} catch (Exception ex) {
+	    /** @todo response to IllegalArgumentException */
+	}
 	log.debug("findById()",this.loans);
 	if (this.loans.get(0) == null) {
 	    getContext().getMessages().add(new LocalizableMessage("loans.findById.empty",this.findId));  
@@ -338,7 +346,11 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     }
     
     public Resolution findByAllActive() {
-	this.loans = this.loanService.findAllActiveLoans();
+	try {
+	    this.loans = this.loanService.findAllActiveLoans();
+	} catch (Exception ex) {
+	    /** @todo response to IllegalArgumentException */
+	}
 	log.debug("findAllActive()",this.loans);
 	if (this.loans.isEmpty()) {
 	    getContext().getMessages().add(new LocalizableMessage("loans.findAllActive.empty"));  
@@ -349,7 +361,11 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     }
     
     public Resolution findByCustomer() {
-	this.loans = this.loanService.findLoansByCustomer(this.customerTo);
+	try {
+	    this.loans = this.loanService.findLoansByCustomer(this.customerTo);
+	} catch (Exception ex) {
+	    /** @todo response to IllegalArgumentException */
+	}
 	if (this.loans.isEmpty()) {
 	    getContext().getMessages().add(new LocalizableMessage("loans.findByCustomer.empty",this.findCustomer));
 	    return getContext().getSourcePageResolution();
@@ -359,7 +375,11 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     }
     
     public Resolution findByFromTo() {
-	this.loans = this.loanService.findLoansByFromTo(this.findFrom,this.findTo);
+	try {
+	    this.loans = this.loanService.findLoansByFromTo(this.findFrom,this.findTo);
+	} catch (Exception ex) {
+	    /** @todo response to IllegalArgumentException */
+	}
 	if (this.loans.isEmpty()) {
 	    getContext().getMessages().add(new LocalizableMessage("loans.findByFromTo.empty",this.findFrom,this.findTo));
 	    return getContext().getSourcePageResolution();
@@ -373,10 +393,14 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     }
     
     public Resolution add() {
-	this.loan = new LoanTo(this.customerTo,this.impressionTo,new Date(),null,DamageType.NEW);
-	this.loanService.addLoan(this.loan);
-	this.impressionTo.setStatus(StatusType.LOANED);
-	this.impressionService.updateImpression(this.impressionTo);
+	this.loan = new LoanTo(this.customerTo,this.impressionTo,new Date(),null,this.impressionTo.getDamage());
+	try {
+	    this.loanService.addLoan(this.loan);
+	    this.impressionTo.setStatus(StatusType.LOANED);
+	    this.impressionService.updateImpression(this.impressionTo);
+	} catch (Exception ex) {
+	    /** @todo response to IllegalArgumentException */
+	}
 	getContext().getMessages().add(new LocalizableMessage("loans.add.confirm",escapeHTML(this.customerTo.getFirstName()),escapeHTML(this.customerTo.getLastName()),escapeHTML(this.bookTo.getAuthor()),escapeHTML(this.bookTo.getName())));
 	return new RedirectResolution(this.getClass());
     }
@@ -384,14 +408,22 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public Resolution restore() {
 	this.loanTo.setToDate(new Date());
 	this.loanTo.getImpressionTo().setStatus(StatusType.AVAILIBLE);
-	this.loanService.updateLoan(this.loanTo);
-	this.impressionService.updateImpression(this.loanTo.getImpressionTo());
+	try {
+	    this.loanService.updateLoan(this.loanTo);
+	    this.impressionService.updateImpression(this.loanTo.getImpressionTo());
+	} catch (Exception ex) {
+	    /** @todo response to IllegalArgumentException */
+	}
 	getContext().getMessages().add(new LocalizableMessage("loans.restore.confirm",escapeHTML(this.loanTo.getCustomerTo().getFirstName()),escapeHTML(this.loanTo.getCustomerTo().getLastName()),escapeHTML(this.loanTo.getImpressionTo().getBookTo().getAuthor()),escapeHTML(this.loanTo.getImpressionTo().getBookTo().getName())));
 	return new RedirectResolution(this.getClass());	
     }
     
     public Resolution delete() {
-	this.loanService.deleteLoan(this.loanTo);
+	try {
+	    this.loanService.deleteLoan(this.loanTo);
+	} catch (Exception ex) {
+	    /** @todo response to IllegalArgumentException */
+	}
 	getContext().getMessages().add(new LocalizableMessage("loans.delete.confirm",this.loanTo.getId()));
 	return new RedirectResolution(this.getClass());	
     }

@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.library.service;
 
-
 import cz.muni.fi.pa165.library.to.BookTo;
 import cz.muni.fi.pa165.library.to.ImpressionTo;
 import java.util.Date;
@@ -11,26 +10,30 @@ import java.util.List;
  * @author Jaroslav Klech
  */
 public interface BookService {
+    
     /**
      * Saves given book.
      * 
      * @param bookTo book to be saved
+     * @return BookTo if save was successful, null otherwise
      */
-    public void save(BookTo bookTo);
+    public BookTo save(BookTo bookTo);
     
     /**
      * Updates given book
      * 
      * @param bookTo book to be updated
+     * @return BookTo if update was successful, null otherwise
      */
-    public void updateBook(BookTo bookTo);
+    public BookTo updateBook(BookTo bookTo);
     
     /**
      * Deletes book
      * 
      * @param bookTo book to be deleted
+     * @return true if book was deleted, false otherwise
      */
-    public void deleteBook(BookTo bookTo);
+    public boolean deleteBook(BookTo bookTo);
     
     /**
      * Finds all books in database

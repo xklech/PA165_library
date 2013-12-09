@@ -96,27 +96,27 @@ public class LoanServiceTest extends AbstractIntegrationTest{
 	assertNotNull(loanTo.getId());
     }
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testUpdateLoan() throws Exception {
         LoanTo loanTo = new LoanTo(new CustomerTo(),new ImpressionTo(),this.parseDate("08/08/2008"),null,DamageType.USED);
         Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
-        doThrow(LoanDaoException.class).when(this.loanDaoMock).updateLoan(loan);        
+        doThrow(IllegalArgumentException.class).when(this.loanDaoMock).updateLoan(loan);        
         this.loanService.updateLoan(loanTo);
-        doThrow(LoanDaoException.class).when(this.loanDaoMock).updateLoan(null);
+        doThrow(IllegalArgumentException.class).when(this.loanDaoMock).updateLoan(null);
         this.loanService.deleteLoan(null);
     }
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testDeleteLoan() throws Exception {
         LoanTo loanTo = new LoanTo(new CustomerTo(),new ImpressionTo(),this.parseDate("08/08/2008"),null,DamageType.USED);
         Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
-        doThrow(LoanDaoException.class).when(this.loanDaoMock).deleteLoan(loan);        
+        doThrow(IllegalArgumentException.class).when(this.loanDaoMock).deleteLoan(loan);        
         this.loanService.deleteLoan(loanTo);
-        doThrow(LoanDaoException.class).when(this.loanDaoMock).deleteLoan(null);
+        doThrow(IllegalArgumentException.class).when(this.loanDaoMock).deleteLoan(null);
         this.loanService.deleteLoan(null);
     }
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testFindLoanById() throws Exception {
         LoanTo loanTo = new LoanTo(new CustomerTo(),new ImpressionTo(),this.parseDate("08/08/2008"),null,DamageType.USED);
         loanTo.setId(1l);
@@ -128,7 +128,7 @@ public class LoanServiceTest extends AbstractIntegrationTest{
         when(loanDaoMock.findLoanById(123l)).thenReturn(null);
         LoanTo loanTo3 = loanService.findLoanById(123l);
         Assert.assertNull(loanTo3);
-        when(loanDaoMock.findLoanById(null)).thenThrow(LoanDaoException.class);
+        when(loanDaoMock.findLoanById(null)).thenThrow(IllegalArgumentException.class);
         this.loanService.findLoanById(null);
     }
     

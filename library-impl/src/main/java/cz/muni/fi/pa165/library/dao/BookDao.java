@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.library.entity.Impression;
 import cz.muni.fi.pa165.library.exceptions.BookDaoException;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Data Access Object for managing entity Book.
@@ -13,33 +12,27 @@ import java.util.List;
  * @author Jaroslav Klech
  */
 public interface BookDao {
-    
-    
-
-    
+        
     /**
      * Saves given book.
      * 
      * @param book book to be saved
-     * @throws BookDaoException is thrown when book is null or has ID
      */
-    public void addBook(Book book) throws BookDaoException;
+    public void addBook(Book book);
     
     /**
      * Updates given book
      * 
      * @param book book to be updated
-     * @throws BookDaoException is thrown when book is null or doesn't exist in DB
      */
-    public void updateBook(Book book) throws BookDaoException;
+    public void updateBook(Book book);
     
     /**
      * Deletes book
      * 
      * @param book book to be deleted
-     * @throws BookDaoException is thrown when book is null, book has null id or book doesn't exist in DB
      */
-    public void deleteBook(Book book) throws BookDaoException;
+    public void deleteBook(Book book);
     
     /**
      * Finds all books in database
@@ -53,9 +46,8 @@ public interface BookDao {
      * 
      * @param id id of searched book
      * @return book with given id
-     * @throws BookDaoException if id is null
      */    
-    public Book findBookById(Long id)throws BookDaoException;
+    public Book findBookById(Long id);
     
     /**
      * Finds book with given ISBN.
@@ -63,7 +55,7 @@ public interface BookDao {
      * @param isbn ISBN of searched book
      * @return book with given ISBN
      */
-    public Book findBookByISBN(String isbn) throws BookDaoException;
+    public Book findBookByISBN(String isbn);
     
     /**
      * Finds books with given author
@@ -71,7 +63,7 @@ public interface BookDao {
      * @param author author of the books
      * @return books with given author
      */
-    public Collection<Book> findBooksByAuthor(String author) throws BookDaoException;
+    public Collection<Book> findBooksByAuthor(String author);
     
     /**
      * Finds books by publish date.
@@ -88,7 +80,7 @@ public interface BookDao {
      * @param name name to find books with
      * @return books with given name
      */
-    public Collection<Book> findBooksByName(String name) throws BookDaoException;
+    public Collection<Book> findBooksByName(String name);
     
     /**
      * Finds books by department
@@ -96,13 +88,15 @@ public interface BookDao {
      * @param department department to find books by
      * @return books with given department
      */
-    public Collection<Book> findBooksByDepartment(String department) throws BookDaoException;
+    public Collection<Book> findBooksByDepartment(String department);
     
     /**
      * Finds books for given Impression
      * 
      * @param impression impression to find book for
+     * @throws BookDaoException
      * @return Book for given impression
      */
-    public Book findBookByImpression(Impression impression) throws BookDaoException;
+    public Book findBookByImpression(Impression impression);
+    
 }

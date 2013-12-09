@@ -46,22 +46,22 @@ public class ImpressionServiceTest {
     @Test
     public void addImpressionTest() throws Exception {
         //try null
-        when(mockedImpDao.addImpression(null)).thenThrow(new ImpressionDaoException());        
+        when(mockedImpDao.addImpression(null)).thenThrow(new IllegalArgumentException());        
         try {
             impService.addImpression(null);
             fail("Null impressionTO passed. Should throw ServiceDataAccessException. ");
         }
-        catch (ServiceDataAccessException ex) {}
+        catch (IllegalArgumentException ex) {}
         
         //try something with ID
         impTO = new ImpressionTo(666l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression imp = EntityConvertor.convertFromImpressionTo(impTO);
-        when(mockedImpDao.addImpression(imp)).thenThrow(new ImpressionDaoException());
+        when(mockedImpDao.addImpression(imp)).thenThrow(new IllegalArgumentException());
         try {
             impService.addImpression(impTO);
             fail("impressionTO with preset ID passed. Should throw ServiceDataAccessException. ");
         }
-        catch (ServiceDataAccessException ex) {}
+        catch (IllegalArgumentException ex) {}
         
         //try some valid input
         ImpressionTo impTO2pre = new ImpressionTo(Long.MIN_VALUE, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
@@ -76,32 +76,32 @@ public class ImpressionServiceTest {
     @Test
     public void updateImpressionTest() throws Exception {
         //try null
-        when(mockedImpDao.updateImpression(null)).thenThrow(new ImpressionDaoException());        
+        when(mockedImpDao.updateImpression(null)).thenThrow(new IllegalArgumentException());        
         try {
             impService.updateImpression(null);
             fail("Null impressionTO passed. Should throw ServiceDataAccessException. ");
         }
-        catch (ServiceDataAccessException ex) {}
+        catch (IllegalArgumentException ex) {}
         
         //try something with null ID
         impTO = new ImpressionTo(null, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression imp = EntityConvertor.convertFromImpressionTo(impTO);
-        when(mockedImpDao.updateImpression(imp)).thenThrow(new ImpressionDaoException());
+        when(mockedImpDao.updateImpression(imp)).thenThrow(new IllegalArgumentException());
         try {
             impService.updateImpression(impTO);
             fail("impressionTO with null ID passed. Should throw ServiceDataAccessException. ");
         }
-        catch (ServiceDataAccessException ex) {}
+        catch (IllegalArgumentException ex) {}
         
         //simulate object not present in the DB
         ImpressionTo impTO2 = new ImpressionTo(1010l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression imp2 = EntityConvertor.convertFromImpressionTo(impTO2);
-        when(mockedImpDao.updateImpression(imp2)).thenThrow(new ImpressionDaoException());
+        when(mockedImpDao.updateImpression(imp2)).thenThrow(new IllegalArgumentException());
         try {
             impService.updateImpression(impTO);
             fail("impressionTO with null ID passed. Should throw ServiceDataAccessException. ");
         }
-        catch (ServiceDataAccessException ex) {}        
+        catch (IllegalArgumentException ex) {}        
         
         //try some valid input
         ImpressionTo impTO3 = new ImpressionTo(666l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
@@ -114,43 +114,43 @@ public class ImpressionServiceTest {
     @Test
     public void deleteImpressionTest() throws Exception {
         //try null
-        doThrow(new ImpressionDaoException()).when(mockedImpDao).deleteImpression(null);       
+        doThrow(new IllegalArgumentException()).when(mockedImpDao).deleteImpression(null);       
         try {
             impService.deleteImpression(null);
             fail("Null impressionTO passed. Should throw ServiceDataAccessException. ");
         }
-        catch (ServiceDataAccessException ex) {}
+        catch (IllegalArgumentException ex) {}
         
         //try something with null ID
         impTO = new ImpressionTo(null, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression imp = EntityConvertor.convertFromImpressionTo(impTO);
-        doThrow(new ImpressionDaoException()).when(mockedImpDao).deleteImpression(imp);
+        doThrow(new IllegalArgumentException()).when(mockedImpDao).deleteImpression(imp);
         try {
             impService.deleteImpression(impTO);
             fail("impressionTO with null ID passed. Should throw ServiceDataAccessException. ");
         }
-        catch (ServiceDataAccessException ex) {}
+        catch (IllegalArgumentException ex) {}
         
         //simulate something not in the DB.
         ImpressionTo impTO2 = new ImpressionTo(2020l, null, DamageType.USED, DamageType.NEW, StatusType.LOANED);
         Impression imp2 = EntityConvertor.convertFromImpressionTo(impTO2);
-        doThrow(new ImpressionDaoException()).when(mockedImpDao).deleteImpression(imp2);
+        doThrow(new IllegalArgumentException()).when(mockedImpDao).deleteImpression(imp2);
         try {
             impService.deleteImpression(impTO);
             fail("impressionTO with null ID passed. Should throw ServiceDataAccessException. ");
         }
-        catch (ServiceDataAccessException ex) {}        
+        catch (IllegalArgumentException ex) {}        
     }
     
     @Test
     public void findImpressionByIdTest() throws Exception {
         //Try null
-        when(mockedImpDao.findImpressionById(null)).thenThrow(new ImpressionDaoException());        
+        when(mockedImpDao.findImpressionById(null)).thenThrow(new IllegalArgumentException());        
         try {
             impService.findImpressionById(null);
             fail("Null id passed. Should throw ServiceDataAccessException. ");
         }
-        catch (ServiceDataAccessException ex) {}
+        catch (IllegalArgumentException ex) {}
         
         //try some real stuff
         Long id = 50l;
@@ -171,12 +171,12 @@ public class ImpressionServiceTest {
         assertEquals(emptyImpTO, result1);
         
         //simulate two impressions with inputed damage level
-        List<ImpressionTo> expectedTO = new ArrayList<ImpressionTo>();
+        List<ImpressionTo> expectedTO = new ArrayList();
         ImpressionTo imp1 = new ImpressionTo(11l, null, DamageType.NEW, DamageType.USED, StatusType.LOANED);
         ImpressionTo imp2 = new ImpressionTo(22l, null, DamageType.NEW, DamageType.USED, StatusType.LOANED);
         expectedTO.add(imp1);
         expectedTO.add(imp2);
-        List<Impression> result = new ArrayList<Impression>();
+        List<Impression> result = new ArrayList();
         for (ImpressionTo supp: expectedTO) {
             result.add(EntityConvertor.convertFromImpressionTo(supp));
         }
@@ -194,12 +194,12 @@ public class ImpressionServiceTest {
         assertEquals(emptyImpTO, result1);
         
         //simulate two impressions with inputed status
-        List<ImpressionTo> expectedTO = new ArrayList<ImpressionTo>();
+        List<ImpressionTo> expectedTO = new ArrayList();
         ImpressionTo imp1 = new ImpressionTo(11l, null, DamageType.NEW, DamageType.USED, StatusType.LOANED);
         ImpressionTo imp2 = new ImpressionTo(22l, null, DamageType.NEW, DamageType.USED, StatusType.LOANED);
         expectedTO.add(imp1);
         expectedTO.add(imp2);
-        List<Impression> result = new ArrayList<Impression>();
+        List<Impression> result = new ArrayList();
         for (ImpressionTo supp: expectedTO) {
             result.add(EntityConvertor.convertFromImpressionTo(supp));
         }
@@ -208,23 +208,16 @@ public class ImpressionServiceTest {
         
         assertEquals(expectedTO, resultTO);
     }
-    
-    /**
-     * Finds all impressions of given books
-     * 
-     * @param bookTo status of impressions to find
-     * @throws ServiceDataAccessException is thrown, when inputed BookTO is null
-     * @return List of all impressionTOs of given BookTO or empty list
-     */
+
     @Test
     public void findImpressionsByBookTest() throws Exception {        
         //try null book
-        when(mockedImpDao.findImpressionsByBook(null)).thenThrow(new ImpressionDaoException());
+        when(mockedImpDao.findImpressionsByBook(null)).thenThrow(new IllegalArgumentException());
         try {
             List<ImpressionTo> result1 = impService.findImpressionsByBook(null);
             fail("Null bookTO passed. Should throw ServiceDataAccessException");
         }
-        catch (ServiceDataAccessException ex) {}
+        catch (IllegalArgumentException ex) {}
         
         //simulate no impressions with inputed bookTO
         BookTo bookTO1 = new BookTo("Babička", "978-80-242-2872-3", "próza", null, "Božena Němcová");

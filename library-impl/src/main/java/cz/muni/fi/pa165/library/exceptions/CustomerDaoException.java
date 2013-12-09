@@ -30,9 +30,8 @@ public class CustomerDaoException extends Exception {
      * @param msg the detail message.
      * @param cause the cause of exception
      */
-    public CustomerDaoException(String message, Throwable cause) {
-        super(message, cause);
+    public CustomerDaoException(String msg, Throwable cause) {
+        super(msg,cause);
     }
-    
     
 }

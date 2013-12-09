@@ -26,10 +26,9 @@ public class LoanTest extends AbstractIntegrationTest{
     @Test
     public void testAddLoan() throws Exception {
 	Customer customer = new Customer();
-	Loan loan = new Loan(customer,new Impression(),this.parseDate("01/01/2001"),this.parseDate("02/02/2002"),DamageType.DAMAGED);
-
+	Impression impression = new Impression();
+	Loan loan = new Loan(customer,impression,this.parseDate("01/01/2001"),this.parseDate("02/02/2002"),DamageType.DAMAGED);
 	loanDao.addLoan(loan);
-
 	Loan loanFromDatabase = loanDao.findLoanById(loan.getId());
 	Assert.assertEquals(loan,loanFromDatabase);
     }

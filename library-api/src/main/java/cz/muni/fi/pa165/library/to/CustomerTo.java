@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.library.to;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -8,7 +9,8 @@ import java.util.Objects;
  *
  * @author Ivana Haraslínová
  */
-public class CustomerTo {
+public class CustomerTo implements Serializable {
+    
     private Long id;
 
     private String firstName; 
@@ -21,11 +23,9 @@ public class CustomerTo {
 
     private String pid;
 
-    public CustomerTo() {
-    }
+    public CustomerTo() {}
 
-    public CustomerTo(Long id, String firstName, String lastName, String address, Date dateOfBirth, String pid) {
-        this.id = id;
+    public CustomerTo(String firstName, String lastName, String address, Date dateOfBirth, String pid) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -81,7 +81,6 @@ public class CustomerTo {
         this.pid = pid;
     }
 
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -106,5 +105,4 @@ public class CustomerTo {
         return "CustomerTO{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", dateOfBirth=" + dateOfBirth + ", pid=" + pid + '}';
     }
 
-    
 }

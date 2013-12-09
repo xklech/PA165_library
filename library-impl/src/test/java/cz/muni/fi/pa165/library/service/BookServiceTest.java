@@ -26,6 +26,7 @@ import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -50,7 +51,7 @@ public class BookServiceTest extends AbstractIntegrationTest{
         bookService.setImpressionDao(mockedImpressionDao);
     }
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testSaveBook() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -68,11 +69,11 @@ public class BookServiceTest extends AbstractIntegrationTest{
         assertNotNull(bookTo.getId());
         book.setId(1l);
         bookTo.setId(1l);
-        doThrow(BookDaoException.class).when(mockedBookDao).addBook(book);
+        doThrow(IllegalArgumentException.class).when(mockedBookDao).addBook(book);
         bookService.save(bookTo);
     }
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testFindBookById() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -81,11 +82,11 @@ public class BookServiceTest extends AbstractIntegrationTest{
         when(mockedBookDao.findBookById(1l)).thenReturn(book);
         BookTo bookTo1 = bookService.findBookById(1l);
         assertEquals(bookTo, bookTo1);
-        when(mockedBookDao.findBookById(null)).thenThrow(BookDaoException.class);
+        when(mockedBookDao.findBookById(null)).thenThrow(IllegalArgumentException.class);
         bookService.findBookById(null);
     }
    
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testFindBooksByName() throws Exception
     {
         Book book1= new Book("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -98,37 +99,37 @@ public class BookServiceTest extends AbstractIntegrationTest{
         Collection<BookTo> books= bookService.findBooksByName("Mobil");
         assertEquals(books.size(), 2);
         
-        when(mockedBookDao.findBooksByName(null)).thenThrow(BookDaoException.class);
+        when(mockedBookDao.findBooksByName(null)).thenThrow(IllegalArgumentException.class);
         bookService.findBooksByName(null);
     }
  
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testUpdateBook() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
         Book book1 = EntityConvertor.convertFromBookTo(bookTo);
-        doThrow(BookDaoException.class).when(mockedBookDao).updateBook(book1);        
+        doThrow(IllegalArgumentException.class).when(mockedBookDao).updateBook(book1);        
         bookService.updateBook(bookTo);
 
         
-        doThrow(BookDaoException.class).when(mockedBookDao).updateBook(null);
+        doThrow(IllegalArgumentException.class).when(mockedBookDao).updateBook(null);
         bookService.updateBook(null);
     }
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testDeleteBook() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
         Book book1 = EntityConvertor.convertFromBookTo(bookTo);
-        doThrow(BookDaoException.class).when(mockedBookDao).deleteBook(book1);        
+        doThrow(IllegalArgumentException.class).when(mockedBookDao).deleteBook(book1);        
         bookService.deleteBook(bookTo);
 
         
-        doThrow(BookDaoException.class).when(mockedBookDao).deleteBook(null);
+        doThrow(IllegalArgumentException.class).when(mockedBookDao).deleteBook(null);
         bookService.deleteBook(null);
     }
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testFindBookByISBN() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -143,11 +144,11 @@ public class BookServiceTest extends AbstractIntegrationTest{
 
         assertNull(bookService.findBookByISBN("1234"));
         
-        doThrow(BookDaoException.class).when(mockedBookDao).findBookByISBN(null);
+        doThrow(IllegalArgumentException.class).when(mockedBookDao).findBookByISBN(null);
         bookService.findBookByISBN(null);
     }
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testFindBooksByAuthor() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -162,7 +163,7 @@ public class BookServiceTest extends AbstractIntegrationTest{
 
         assertNull(bookService.findBookByISBN("1234"));
         
-        doThrow(BookDaoException.class).when(mockedBookDao).findBooksByAuthor(null);
+        doThrow(IllegalArgumentException.class).when(mockedBookDao).findBooksByAuthor(null);
         bookService.findBooksByAuthor(null);
     }
    
@@ -183,7 +184,7 @@ public class BookServiceTest extends AbstractIntegrationTest{
 
     }
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=BookDaoException.class)
     public void testFindBooksByDepartment() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -203,7 +204,7 @@ public class BookServiceTest extends AbstractIntegrationTest{
 
     } 
    
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testFindBookByImpression() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -225,7 +226,7 @@ public class BookServiceTest extends AbstractIntegrationTest{
         when(mockedBookDao.findBookByImpression(impression2)).thenReturn(null);
         assertNull(bookService.findBookByImpression(impressionTo2));
         
-        doThrow(BookDaoException.class).when(mockedBookDao).findBookByImpression(null);
+        doThrow(IllegalArgumentException.class).when(mockedBookDao).findBookByImpression(null);
         bookService.findBookByImpression(null);
 
     } 

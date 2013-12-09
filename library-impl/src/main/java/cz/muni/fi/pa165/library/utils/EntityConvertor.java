@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package cz.muni.fi.pa165.library.utils;
 
 import cz.muni.fi.pa165.library.entity.Book;
@@ -26,8 +20,8 @@ public class EntityConvertor {
      * @param book book to be converted
      * @return book transfer object
      */
-    public static BookTo convertFromBook(Book book){
-        if(book == null){
+    public static BookTo convertFromBook(Book book) {
+        if (book == null) {
             return null;
         }
         BookTo bookTo = new BookTo();
@@ -45,19 +39,17 @@ public class EntityConvertor {
      * @param bookTo bookTo to be converted
      * @return book
      */
-    public static Book convertFromBookTo(BookTo bookTo){
-        if(bookTo == null){
+    public static Book convertFromBookTo(BookTo bookTo) {
+        if (bookTo == null) {
             return null;
         }
         Book book = new Book();
         book.setId(bookTo.getId());
         book.setName(bookTo.getName());
         book.setISBN(bookTo.getIsbn());
-
         book.setDepartment(bookTo.getDepartment());
         book.setPublishDate(bookTo.getPublishDate());
         book.setAuthor(bookTo.getAuthor());
-
         return book;
     }
     /**
@@ -66,17 +58,15 @@ public class EntityConvertor {
      * @return impression transfer object
      */
     public static ImpressionTo convertFromImpression(Impression impr) {
-        if(impr == null){
+        if (impr == null) {
             return null;
         }
         ImpressionTo impressionTo = new ImpressionTo();
-        
         impressionTo.setId(impr.getId());
         impressionTo.setBookTo(EntityConvertor.convertFromBook(impr.getBook()));
         impressionTo.setInitialDamage(impr.getInitialDamage());
         impressionTo.setDamage(impr.getDamage());
         impressionTo.setStatus(impr.getStatus());
-
         return impressionTo;
     }
 
@@ -86,7 +76,7 @@ public class EntityConvertor {
      * @return Impression
      */
     public static Impression convertFromImpressionTo(ImpressionTo imprTo) {
-        if(imprTo == null){
+        if (imprTo == null) {
             return null;
         }
         Impression impression = new Impression();
@@ -104,7 +94,7 @@ public class EntityConvertor {
      * @return customer transfer object
      */
     public static CustomerTo convertFromCustomer(Customer customer){
-        if(customer == null){
+        if (customer == null) {
             return null;
         }
         CustomerTo customerTo = new CustomerTo();
@@ -123,8 +113,8 @@ public class EntityConvertor {
      * @param customerTo CustomerTo to be converted
      * @return Customer
      */
-    public static Customer convertFromCustomerTo(CustomerTo customerTo){
-        if(customerTo == null){
+    public static Customer convertFromCustomerTo(CustomerTo customerTo) {
+        if (customerTo == null) {
             return null;
         }
         Customer customer= new Customer();
@@ -134,7 +124,6 @@ public class EntityConvertor {
         customer.setAddress(customerTo.getAddress());
         customer.setDateOfBirth(customerTo.getDateOfBirth());
         customer.setPid(customerTo.getPid());
-        
         return customer;
     }
 
@@ -158,7 +147,7 @@ public class EntityConvertor {
         return loanTo;
     }
 
-        /**
+    /**
      * Converts Loan transfer object into Loan
      * @param loanTo LoanTo to be converted
      * @return Loan

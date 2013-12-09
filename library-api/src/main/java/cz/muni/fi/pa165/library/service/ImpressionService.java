@@ -4,7 +4,6 @@ import cz.muni.fi.pa165.library.to.BookTo;
 import cz.muni.fi.pa165.library.to.ImpressionTo;
 import cz.muni.fi.pa165.library.enums.DamageType;
 import cz.muni.fi.pa165.library.enums.StatusType;
-import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import java.util.List;
 
 /**
@@ -17,36 +16,33 @@ public interface ImpressionService {
      * Saves given impression.
      * 
      * @param impressionTO ImpressionTo to be saved
-     * @throws ServiceDataAccessException is thrown when impressionTO is null or has ID
-     * @return the inputed ImpressionTo
+     * @return ImpressionTo if save was successful, null otherwise
      */
-    public ImpressionTo addImpression(ImpressionTo impressionTO) throws ServiceDataAccessException;
+    public ImpressionTo addImpression(ImpressionTo impressionTO);
     
     /**
      * Updates given impression
      * 
      * @param impressionTO ImpressionTo to be updated
-     * @throws ServiceDataAccessException is thrown when impressionTO is null, has no ID or doesn't exist in DB
-     * @return the inputed impressionTO
+     * @return ImpressionTo if update was successful, null otherwise
      */
-    public ImpressionTo updateImpression(ImpressionTo impressionTO) throws ServiceDataAccessException;
+    public ImpressionTo updateImpression(ImpressionTo impressionTO);
     
     /**
      * Deletes given impression
      * 
      * @param impressionTO ImpressionTo to be updated
-     * @throws ServiceDataAccessException is thrown when impressionTO is null, has no ID or doesn't exist in DB
+     * @return true if impression was deleted, false otherwise
      */
-    public void deleteImpression(ImpressionTo impressionTO) throws ServiceDataAccessException;
+    public boolean deleteImpression(ImpressionTo impressionTO);
     
     /**
      * Finds impression with given ID.
      * 
-     * @param id id (Long) of searched impression
-     * @throws ServiceDataAccessException is thrown when inputed ID is null
+     * @param id id (Long) of searched 
      * @return ImpressionTo with given id or null if not found
      */    
-    public ImpressionTo findImpressionById(Long id) throws ServiceDataAccessException;
+    public ImpressionTo findImpressionById(Long id);
     
     /**
      * Finds all impressions with given damage level
@@ -68,9 +64,8 @@ public interface ImpressionService {
      * Finds all impressions of given books
      * 
      * @param bookTo status of impressions to find
-     * @throws ServiceDataAccessException is thrown, when inputed BookTO is null
      * @return List of all impressionTOs of given BookTO or empty list
      */
-    public List<ImpressionTo> findImpressionsByBook(BookTo bookTo) throws ServiceDataAccessException;
+    public List<ImpressionTo> findImpressionsByBook(BookTo bookTo);
 
 }

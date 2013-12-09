@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.to;
 
 import cz.muni.fi.pa165.library.enums.DamageType;
 import cz.muni.fi.pa165.library.enums.StatusType;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -10,7 +11,8 @@ import java.util.Objects;
  * @author Petr Vacek
  */
 
-public class ImpressionTo {
+public class ImpressionTo implements Serializable {
+    
     private Long id;
 
     private BookTo bookTo;
@@ -29,10 +31,7 @@ public class ImpressionTo {
         this.status = status;
     }
 
-    public ImpressionTo() {
-    }
-    
-    
+    public ImpressionTo() {}
     
     public Long getId() {
         return id;
@@ -100,8 +99,5 @@ public class ImpressionTo {
     public String toString() {
         return "ImpressionTO{" + "id=" + id + ", bookTo=" + bookTo + ", initialDamage=" + initialDamage + ", damage=" + damage + ", status=" + status + '}';
     }
-    
-    
-    
     
 }

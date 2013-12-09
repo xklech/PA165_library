@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.library.to;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ import java.util.Objects;
  *
  * @author Jaroslav Klech
  */
-public class BookTo implements Cloneable{
+public class BookTo implements Serializable {
     
     private Long id;
 
@@ -22,8 +23,7 @@ public class BookTo implements Cloneable{
 
     private String author;
 
-    public BookTo() {
-    }
+    public BookTo() {}
     
     public BookTo(String name, String isbn, String department, Date publishDate, String author) {
         this.name = name;
@@ -104,15 +104,5 @@ public class BookTo implements Cloneable{
     public String toString() {
         return "BookTo{" + "id=" + id + ", name=" + name + ", isbn=" + isbn + ", department=" + department + ", publishDate=" + publishDate + ", author=" + author + '}';
     }
-    
-    @Override
-    public Object clone()  {
-        try {
-            return super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-    } 
-    
     
 }

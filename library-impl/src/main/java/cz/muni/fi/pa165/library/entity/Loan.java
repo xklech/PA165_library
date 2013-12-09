@@ -4,7 +4,6 @@ import cz.muni.fi.pa165.library.enums.DamageType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -111,10 +110,7 @@ public class Loan implements Serializable {
 	    return false;
 	}
 	final Loan other = (Loan) obj;
-	if (!Objects.equals(this.id, other.id)) {
-	    return false;
-	}
-	return true;
+	return Objects.equals(this.id, other.id);
     }
 
     @Override

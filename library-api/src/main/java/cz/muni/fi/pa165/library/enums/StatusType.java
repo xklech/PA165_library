@@ -9,6 +9,6 @@ public enum StatusType {
     
     AVAILIBLE,
     LOANED,
-    DISABLED // How about REMOVED instead?
+    REMOVED
     
 }

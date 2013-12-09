@@ -76,7 +76,8 @@ public class EntityConvertorTest {
     
     @Test
     public void fromCustomerTest(){
-        Customer customer = new Customer(1l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        Customer customer = new Customer("George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+	customer.setId(1l);
         CustomerTo customerTo = EntityConvertor.convertFromCustomer(customer);
         assertEquals(customer.getId(),customerTo.getId());
         assertEquals(customer.getAddress(),customerTo.getAddress());
@@ -88,7 +89,8 @@ public class EntityConvertorTest {
     
     @Test
     public void fromCustomerToTest(){
-        CustomerTo customerTo = new CustomerTo(1l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTo = new CustomerTo("George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+	customerTo.setId(1l);
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTo);
         assertEquals(customer.getId(),customerTo.getId());
         assertEquals(customer.getAddress(),customerTo.getAddress());
@@ -100,7 +102,8 @@ public class EntityConvertorTest {
     
     @Test
     public void fromLoanTest(){
-        Customer customer = new Customer(1l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        Customer customer = new Customer("George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+	customer.setId(1l);
         Book book = new Book("Android", "1234-4569-874", "Mobil", new Date(), "Jaryn");
         book.setId(1l);
         Impression impression = new Impression(book, DamageType.USED, DamageType.NEW, StatusType.LOANED);
@@ -117,7 +120,8 @@ public class EntityConvertorTest {
 
     @Test
     public void fromLoanToTest(){
-        CustomerTo customerTo = new CustomerTo(1l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTo = new CustomerTo("George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+	customerTo.setId(1l);
         BookTo bookTo = new BookTo("Android", "1234-4569-874", "Mobil", new Date(), "Jaryn");
         bookTo.setId(1l);
         ImpressionTo impressionTo = new ImpressionTo(123l,bookTo, DamageType.USED, DamageType.NEW, StatusType.LOANED);

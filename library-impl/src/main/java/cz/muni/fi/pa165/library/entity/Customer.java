@@ -36,11 +36,9 @@ public class Customer implements Serializable {
     @Column(length=11)
     private String pid;
 
-    
     public Customer() {}
 
-    public Customer(Long id, String firstName, String lastName, String address, Date dateOfBirth, String pid) {
-	this.id = id;
+    public Customer(String firstName, String lastName, String address, Date dateOfBirth, String pid) {
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.address = address;
@@ -112,10 +110,7 @@ public class Customer implements Serializable {
 	    return false;
 	}
 	final Customer other = (Customer) obj;
-	if (!Objects.equals(this.id, other.id)) {
-	    return false;
-	}
-	return true;
+	return Objects.equals(this.id, other.id);
     }
 
     @Override

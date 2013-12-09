@@ -22,24 +22,29 @@ public class ImpressionDaoImpl implements ImpressionDao {
     private EntityManager entityManager;
     
     @Override
-    public Impression addImpression(Impression impression) throws ImpressionDaoException {
-        if (impression == null)
-                throw new ImpressionDaoException("Trying to store NULL object");
-        if (impression.getId() != null)
-                throw new ImpressionDaoException("Trying to store object that is already stored");        
+    public Impression addImpression(Impression impression) {
+        if (impression == null) {
+	    throw new IllegalArgumentException("Trying to store NULL object");
+	}
+        if (impression.getId() != null) {
+	    throw new IllegalArgumentException("Trying to store object that is already stored");        
+	}
         entityManager.persist(impression);
         return impression;
     }
 
     @Override
-    public Impression updateImpression(Impression impression) throws ImpressionDaoException {
-        if (impression == null)
-            throw new ImpressionDaoException("Trying to update NULL");
-        if (impression.getId() == null)
-            throw new ImpressionDaoException("Trying to update impression with null id");
+    public Impression updateImpression(Impression impression) {
+        if (impression == null) {
+            throw new IllegalArgumentException("Trying to update NULL");
+	}
+        if (impression.getId() == null) {
+            throw new IllegalArgumentException("Trying to update impression with null id");
+	}
         Impression storedImpression = entityManager.find(Impression.class, impression.getId());
-        if (storedImpression == null)
-            throw new ImpressionDaoException("Given impression not found in the database");
+        if (storedImpression == null) {
+            throw new IllegalArgumentException("Given impression not found in the database");
+	}
         storedImpression.setBook(impression.getBook());
         storedImpression.setInitialDamage(impression.getInitialDamage());
         storedImpression.setDamage(impression.getDamage());
@@ -48,54 +53,51 @@ public class ImpressionDaoImpl implements ImpressionDao {
     }
 
     @Override
-    public void deleteImpression(Impression impression) throws ImpressionDaoException  {
-        if (impression == null)
-            throw new ImpressionDaoException("Trying to delete NULL object");
-        if (impression.getId() == null)
-            throw new ImpressionDaoException ("Trying to delete unstored impression");
+    public void deleteImpression(Impression impression) {
+        if (impression == null) {
+            throw new IllegalArgumentException("Trying to delete NULL object");
+	}
+        if (impression.getId() == null) {
+            throw new IllegalArgumentException ("Trying to delete unstored impression");
+	}
         Impression storedImpression = entityManager.find(Impression.class, impression.getId());
-        if (storedImpression == null)
-            throw new ImpressionDaoException("Given impression not found in the database");
+        if (storedImpression == null) {
+            throw new IllegalArgumentException("Given impression not found in the database");
+	}
         entityManager.remove(storedImpression);
     }
     
     @Override
-    public Impression findImpressionById(Long id) throws ImpressionDaoException {
-        if (id == null)
-            throw new ImpressionDaoException("Trying to find NULL");
+    public Impression findImpressionById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Trying to find NULL");
+	}
         return entityManager.find(Impression.class, id);
     }
 
     @Override
     public List<Impression> findImpressionsByDamage(DamageType damage) {
-        TypedQuery<Impression> query 
-                = entityManager.createNamedQuery("Impression.findImpressionsByDamage",
-                                        Impression.class);
+        TypedQuery<Impression> query = entityManager.createNamedQuery("Impression.findImpressionsByDamage",Impression.class);
         query.setParameter("damage", damage);
         return query.getResultList();
     }
 
     @Override
     public List<Impression> findImpressionsByStatus(StatusType status) {
-        TypedQuery<Impression> query 
-                = entityManager.createNamedQuery("Impression.findImpressionsByStatus",
-                                        Impression.class);
+        TypedQuery<Impression> query = entityManager.createNamedQuery("Impression.findImpressionsByStatus",Impression.class);
         query.setParameter("status", status);
         return query.getResultList();
     }
 
     @Override
-    public List<Impression> findImpressionsByBook(Book book) throws ImpressionDaoException {
+    public List<Impression> findImpressionsByBook(Book book) {
         if (book == null) {
-            throw new ImpressionDaoException("Inputed book is NULL");
+            throw new IllegalArgumentException("Inputed book is NULL");
         }
-        Long bookId = book.getId();
-        if (bookId == null) {
-            throw new ImpressionDaoException("Inputed book has null ID");
+        if (book.getId() == null) {
+            throw new IllegalArgumentException("Inputed book has null ID");
         }
-        TypedQuery<Impression> query 
-                = entityManager.createNamedQuery("Impression.findImpressionsByBook",
-                                        Impression.class);
+        TypedQuery<Impression> query = entityManager.createNamedQuery("Impression.findImpressionsByBook",Impression.class);
         query.setParameter("book", book);
         return query.getResultList();
     }

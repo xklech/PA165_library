@@ -81,14 +81,22 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
 
     public Resolution add() {
         log.debug("add() customer={}", customer);
-        customerService.addCustomer(customer);
+	try {
+	    customerService.addCustomer(customer);
+	} catch (Exception ex) {
+	    /** @todo response to IllegalArgumentException */
+	}
         getContext().getMessages().add(new LocalizableMessage("customer.add.message",escapeHTML(customer.getFirstName()),escapeHTML(customer.getLastName()),customer.getId()));
         return new RedirectResolution(this.getClass());
     }
   
     public Resolution save() {
         log.debug("save() customer={}", customer);
-        customerService.updateCustomer(customer);
+	try {
+	    customerService.updateCustomer(customer);
+	} catch (Exception ex) {
+	    /** @todo response to IllegalArgumentException */
+	}
         getContext().getMessages().add(new LocalizableMessage("customer.save.message",escapeHTML(customer.getFirstName()),escapeHTML(customer.getLastName()),customer.getId()));
         return new RedirectResolution(this.getClass());
     }
@@ -112,18 +120,30 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
         if (idStr == null) {
             return;
         }
+	Long id;
         try {
-            customer = customerService.findCustomerById(Long.parseLong(idStr));
+	    id = Long.parseLong(idStr);
         } catch(NumberFormatException ex) {
             log.debug("loadCustomerFromDatabase() number format exception - input:{}",idStr);
+	    return;
         }
+	try {
+	    customer = customerService.findCustomerById(id);
+	} catch (Exception ex) {
+	    /** @todo response to IllegalArgumentException */
+	}
     }
 
     public Resolution findById() {
         log.debug("findById() ");
-        CustomerTo supp = customerService.findCustomerById(findId);
-        if (supp != null) {
-            customers = Arrays.asList(supp);
+	CustomerTo customerTo = null;
+	try {
+	    customerTo = customerService.findCustomerById(findId);
+	} catch (Exception ex) {
+	    /** @todo response to IllegalArgumentException */
+	}
+        if (customerTo != null) {
+            customers = Arrays.asList(customerTo);
         } else {
             getContext().getMessages().add(new LocalizableError("customer.findId.message",findId));  
             return getContext().getSourcePageResolution();
@@ -133,7 +153,11 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
 
     public Resolution findByName() {
         log.debug("findByName(" + findFirstName + ", " + findLastName + ") ");
-        customers = customerService.findCustomerByName(findFirstName, findLastName);
+	try {
+	    customers = customerService.findCustomerByName(findFirstName, findLastName);
+	} catch (Exception ex) {
+	    /** @todo response to IllegalArgumentException */
+	}
         if (customers == null || customers.isEmpty()) {
             getContext().getMessages().add(new LocalizableError("customer.findName.message", findFirstName, findLastName));  
             return getContext().getSourcePageResolution();

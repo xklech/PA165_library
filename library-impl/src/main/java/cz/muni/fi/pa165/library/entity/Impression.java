@@ -37,11 +37,7 @@ public class Impression implements Serializable {
 
     public Impression() {}
     
-    public Impression(  Book book,
-                        DamageType initialDamage,
-                        DamageType damage,
-                        StatusType status)
-    {
+    public Impression(Book book, DamageType initialDamage, DamageType damage, StatusType status) {
         this.book = book;
         this.initialDamage = initialDamage;
         this.damage = damage;
@@ -104,10 +100,7 @@ public class Impression implements Serializable {
             return false;
         }
         final Impression other = (Impression) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override

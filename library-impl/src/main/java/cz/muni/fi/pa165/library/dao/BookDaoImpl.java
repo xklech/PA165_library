@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Impression;
-import cz.muni.fi.pa165.library.exceptions.BookDaoException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -25,32 +24,28 @@ public class BookDaoImpl implements BookDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    
-    
     @Override
-    public void addBook(Book book) throws BookDaoException {
+    public void addBook(Book book) {
         if (book == null) {
-            throw new BookDaoException("addBook: given book atribute is null");
+            throw new IllegalArgumentException("addBook: given book atribute is null");
         }
         if (book.getId() != null) {
-            throw new BookDaoException("addBook: given book has filled id");
+            throw new IllegalArgumentException("addBook: given book has filled id");
         }
-        System.err.println("dao:addbook called");
         entityManager.persist(book);
-
     }
 
     @Override
-    public void updateBook(Book book) throws BookDaoException {
+    public void updateBook(Book book) {
         if (book == null) {
-            throw new BookDaoException("updateBook: given book atribute is null");
+            throw new IllegalArgumentException("updateBook: given book atribute is null");
         }
         if (book.getId() == null) {
-            throw new BookDaoException("updateBook: given book has not filled id");
+            throw new IllegalArgumentException("updateBook: given book has not filled id");
         }
         Book savedBook = entityManager.find(Book.class, book.getId());
         if (savedBook == null) {
-            throw new BookDaoException("updateBook: given book doesn't exist in DB");
+            throw new IllegalArgumentException("updateBook: given book doesn't exist in DB");
         }
         savedBook.setAuthor(book.getAuthor());
         savedBook.setDepartment(book.getDepartment());
@@ -60,20 +55,18 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public void deleteBook(Book book) throws BookDaoException {
-
+    public void deleteBook(Book book) {
         if (book == null) {
-            throw new BookDaoException("deleteBook: given book atribute is null");
+            throw new IllegalArgumentException("deleteBook: given book atribute is null");
         }
         if (book.getId() == null) {
-            throw new BookDaoException("deleteBook: given book has not filled id");
+            throw new IllegalArgumentException("deleteBook: given book has not filled id");
         }
         Book savedBook = entityManager.find(Book.class, book.getId());
         if (savedBook == null) {
-            throw new BookDaoException("deleteBook: given book doesn't exist in DB");
+            throw new IllegalArgumentException("deleteBook: given book doesn't exist in DB");
         }
         entityManager.remove(savedBook);
-
     }
 
     @Override
@@ -83,20 +76,18 @@ public class BookDaoImpl implements BookDao {
     }
     
     @Override
-    public Book findBookById(Long id) throws BookDaoException {
-
+    public Book findBookById(Long id) {
         if (id == null) {
-            throw new BookDaoException("findBookById: given attribute id is null");
+            throw new IllegalArgumentException("findBookById: given attribute id is null");
         }
         Book book = entityManager.find(Book.class, id);
-
         return book;
     }
 
     @Override
-    public Book findBookByISBN(String isbn) throws BookDaoException{
+    public Book findBookByISBN(String isbn) {
         if (isbn == null) {
-            throw new BookDaoException("findBookByISBN: given attribute isbn is null");
+            throw new IllegalArgumentException("findBookByISBN: given attribute isbn is null");
         }
         TypedQuery query = entityManager.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn", Book.class);
         query.setParameter("isbn", isbn);
@@ -104,19 +95,17 @@ public class BookDaoImpl implements BookDao {
         if (books == null || books.isEmpty()) {
             return null;
         }
-
         return books.get(0);
 
     }
 
     @Override
-    public Collection<Book> findBooksByAuthor(String author) throws BookDaoException{
+    public Collection<Book> findBooksByAuthor(String author) {
         if (author == null) {
-            throw new BookDaoException("findBooksByAuthor: given attribute author is null");
+            throw new IllegalArgumentException("findBooksByAuthor: given attribute author is null");
         }
         TypedQuery query = entityManager.createQuery("SELECT b FROM Book b WHERE b.author LIKE :author", Book.class);
         query.setParameter("author", "%" + author + "%");
-
         return query.getResultList();
     }
 
@@ -141,9 +130,9 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Collection<Book> findBooksByName(String name) throws BookDaoException{
+    public Collection<Book> findBooksByName(String name) {
         if (name == null) {
-            throw new BookDaoException("findBooksByName: given attribute name is null");
+            throw new IllegalArgumentException("findBooksByName: given attribute name is null");
         }
         TypedQuery query = entityManager.createQuery("SELECT b FROM Book b WHERE b.name LIKE :name", Book.class);
         query.setParameter("name", "%" + name + "%");
@@ -153,9 +142,9 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Collection<Book> findBooksByDepartment(String department) throws BookDaoException{
+    public Collection<Book> findBooksByDepartment(String department) {
         if (department == null) {
-            throw new BookDaoException("findBooksByDepartment: given attribute department is null");
+            throw new IllegalArgumentException("findBooksByDepartment: given attribute department is null");
         }
         TypedQuery query = entityManager.createQuery("SELECT b FROM Book b WHERE b.department LIKE :department", Book.class);
         query.setParameter("department", "%" + department + "%");
@@ -164,19 +153,20 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Book findBookByImpression(Impression impression) throws BookDaoException {
+    public Book findBookByImpression(Impression impression) {
         if (impression == null) {
-            throw new BookDaoException("Impression: given attribute impression is null");
+            throw new IllegalArgumentException("Impression: given attribute impression is null");
         }
+	if (impression.getId() == null) {
+	    throw new IllegalArgumentException("Impression.id: given attribute impression is null");
+	}
         TypedQuery query = entityManager.createQuery("SELECT b FROM Impression i LEFT JOIN i.book b WHERE i.id = :id", Book.class);
         query.setParameter("id", impression.getId());
         List<Book> books = query.getResultList();
         if (books == null || books.isEmpty()) {
             return null;
         }
-
         return books.get(0);
     }
-
 
 }

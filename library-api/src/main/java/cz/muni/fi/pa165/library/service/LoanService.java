@@ -15,22 +15,25 @@ public interface LoanService {
      * Saves loan supplied as parameter into database.
      * 
      * @param loanTo loan to be saved
+     * @return LoanTo if save was successful, null otherwise
      */
-    public void addLoan(LoanTo loanTo);
+    public LoanTo addLoan(LoanTo loanTo);
     
     /**
      * Updates data of loan supplied as parameter in database.
      * 
      * @param loanTo loan to be updated
+     * @return LoanTo if update was successful, null otherwise
      */
-    public void updateLoan(LoanTo loanTo);
+    public LoanTo updateLoan(LoanTo loanTo);
     
     /**
      * Deletes loan supplied as parameter from database.
      * 
      * @param loanTo loan to be deleted
+     * @return true if loan was deleted, false otherwise
      */
-    public void deleteLoan(LoanTo loanTo);
+    public boolean deleteLoan(LoanTo loanTo);
     
     /**
      * Finds and returns loan according to its id

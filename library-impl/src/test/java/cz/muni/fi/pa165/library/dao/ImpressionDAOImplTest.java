@@ -1,7 +1,5 @@
 package cz.muni.fi.pa165.library.dao;
 
-import cz.muni.fi.pa165.library.dao.BookDao;
-import cz.muni.fi.pa165.library.dao.ImpressionDao;
 import cz.muni.fi.pa165.library.AbstractIntegrationTest;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.enums.DamageType;
@@ -47,12 +45,7 @@ public class ImpressionDAOImplTest extends AbstractIntegrationTest{
         assertEquals(imp.getDamage(), storedImp.getDamage());
         assertEquals(imp.getStatus(), storedImp.getStatus());
         Impression result;
-        try {
-            result = impressionDao.findImpressionById(storedImp.getId());
-        } catch (ImpressionDaoException ex) {
-            fail(buildErrMsg(ex));
-            return;
-        }
+	result = impressionDao.findImpressionById(storedImp.getId());
         assertEquals(storedImp, result);
     }
 
@@ -73,13 +66,7 @@ public class ImpressionDAOImplTest extends AbstractIntegrationTest{
         impressionDao.addImpression(imp);
         imp2.setId(imp.getId());
         imp3.setId(imp.getId());
-        try {
-            imp2 = impressionDao.updateImpression(imp2);
-        }
-        catch(ImpressionDaoException ex) {
-            fail(buildErrMsg(ex));
-            return;
-        }
+	imp2 = impressionDao.updateImpression(imp2);
         assertTrue(imp == imp2);
         assertEquals(imp.getId(),imp3.getId());
         assertEquals(imp.getBook(),imp3.getBook());
@@ -96,12 +83,7 @@ public class ImpressionDAOImplTest extends AbstractIntegrationTest{
 
         assertNotNull(imp.getId());
 
-        try {
-            impressionDao.deleteImpression(imp);
-        } catch (ImpressionDaoException ex) {
-            fail(buildErrMsg(ex));
-            return;            
-        }
+	impressionDao.deleteImpression(imp);
         Impression impr = impressionDao.findImpressionById(imp.getId());
         assertNull(impr);
     }
@@ -126,7 +108,7 @@ public class ImpressionDAOImplTest extends AbstractIntegrationTest{
     public void testFindImpressionsByStatus() throws Exception{
         List<Impression> beforeList;
         List<Impression> afterList;
-        StatusType status = StatusType.DISABLED;
+        StatusType status = StatusType.REMOVED;
         imp.setStatus(status);
         
         beforeList = impressionDao.findImpressionsByStatus(status);
@@ -146,22 +128,10 @@ public class ImpressionDAOImplTest extends AbstractIntegrationTest{
         bookDao.addBook(book);
         imp.setBook(book);
         
-        try {
-            beforeList = impressionDao.findImpressionsByBook(book);
-        }
-        catch (ImpressionDaoException ex) {
-            fail(buildErrMsg(ex));
-            return;
-        }
+	beforeList = impressionDao.findImpressionsByBook(book);
         impressionDao.addImpression(imp);
         beforeList.add(imp);
-        try {
-            afterList = impressionDao.findImpressionsByBook(book);
-        }
-        catch (ImpressionDaoException ex) {
-            fail(buildErrMsg(ex));
-            return;
-        }
+	afterList = impressionDao.findImpressionsByBook(book);
         assertEquals(beforeList, afterList);
     }
     

@@ -13,6 +13,7 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 
 /**
  * Unit test for customerDAO implementation
@@ -30,9 +31,9 @@ public class CustomerTest extends AbstractIntegrationTest{
     @Autowired
     private ImpressionDao impressionDao;
     
-    @Test(expected=CustomerDaoException.class)
+    @Test(expected=DataAccessException.class)
     public void testAddCustomer() throws Exception {
-	Customer customer = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
+	Customer customer = new Customer("John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
         Customer customerSaved;
  
         customerDao.addCustomer(customer);
@@ -43,16 +44,16 @@ public class CustomerTest extends AbstractIntegrationTest{
         customerDao.addCustomer(customer);
     }
     
-    @Test(expected=CustomerDaoException.class)
+    @Test(expected=DataAccessException.class)
     public void testUpdateCustomer() throws Exception {
-        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
+        Customer customer1 = new Customer("John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
         customerDao.addCustomer(customer1);
         
         
         Customer customer = customerDao.findCustomerById(customer1.getId());
         customer.setFirstName("George");
         
-        Customer customer2 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
+        Customer customer2 = new Customer("John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
         customer2.setId(customer.getId());
         customer2.setFirstName("George");
         customerDao.updateCustomer(customer2);
@@ -64,9 +65,9 @@ public class CustomerTest extends AbstractIntegrationTest{
 
     }
     
-    @Test(expected=CustomerDaoException.class)
+    @Test(expected=DataAccessException.class)
     public void testDeleteCustomer() throws Exception {
-        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
+        Customer customer1 = new Customer("John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
 
         customerDao.addCustomer(customer1);
         
@@ -82,9 +83,9 @@ public class CustomerTest extends AbstractIntegrationTest{
 
     }
     
-    @Test(expected=CustomerDaoException.class)
+    @Test(expected=DataAccessException.class)
     public void testFindCustomerById() throws Exception {
-        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
+        Customer customer1 = new Customer("John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
 
         customerDao.addCustomer(customer1);
 
@@ -98,17 +99,17 @@ public class CustomerTest extends AbstractIntegrationTest{
     
     @Test
     public void testFindAllCustomers() throws Exception {
-        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
-        Customer customer2 = new Customer(null, "John", "Pepa", "1 New Oxford Street, London", new Date(23-06-1989), "830623/6973");
+        Customer customer1 = new Customer("John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
+        Customer customer2 = new Customer("John", "Pepa", "1 New Oxford Street, London", new Date(23-06-1989), "830623/6973");
         Assert.assertEquals(0, customerDao.findAllCustomers().size());
         customerDao.addCustomer(customer1);
         customerDao.addCustomer(customer2);
         Assert.assertEquals(Arrays.asList(customer1,customer2),customerDao.findAllCustomers());
     }
     
-    @Test(expected=CustomerDaoException.class)
+    @Test(expected=DataAccessException.class)
     public void testFindCustomersByBook() throws Exception {
-        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
+        Customer customer1 = new Customer("John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
         customerDao.addCustomer(customer1);
         Book book = new Book("Android", "1234-4569-874", "Mobil", null, "Jaryn");
         bookDao.addBook(book);
@@ -124,22 +125,20 @@ public class CustomerTest extends AbstractIntegrationTest{
         customerDao.findCustomersByBook(null);
     }
     
-    //@Test(expected=CustomerDaoException.class)
     public void testFindCustomerByLoan() throws Exception {
-        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
+        Customer customer1 = new Customer("John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
         customerDao.addCustomer(customer1);
         Loan loan = new Loan();
         loan.setCustomer(customer1);
         loanDao.addLoan(loan);
         
         Assert.assertEquals(customer1,customerDao.findCustomerByLoan(loan));
-        customerDao.findCustomerByLoan(null);
     }
     
-    @Test(expected=CustomerDaoException.class)
+    @Test(expected=DataAccessException.class)
     public void testFindCustomerByName() throws Exception {
-        Customer customer1 = new Customer(null, "John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
-        Customer customer2 = new Customer(null, "John", "Pepa", "1 New Oxford Street, London", new Date(23-06-1989), "830623/6973");
+        Customer customer1 = new Customer("John", "Smith", "1 New Oxford Street, London", new Date(23-06-1983), "830623/6973");
+        Customer customer2 = new Customer("John", "Pepa", "1 New Oxford Street, London", new Date(23-06-1989), "830623/6973");
         Assert.assertEquals(0, customerDao.findAllCustomers().size());
         customerDao.addCustomer(customer1);
         customerDao.addCustomer(customer2);

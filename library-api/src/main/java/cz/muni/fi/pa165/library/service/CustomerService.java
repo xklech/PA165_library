@@ -1,10 +1,9 @@
 package cz.muni.fi.pa165.library.service;
 
-
 import cz.muni.fi.pa165.library.to.CustomerTo;
 import cz.muni.fi.pa165.library.to.BookTo;
 import cz.muni.fi.pa165.library.to.LoanTo;
-import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -16,22 +15,25 @@ public interface CustomerService {
      * Adds given customer.
      * 
      * @param customerTO 
+     * @return CustomerTo if save was successful, null otherwise
      */
-    public void addCustomer(CustomerTo customerTO);
-    
-    /**
-     * Delets given customer.
-     * 
-     * @param customerTO 
-     */
-    public void deleteCustomer(CustomerTo customerTO);
+    public CustomerTo addCustomer(CustomerTo customerTO);
     
     /**
      * Updates given customer.
      * 
      * @param customerTO 
+     * @return true if customer was deleted, false otherwise
      */
-    public void updateCustomer(CustomerTo customerTO);
+    public CustomerTo updateCustomer(CustomerTo customerTO);
+    
+    /**
+     * Deletes given customer.
+     * 
+     * @param customerTO 
+     * @return CustomerTo if update was successful, null otherwise
+     */
+    public boolean deleteCustomer(CustomerTo customerTO);
 
     /**
      * Finds customer with given id.
@@ -46,7 +48,7 @@ public interface CustomerService {
      * 
      * @return customers
      */
-    public Collection<CustomerTo> findAllCustomers();
+    public List<CustomerTo> findAllCustomers();
     
     /**
      * Finds all customers which have borrowed given book
@@ -54,7 +56,7 @@ public interface CustomerService {
      * @param bookTO
      * @return customers
      */
-    public Collection<CustomerTo> findCustomersByBook(BookTo bookTO);
+    public List<CustomerTo> findCustomersByBook(BookTo bookTO);
     
     /**
      * Finds customer with given loan
@@ -71,5 +73,5 @@ public interface CustomerService {
      * @param lastName
      * @return customers
      */
-    public Collection<CustomerTo> findCustomerByName(String firstName, String lastName);    
+    public List<CustomerTo> findCustomerByName(String firstName, String lastName);    
 }

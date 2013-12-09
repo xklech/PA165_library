@@ -23,8 +23,16 @@ public class ImpressionDaoException extends Exception {
     public ImpressionDaoException(String msg) {
         super(msg);
     }
-    
+   
+    /**
+     * Constructs an instance of
+     * <code>ImpressionDAOException</code> with the specified detail message and cause.
+     *
+     * @param msg the detail message.
+     * @param cause the cause of exception
+     */
     public ImpressionDaoException(String msg, Throwable cause) {
-        super(msg, cause);
+        super(msg,cause);
     }
+    
 }

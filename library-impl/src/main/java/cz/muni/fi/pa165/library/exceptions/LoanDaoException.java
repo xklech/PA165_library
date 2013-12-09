@@ -30,9 +30,8 @@ public class LoanDaoException extends Exception {
      * @param msg the detail message.
      * @param cause the cause of exception
      */
-    public LoanDaoException(String message, Throwable cause) {
-        super(message, cause);
+    public LoanDaoException(String msg, Throwable cause) {
+        super(msg,cause);
     }
-    
     
 }

@@ -31,9 +31,8 @@ public class BookDaoException extends Exception {
      * @param msg the detail message.
      * @param cause the cause of exception
      */
-    public BookDaoException(String message, Throwable cause) {
-        super(message, cause);
+    public BookDaoException(String msg, Throwable cause) {
+        super(msg,cause);
     }
-    
     
 }

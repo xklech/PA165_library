@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.library.dao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Customer;
 import cz.muni.fi.pa165.library.entity.Loan;
-import cz.muni.fi.pa165.library.exceptions.CustomerDaoException;
 import java.util.Collection;
 
 /**
@@ -16,38 +15,31 @@ public interface CustomerDao {
     /**
      * Saves new customer.
      * 
-     * @param customer to be saved
-     * @throws CustomerDaoException thrown when customer parameter is null or 
-     *                              has id with non-null value                   
+     * @param customer to be saved                 
      */
-    public void addCustomer(Customer customer) throws CustomerDaoException;
+    public void addCustomer(Customer customer);
     
     /**
      * Updates given customer.
      * 
      * @param customer to be updated
-     * @throws CustomerDaoException thrown when customer parameter is null 
-     *                              or id is null
      */
-    public void updateCustomer(Customer customer) throws CustomerDaoException;
+    public void updateCustomer(Customer customer);
     
     /**
-     * Delets given customer.
+     * Deletes given customer.
      * 
      * @param customer to be deleted
-     * @throws CustomerDaoException thrown when customer parameter is null 
-     *                              or id is null
      */
-    public void deleteCustomer(Customer customer) throws CustomerDaoException;
+    public void deleteCustomer(Customer customer);
     
     /**
      * Finds customer with given id.
      * 
      * @param id of searched customer
      * @return customer
-     * @throws CustomerDaoException thrown when customers id is null
      */
-    public Customer findCustomerById(Long id) throws CustomerDaoException;
+    public Customer findCustomerById(Long id);
     
     /**
      * Finds all customers database.
@@ -61,20 +53,16 @@ public interface CustomerDao {
      * 
      * @param book
      * @return customers
-     * @throws CustomerDaoException thrown when book parameter is null 
-     *                              or its id is null
      */
-    public Collection<Customer> findCustomersByBook(Book book) throws CustomerDaoException;
+    public Collection<Customer> findCustomersByBook(Book book);
     
     /**
      * Finds customer with given loan
      * 
      * @param loan
      * @return customer
-     * @throws CustomerDaoException thrown when loan parameter is null 
-     *                              or its id is null
      */
-    public Customer findCustomerByLoan(Loan loan) throws CustomerDaoException;
+    public Customer findCustomerByLoan(Loan loan);
     
     /**
      * Finds customer with given name
@@ -82,9 +70,7 @@ public interface CustomerDao {
      * @param firstName
      * @param lastName
      * @return customers
-     * @throws CustomerDaoException thrown when firstName parameter or lastName 
-     *                              parameter is null
      */
-    public Collection<Customer> findCustomerByName(String firstName, String lastName) throws CustomerDaoException;
+    public Collection<Customer> findCustomerByName(String firstName, String lastName);
     
 }

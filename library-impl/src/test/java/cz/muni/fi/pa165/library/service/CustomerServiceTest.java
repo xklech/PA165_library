@@ -54,7 +54,7 @@ public class CustomerServiceTest {
     
     @Test
     public void testAddCustomer() throws Exception {
-        CustomerTo customerTO = new CustomerTo(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTO = new CustomerTo("George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
         doAnswer(new Answer() {
             @Override
@@ -70,53 +70,45 @@ public class CustomerServiceTest {
         assertNotNull(customerTO.getId());
     }
    
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testDeleteCustomer() throws Exception {
-        CustomerTo customerTO= new CustomerTo(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTO= new CustomerTo("George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
-        doThrow(CustomerDaoException.class).when(mockedCustomerDao).deleteCustomer(customer);        
+        doThrow(IllegalArgumentException.class).when(mockedCustomerDao).deleteCustomer(customer);        
         customerService.deleteCustomer(customerTO);
-
-        
-        doThrow(CustomerDaoException.class).when(mockedCustomerDao).deleteCustomer(null);
+        doThrow(IllegalArgumentException.class).when(mockedCustomerDao).deleteCustomer(null);
         customerService.deleteCustomer(null);
     }
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testUpdateCustomer() throws Exception {
-        CustomerTo customerTO= new CustomerTo(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTO= new CustomerTo("George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
-        doThrow(CustomerDaoException.class).when(mockedCustomerDao).updateCustomer(customer);        
+        doThrow(IllegalArgumentException.class).when(mockedCustomerDao).updateCustomer(customer);        
         customerService.updateCustomer(customerTO);
-
-        
-        doThrow(CustomerDaoException.class).when(mockedCustomerDao).updateCustomer(null);
+        doThrow(IllegalArgumentException.class).when(mockedCustomerDao).updateCustomer(null);
         customerService.updateCustomer(null);
     }
     
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testFindCustomerById() throws Exception {
-        CustomerTo customerTO= new CustomerTo(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTO= new CustomerTo("George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         customerTO.setId(12l);
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
-
         when(mockedCustomerDao.findCustomerById(12l)).thenReturn(customer);
         CustomerTo customerTO2 = customerService.findCustomerById(12l);
         assertEquals(customerTO, customerTO2);
-
         when(mockedCustomerDao.findCustomerById(1l)).thenReturn(null);
-
         assertNull(customerService.findCustomerById(1l));
-        
-        doThrow(CustomerDaoException.class).when(mockedCustomerDao).findCustomerById(null);
+        doThrow(IllegalArgumentException.class).when(mockedCustomerDao).findCustomerById(null);
         customerService.findCustomerById(null);
     }    
     
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testFindCustomerByLoan()throws Exception { 
-        CustomerTo customerTO = new CustomerTo(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTO = new CustomerTo("George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         customerTO.setId(12l);
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
 
@@ -137,17 +129,19 @@ public class CustomerServiceTest {
         when(mockedCustomerDao.findCustomerByLoan(loan2)).thenReturn(null);
         assertNull(customerService.findCustomerByLoan(loanTO2));
         
-        doThrow(CustomerDaoException.class).when(mockedCustomerDao).findCustomerByLoan(null);
+        doThrow(IllegalArgumentException.class).when(mockedCustomerDao).findCustomerByLoan(null);
         customerService.findCustomerByLoan(null);
         
     }
     
     @Test
     public void testFindAllCustomers() throws Exception {
-        CustomerTo customerTo1 = new CustomerTo(11l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTo1 = new CustomerTo("George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+	customerTo1.setId(11l);
         Customer customer1 = EntityConvertor.convertFromCustomerTo(customerTo1);
 
-        CustomerTo customerTo2 = new CustomerTo(12l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTo2 = new CustomerTo("George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+	customerTo2.setId(12l);
         Customer customer2 = EntityConvertor.convertFromCustomerTo(customerTo2);    
         when(mockedCustomerDao.findAllCustomers()).thenReturn(null);      
         assertNull(customerService.findAllCustomers());
@@ -159,11 +153,13 @@ public class CustomerServiceTest {
         
     }
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testFindCustomersByBook() throws Exception {
-        CustomerTo customerTo1 = new CustomerTo(11l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTo1 = new CustomerTo("George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+	customerTo1.setId(11l);
         Customer customer1 = EntityConvertor.convertFromCustomerTo(customerTo1); 
-        CustomerTo customerTo2 = new CustomerTo(12l, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTo2 = new CustomerTo("George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+	customerTo2.setId(12l);
         Customer customer2 = EntityConvertor.convertFromCustomerTo(customerTo2);    
         
         Book book = new Book("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -174,13 +170,13 @@ public class CustomerServiceTest {
         Collection<CustomerTo> customers = customerService.findCustomersByBook(bookTo);
         assertEquals(customers, Arrays.asList(customerTo1,customerTo2));
         
-        doThrow(CustomerDaoException.class).when(mockedCustomerDao).findCustomersByBook(null);
+        doThrow(IllegalArgumentException.class).when(mockedCustomerDao).findCustomersByBook(null);
         customerService.findCustomerByLoan(null);
     }
     
-    @Test(expected=ServiceDataAccessException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testFindCustomerByName()throws Exception {
-        CustomerTo customerTO = new CustomerTo(null, "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
+        CustomerTo customerTO = new CustomerTo( "George", "White", "1 New Oxford Street, London", new Date(28-02-1976), "760228/9246");
         customerTO.setId(12l);
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTO);
 
@@ -192,7 +188,7 @@ public class CustomerServiceTest {
 
         assertNull(customerService.findCustomerByName("George",""));
         
-        doThrow(CustomerDaoException.class).when(mockedCustomerDao).findCustomerByName(null,null);
+        doThrow(IllegalArgumentException.class).when(mockedCustomerDao).findCustomerByName(null,null);
         customerService.findCustomerByName(null,null);
         
     }    

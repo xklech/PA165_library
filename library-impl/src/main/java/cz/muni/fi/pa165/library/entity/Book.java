@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 
 /**
- *  Book entity holding information abou one book.
+ *  Book entity holding information about one book.
  * 
  * @author Jaroslav Klech
  */
@@ -112,16 +112,12 @@ public class Book implements Serializable{
             return false;
         }
         final Book other = (Book) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+	return Objects.equals(this.id, other.id);
     }
 
     @Override
     public String toString() {
         return "Book{" + "id=" + id + ", name=" + name + ", ISBN=" + isbn + ", department=" + department + ", publishDate=" + publishDate + ", author=" + author + '}';
     }
-
 
 }
