@@ -20,7 +20,7 @@
 	    <div id="headerWrapper">
 		<div id="header"> 
 		    <h1>
-			<a href="index.html" title="Home page"><f:message key="library.header" /></a>
+			<a href="${pageContext.request.contextPath}" title="Home page"><f:message key="library.header" /></a>
 		    </h1>
 		</div>
 	    </div>
