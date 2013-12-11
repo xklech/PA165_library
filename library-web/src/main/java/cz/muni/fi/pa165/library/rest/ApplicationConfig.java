@@ -13,8 +13,7 @@ public class ApplicationConfig extends Application {
         return resources;
     }
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(cz.muni.fi.pa165.library.rest.ServiceResource.class);
-        resources.add(cz.muni.fi.pa165.library.rest.CustomerServiceResource.class);
         resources.add(cz.muni.fi.pa165.library.rest.CustomerResource.class);
+        resources.add(cz.muni.fi.pa165.library.rest.CustomerServiceResource.class);
     }
 }
