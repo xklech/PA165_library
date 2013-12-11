@@ -55,7 +55,6 @@
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
         </dependency>
-
         <!-- stripes -->
         <dependency>
             <groupId>net.sourceforge.stripes</groupId>
@@ -73,9 +72,7 @@
             <artifactId>cos</artifactId>
             <version>05Nov2002</version>
         </dependency>
-
         <!-- slf4j -->
-
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -91,12 +88,6 @@
             <artifactId>janino</artifactId>
             <version>2.6.1</version>
         </dependency>
-        <!--<dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
@@ -124,6 +115,23 @@
             <artifactId>log4j</artifactId>
             <version>1.2.16</version>
         </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <!-- if your container implements Servlet API older than 3.0, use "jersey-container-servlet-core"  -->
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>2.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.ext</groupId>
+            <artifactId>jersey-spring3</artifactId>
+            <version>2.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-moxy</artifactId>
+            <version>2.4.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
