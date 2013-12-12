@@ -6,6 +6,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 @XmlRootElement
@@ -17,7 +18,8 @@ public class CustomerResource {
     private String lastName;  
 
     private String address;   
-
+    
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date dateOfBirth;   
 
     private String pid;
@@ -90,6 +92,5 @@ public class CustomerResource {
     public String toString() {
         return "CustomerResource{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", dateOfBirth=" + dateOfBirth + ", pid=" + pid + '}';
     }
-    
     
 }

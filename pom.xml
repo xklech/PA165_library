@@ -10,6 +10,7 @@
         <module>library-api</module>
         <module>library-impl</module>
     <module>library-web</module>
+    <module>library-rest</module>
   </modules>
     
     <properties>
@@ -17,6 +18,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.test.skip>true</maven.test.skip>
     </properties>
+
 
     <build>
         <plugins>

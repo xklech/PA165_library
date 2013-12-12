@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerServiceResource {
     
-    final static Logger log = LoggerFactory.getLogger(BooksActionBean.class);
+    final static Logger log = LoggerFactory.getLogger(CustomerServiceResource.class);
     
     @Context
     private UriInfo context;
@@ -96,16 +96,17 @@ public class CustomerServiceResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("json/add")
+    @Path("json")
     public Response postJson(CustomerResource customerResource) {
+        CustomerTo customerTo;
         try{
-            customerService.addCustomer(ResourceConvertor.fromCustomerResource(customerResource));
+            customerTo = customerService.addCustomer(ResourceConvertor.fromCustomerResource(customerResource));
         }catch(Exception ex){
             log.debug("Create customer - server error" + ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        log.debug("Created customer " + customerResource.getId());
-        return Response.created(URI.create(context.getAbsolutePath() + "/"+ customerResource.getId())).build();
+        log.debug("Created customer " + customerTo.getId());
+        return Response.created(URI.create(context.getAbsolutePath() + "/"+ customerTo.getId())).entity(customerTo).build();
     }
     
     

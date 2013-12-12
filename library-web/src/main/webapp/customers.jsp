@@ -14,8 +14,10 @@
                         <tr>
                             <th><s:label for="f1" name="findId"/></th>
                             <td><s:text id="f1" name="findId"/><s:errors field="findId" /></td>
-                            <td><s:submit name="findById"><f:message key="common.search" /></s:submit></td>
-                        </tr>                            
+                        </tr>      
+                        <tr>
+                            <td colspan="2"><s:submit name="findById"><f:message key="common.search" /></s:submit></td>
+                        </tr>
                     </table>
                 </fieldset>
             </s:form>
