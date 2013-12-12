@@ -138,14 +138,15 @@ public class BookServiceResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("json/add")
     public Response postJson(BookResource bookRes) {
+        BookTo bookTo;
         try {
-            bookService.save(ResourceConvertor.fromBookResource(bookRes));
+            bookTo = bookService.save(ResourceConvertor.fromBookResource(bookRes));
         } catch(Exception ex) {
             log.debug("Create book - server error" + ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        log.debug("Created book " + bookRes.getId());
-        return Response.created(URI.create(context.getAbsolutePath() + "/"+ bookRes.getId())).build();
+        log.debug("Created book " + bookTo.getId());
+        return Response.created(URI.create(context.getAbsolutePath() + "/"+ bookTo.getId())).build();
     }
     
     @PUT
