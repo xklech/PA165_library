@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.library.rest;
 
-import cz.muni.fi.pa165.library.BooksActionBean;
 import cz.muni.fi.pa165.library.service.CustomerService;
 import cz.muni.fi.pa165.library.to.CustomerTo;
 import java.net.URI;
@@ -37,23 +36,52 @@ public class CustomerServiceResource {
     @Autowired
     protected CustomerService customerService; 
     
-    @GET
-    @Produces("text/plain")
-    public String getText() {
-        return "hello!";
-    }
-    
     @Path("{id}")
     public CustomerResource getCustomerResource(@PathParam("id") Integer id) {
         log.debug("customers: find by id "+id);
-        return ResourceConvertor.fromCustomerTo(customerService.findCustomerById(id.longValue()));
+        CustomerTo customerTo = null;
+        try{
+            customerTo = customerService.findCustomerById(id.longValue());
+        }catch(Exception ex){
+            log.error("getCustomerResource by id exception",ex);
+            throw new WebApplicationException(ex,Response.Status.INTERNAL_SERVER_ERROR);
+        }
+        return ResourceConvertor.fromCustomerTo(customerTo);
+    }
+    
+    @GET
+    @Path("json/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<CustomerResource> getJsonAll() {
+        List<CustomerTo> customers;
+        try{        
+            customers = customerService.findAllCustomers();
+        }catch(Exception ex){
+            log.error("getJsonAll",ex);
+            throw new WebApplicationException(ex, Response.Status.INTERNAL_SERVER_ERROR);
+        }
+        if(customers == null){
+            return null;
+        }
+        List<CustomerResource> resourceCustomers = new ArrayList<>();
+        for(CustomerTo customerTo: customers){
+            resourceCustomers.add(ResourceConvertor.fromCustomerTo(customerTo));
+        }
+        return resourceCustomers;
     }
     
     @GET
     @Path("json/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public CustomerResource getJsonId(@PathParam("id") Integer id) {
-        return ResourceConvertor.fromCustomerTo(customerService.findCustomerById(id.longValue()));
+        CustomerTo customerTo = null;
+        try{
+            customerTo = customerService.findCustomerById(id.longValue());
+        }catch(Exception ex){
+            log.error("getJsonId",ex);
+            throw new WebApplicationException(ex,Response.Status.INTERNAL_SERVER_ERROR);
+        }
+        return ResourceConvertor.fromCustomerTo(customerTo);
     }
     
     @GET
@@ -68,7 +96,8 @@ public class CustomerServiceResource {
         try{        
             customers = customerService.findCustomerByName(firstName, lastName);
         }catch(Exception ex){
-            throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+            log.error("getJsonFullName",ex);
+            throw new WebApplicationException(ex,Response.Status.INTERNAL_SERVER_ERROR);
         }
         if(customers == null){
             return null;
@@ -111,20 +140,17 @@ public class CustomerServiceResource {
     
     
     @PUT
-    @Path("json/put/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("json/put/{id}")
     public Response putJson(@PathParam("id") Integer id, CustomerResource customerResource) {
         log.debug("----  putting item ");
-        if( id == null){
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        } 
         Response response;
         Long idLong = id.longValue();
         try{
             CustomerTo customer = customerService.findCustomerById(idLong);
             if (customer == null) {
-                customerService.addCustomer(customer);
-                response = Response.created(URI.create(context.getAbsolutePath() + "/"+ customerResource.getId())).build();
+                return Response.status(Response.Status.NOT_FOUND).build();
             } else {
                 customerResource.setId(idLong);
                 customerService.updateCustomer(ResourceConvertor.fromCustomerResource(customerResource));
@@ -140,20 +166,20 @@ public class CustomerServiceResource {
     @DELETE
     @Path("delete/{id}")
     public Response delete(@PathParam("id") Integer id) {
-        System.out.println("---- Deleting item nr. " + id);
-        if(id == null){
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
+        log.info("---- Deleting item nr. " + id);
         CustomerTo customer;
-        customer = customerService.findCustomerById(id.longValue());
-        if (customer == null) {
-             return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        if(customerService.deleteCustomer(customer)){
-            return Response.status(Response.Status.OK).build();
-        }else{
+        try{customer = customerService.findCustomerById(id.longValue());
+            if (customer == null) {
+                 return Response.status(Response.Status.NOT_FOUND).build();
+            }
+            if(customerService.deleteCustomer(customer)){
+                return Response.status(Response.Status.OK).build();
+            }else{
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }catch(Exception ex){
+            log.error("customers rest: delete - ",ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        
     }
 }

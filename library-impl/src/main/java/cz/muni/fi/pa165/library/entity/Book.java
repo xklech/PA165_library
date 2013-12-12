@@ -22,19 +22,19 @@ public class Book implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @Column(length=50)
+    @Column
     private String name;
     
-    @Column(length=20)
+    @Column
     private String isbn;
     
-    @Column(length=50)
+    @Column
     private String department;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date publishDate;
     
-    @Column(length=100)
+    @Column
     private String author;
 
     public Book() {

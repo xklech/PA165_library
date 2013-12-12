@@ -21,19 +21,19 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(length=30)
+    @Column
     private String firstName;
     
-    @Column(length=50)
+    @Column
     private String lastName;
     
-    @Column(length=75)
+    @Column
     private String address;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateOfBirth;
     
-    @Column(length=11)
+    @Column
     private String pid;
 
     public Customer() {}
