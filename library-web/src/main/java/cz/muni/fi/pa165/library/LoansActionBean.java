@@ -41,26 +41,14 @@ import org.slf4j.LoggerFactory;
  */
 @UrlBinding("/loans/{$event}/{$loan.id}")
 public class LoansActionBean extends BaseActionBean implements ValidationErrorHandler {
-
-    /* ---------------------------------------------------------------------- */
-    /* DATA AND VARIABLES */
-        
-    /* ------------------------------ */
-    /* Logger */
     
     final static Logger log = LoggerFactory.getLogger(LoansActionBean.class);   
-    
-    /* ------------------------------ */
-    /* Class attributes */
-    
+
     private CustomerTo customerTo;
     private BookTo bookTo;
     private ImpressionTo impressionTo;
     private LoanTo loanTo;
-    
-    /* ------------------------------ */
-    /* Spring beans */
-    
+
     @SpringBean
     protected LoanService loanService;
     
@@ -72,10 +60,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     
     @SpringBean
     protected BookService bookService;
-    
-    /* ------------------------------ */
-    /* Validation errors & error handler */
-    
+
     private Boolean validationError;
     
     public Boolean isValidationError() {
@@ -91,10 +76,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
         log.debug("errors() {}",errors);
         return null;
     }  
-    
-    /* ------------------------------ */
-    /* Loan */
-    
+
     private LoanTo loan;
 
     public LoanTo getLoan() {
@@ -104,48 +86,30 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public void setLoan(LoanTo loan) {
 	this.loan = loan;
     }
-    
-    /* ------------------------------ */
-    /* Loan collection */
-    
+  
     private List<LoanTo> loans;
 
     public List<LoanTo> getLoans() {
 	return this.loans;
     }
     
-    /* ------------------------------ */
-    /* Customer collection */
-    
     private List<CustomerTo> customers;
 
     public List<CustomerTo> getCustomers() {
 	return this.customers;
     }
-    
-    /* ------------------------------ */
-    /* Impression collection */
-    
+
     private List<ImpressionTo> impressions;
 
     public List<ImpressionTo> getImpressions() {
 	return this.impressions;
     }
-    
-    /* ------------------------------ */
-    /* Book collection */
-    
+
     private List<BookTo> books;
 
     public List<BookTo> getBooks() {
 	return this.books;
     }
-    
-    /* ---------------------------------------------------------------------- */
-    /* POST FIELDS */
-    
-    /* ------------------------------ */
-    /* Find loan by id */
     
     @Validate(on = "findById", required = true, minvalue = 0)
     private Long findId;
@@ -158,9 +122,6 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
 	this.findId = findId;
     }
     
-    /* ------------------------------ */
-    /* Find loans by customer */
-    
     @Validate(on = "findByCustomer", required = true, minvalue = 0)
     private Long findCustomer;
 
@@ -171,10 +132,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public void setFindCustomer(Long findCustomer) {
 	this.findCustomer = findCustomer;
     }
-    
-    /* ------------------------------ */
-    /* Find loans by from date */
-    
+
     @Validate(on = "findByFromTo")
     private Date findFrom;
 
@@ -185,9 +143,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public void setFindFrom(Date findFrom) {
 	this.findFrom = findFrom;
     }
-    
-    /* ------------------------------ */
-    /* Find loans by to date */
+
     @Validate(on = "findByFromTo")
     private Date findTo;
 
@@ -198,10 +154,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public void setFindTo(Date findTo) {
 	this.findTo = findTo;
     }
-    
-    /* ------------------------------ */
-    /* Customer id */
-    
+
     @Validate(on = {"prepare","add"}, required = true, minvalue = 1)
     private Long customerId;
     
@@ -212,10 +165,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public Long getCustomerId() {
 	return this.customerId;
     }
-    
-    /* ------------------------------ */
-    /* Book id */
-    
+
     @Validate(on = {"prepare","add"}, required = true, minvalue = 1)
     private Long bookId;
     
@@ -227,9 +177,6 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
 	return this.bookId;
     }
     
-    /* ------------------------------ */
-    /* Impression id */
-    
     @Validate(on = "add", required = true, minvalue = 1)
     private Long impressionId;
     
@@ -240,10 +187,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public Long getImpressionId() {
 	return this.impressionId;
     }
-    
-    /* ------------------------------ */
-    /* Loan id */
-    
+
     @Validate(on = "restore", required = true, minvalue = 1)
     private Long loanId;
     
@@ -254,10 +198,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     public Long getLoanId() {
 	return this.loanId;
     }
-    
-    /* ---------------------------------------------------------------------- */
-    /* INITIALIZATION */
-    
+        
     @Before(stages = LifecycleStage.BindingAndValidation)
     public void loadLists() {
 	this.customers = new ArrayList(this.customerService.findAllCustomers());
@@ -268,10 +209,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
 	    log.error("service error",ex);
 	}
     }
-    
-    /* ---------------------------------------------------------------------- */
-    /* VALIDATION METHODS */
-    
+        
     @ValidationMethod(on = "findByCustomer")
     public void validateFindByCustomer() {
 	try {
@@ -321,10 +259,7 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
 	    getContext().getValidationErrors().add("loanId",new LocalizableError("loans.loanId.invalid",this.loanId));
 	}
     }
-    
-    /* ---------------------------------------------------------------------- */
-    /* ACTION HANDLERS */
-    
+        
     @DefaultHandler
     public Resolution defaultHandler() {
 	log.debug("defaultHandler()");

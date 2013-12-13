@@ -70,13 +70,11 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
     
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-        //fill up the data for the table if validation errors occured
         log.debug("errors() {}", errors);
         if ("add".equals(getContext().getEventName())) {
             log.debug("add() validationError =true ");
             validationError = true;
         }
-        //return null to let the event handling continue
         return null;
     }
     
@@ -174,12 +172,12 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
         log.debug("find by loan id: "+findLoanId);
         try{
             LoanTo loanTo = loanService.findLoanById(findLoanId);
-            if(loanTo == null){
+            if (loanTo == null) {
                  getContext().getMessages().add(new LocalizableMessage("loans.findId.invalid",findLoanId));  
                  return getContext().getSourcePageResolution();
             }
             this.customers = Arrays.asList(customerService.findCustomerByLoan(loanTo));
-        }catch(Exception ex){
+        } catch (Exception ex) {
             log.error("service error",ex);
             getContext().getMessages().add(new LocalizableError("common.find.error"));  
             return getContext().getSourcePageResolution();
@@ -224,9 +222,9 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
     
     public Resolution findAll(){
         log.debug("Find all customers");
-        try{
+        try {
             customers = customerService.findAllCustomers();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             log.error("service error",ex);
             getContext().getMessages().add(new LocalizableError("common.find.error"));  
             return getContext().getSourcePageResolution();
@@ -282,6 +280,4 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
         this.findLoanId = findLoanId;
     }
 
-    
-    
 }

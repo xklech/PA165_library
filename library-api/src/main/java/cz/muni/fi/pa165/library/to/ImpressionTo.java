@@ -89,10 +89,7 @@ public class ImpressionTo implements Serializable {
             return false;
         }
         final ImpressionTo other = (ImpressionTo) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override

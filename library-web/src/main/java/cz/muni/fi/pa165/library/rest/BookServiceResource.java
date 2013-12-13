@@ -43,9 +43,8 @@ public class BookServiceResource {
     @Path("delete/{id}")
     public Response delete(@PathParam("id") Integer id) {
         log.debug("books: delete #" + id);
-        try{
+        try {
             BookTo book = bookService.findBookById(id.longValue());
-            
             if (book == null) {
                  return Response.status(Response.Status.NOT_FOUND).build();
             }
@@ -54,7 +53,7 @@ public class BookServiceResource {
             } else {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             log.error("deleting book exception", ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -64,9 +63,9 @@ public class BookServiceResource {
     public BookResource getBookResource(@PathParam("id") Integer id) {
         log.debug("books: find by id "+id);
         BookTo bookTo = null;
-        try{
+        try {
             bookTo = bookService.findBookById(id.longValue());
-        }catch(Exception ex){
+        } catch (Exception ex) {
             log.error("getBookResource by id exception",ex);
             throw new WebApplicationException(ex,Response.Status.INTERNAL_SERVER_ERROR);
         }
@@ -79,9 +78,9 @@ public class BookServiceResource {
     public BookResource getJsonId(@PathParam("id") Integer id) {
         log.debug("books: find by id json "+id);
         BookTo bookTo = null;
-        try{
+        try {
             bookTo = bookService.findBookById(id.longValue());
-        }catch(Exception ex){
+        } catch(Exception ex) {
             log.error("getBookResource by id exception",ex);
             throw new WebApplicationException(ex,Response.Status.INTERNAL_SERVER_ERROR);
         }
@@ -97,7 +96,7 @@ public class BookServiceResource {
         List<BookTo> books;
         try {        
             books = bookService.findBooksByName(name);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             log.error("getJsonName",ex);
             throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
         }
@@ -118,7 +117,7 @@ public class BookServiceResource {
         List<BookTo> books;
         try {        
             books = bookService.findBooksByAuthor(author);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             log.error("getJsonAuthor",ex);
             throw new WebApplicationException(ex,Response.Status.INTERNAL_SERVER_ERROR);
         }
@@ -139,7 +138,7 @@ public class BookServiceResource {
         List<BookTo> books;
         try {        
             books = bookService.findBooksByDepartment(department);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             log.error("getJsonDepartment",ex);
             throw new WebApplicationException(ex, Response.Status.INTERNAL_SERVER_ERROR);
         }
@@ -172,13 +171,13 @@ public class BookServiceResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<BookResource> getJsonAll() {
         List<BookTo> books;
-        try{        
+        try {        
             books = bookService.findAllBooks();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             log.error("getJsonAll",ex);
             throw new WebApplicationException(ex, Response.Status.INTERNAL_SERVER_ERROR);
         }
-        if(books == null){
+        if (books == null) {
             return null;
         }
         List<BookResource> resourceBooks = new ArrayList<>();
@@ -197,7 +196,7 @@ public class BookServiceResource {
         BookTo bookTo;
         try {
             bookTo = bookService.save(ResourceConvertor.fromBookResource(bookRes));
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             log.debug("Create book - server error" , ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -221,7 +220,7 @@ public class BookServiceResource {
                 bookService.updateBook(ResourceConvertor.fromBookResource(bookRes));
                 response = Response.noContent().build();
             }
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             log.error("books rest: putJson - ",ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

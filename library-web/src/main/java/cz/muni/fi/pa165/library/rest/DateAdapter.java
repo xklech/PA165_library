@@ -7,10 +7,11 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-    public class DateAdapter extends XmlAdapter<String, Date> {
+public class DateAdapter extends XmlAdapter<String, Date> {
+    
     final static Logger log = LoggerFactory.getLogger(DateAdapter.class);
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat(
-    "MM/dd/yyyy");
+    
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
     @Override
     public String marshal(Date v) {

@@ -27,12 +27,11 @@ public class AutoCompleteActionBean extends BaseActionBean{
     
     private String term;
 
-    
     public Resolution booksByName(){
-        JSONArray json = new  JSONArray();
-        if(term != null){
+        JSONArray json = new JSONArray();
+        if (term != null) {
             List<BookTo> books = bookService.findBooksByName(term);
-            if(books != null){
+            if (books != null) {
                 for(BookTo book: books){
                     json.put(book.getName());
                 }
@@ -42,11 +41,11 @@ public class AutoCompleteActionBean extends BaseActionBean{
     }
     
     public Resolution booksByAuthor(){
-        JSONArray json = new  JSONArray();
-        if(term != null){
+        JSONArray json = new JSONArray();
+        if (term != null) {
             List<BookTo> books = bookService.findBooksByAuthor(term);
-            if(books != null){
-                for(BookTo book: books){
+            if (books != null) {
+                for (BookTo book: books) {
                     json.put(book.getAuthor());
                 }
             }
@@ -55,11 +54,11 @@ public class AutoCompleteActionBean extends BaseActionBean{
     }
     
     public Resolution booksByDepartment(){
-        JSONArray json = new  JSONArray();
-        if(term != null){
+        JSONArray json = new JSONArray();
+        if (term != null) {
             List<BookTo> books = bookService.findBooksByDepartment(term);
-            if(books != null){
-                for(BookTo book: books){
+            if (books != null) {
+                for (BookTo book: books) {
                     json.put(book.getDepartment());
                 }
             }
@@ -74,8 +73,5 @@ public class AutoCompleteActionBean extends BaseActionBean{
     public void setTerm(String term) {
         this.term = term;
     }
-    
-    
-    
-    
+        
 }
