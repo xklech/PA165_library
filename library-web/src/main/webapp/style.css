@@ -72,7 +72,7 @@ body {
 #wrapper #headerWrapper #header {
     text-align: center;
     margin: auto;
-    width: 960px;
+    width: auto;
 }
 #wrapper #headerWrapper #header h1 {}
 #wrapper #headerWrapper #header h1 a {
@@ -100,7 +100,7 @@ body {
     margin: auto;
     padding: 20px 0;
     text-align: center;
-    width: 960px;
+    width: auto;
 }
 #wrapper #contentWrapper nav a {
     background: white;
@@ -117,7 +117,6 @@ body {
 
 #wrapper #contentWrapper #content {
     margin: auto;
-    width: 960px;
 }
 #wrapper #contentWrapper #content a {
     color: #333;

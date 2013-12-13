@@ -201,8 +201,8 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
         
     @Before(stages = LifecycleStage.BindingAndValidation)
     public void loadLists() {
-	this.customers = new ArrayList(this.customerService.findAllCustomers());
 	try {
+	    this.customers = new ArrayList(this.customerService.findAllCustomers());
 	    this.books = this.bookService.findAllBooks();
 	    this.impressions = this.impressionService.findImpressionsByStatus(StatusType.AVAILIBLE);
 	} catch (Exception ex) {
@@ -267,20 +267,22 @@ public class LoansActionBean extends BaseActionBean implements ValidationErrorHa
     }
     
     public Resolution findById() {
+	log.debug("findById()",this.loans);
+	LoanTo lTo;
 	try {
-	    this.loans = Arrays.asList(this.loanService.findLoanById(this.findId));
+	    lTo = this.loanService.findLoanById(this.findId);
 	} catch (Exception ex) {
 	    log.error("service error",ex);
             getContext().getMessages().add(new LocalizableError("common.find.error"));  
             return getContext().getSourcePageResolution();
 	}
-	log.debug("findById()",this.loans);
-	if (this.loans.isEmpty()) {
+	if (lTo != null) {
+	    this.loans = Arrays.asList(lTo);
+	} else {
 	    getContext().getMessages().add(new LocalizableMessage("loans.findById.empty",this.findId));  
 	    return getContext().getSourcePageResolution();
-	} else {
-	    return new ForwardResolution("/loan/list.jsp");
 	}
+	return new ForwardResolution("/loan/list.jsp");
     }
     
     public Resolution findByAllActive() {

@@ -14,8 +14,8 @@ public class ApplicationConfig extends Application {
     }
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(cz.muni.fi.pa165.library.rest.BookResource.class);
-        resources.add(cz.muni.fi.pa165.library.rest.BookServiceResource.class);
-        resources.add(cz.muni.fi.pa165.library.rest.CustomerResource.class);
-        resources.add(cz.muni.fi.pa165.library.rest.CustomerServiceResource.class);
+	resources.add(cz.muni.fi.pa165.library.rest.BookServiceResource.class);
+	resources.add(cz.muni.fi.pa165.library.rest.CustomerResource.class);
+	resources.add(cz.muni.fi.pa165.library.rest.CustomerServiceResource.class);
     }
 }
