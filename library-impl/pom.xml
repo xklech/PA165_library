@@ -45,10 +45,16 @@
 	<artifactId>mockito-all</artifactId>
 	<version>1.9.5</version>
     </dependency>
+    
     <dependency>
 	<groupId>org.hibernate</groupId>
 	<artifactId>hibernate-entitymanager</artifactId>
 	<version>4.2.6.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.0-api</artifactId>
+      <version>1.0.1.Final</version>
     </dependency>
     
     <dependency>
@@ -61,13 +67,7 @@
 	<artifactId>derbyclient</artifactId>
 	<version>10.10.1.1</version>
     </dependency>    
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-aspects</artifactId>
-        <version>${org.springframework.version}</version>
-    </dependency>
-    
-    
+
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-context</artifactId>
@@ -79,19 +79,7 @@
         <artifactId>spring-test</artifactId>
         <version>${org.springframework.version}</version>
     </dependency>
-    
-    <dependency>
-        <groupId>cglib</groupId>
-        <artifactId>cglib</artifactId>
-        <version>2.2.2</version>
-    </dependency>
-    
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-jdbc</artifactId>
-        <version>${org.springframework.version}</version>
-    </dependency>
-    
+            
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-tx</artifactId>
@@ -110,12 +98,6 @@
 	<version>${org.springframework.version}</version>
     </dependency>
     
-    <dependency>
-        <groupId>org.aspectj</groupId>
-        <artifactId>aspectjrt</artifactId>
-        <version>1.6.9</version>
-    </dependency>
-
     <dependency>
         <groupId>org.aspectj</groupId>
         <artifactId>aspectjweaver</artifactId>
