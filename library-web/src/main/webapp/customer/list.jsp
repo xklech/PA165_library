@@ -17,7 +17,7 @@
                 <td class="c b w20"><f:message key="customer.address"/></td>
                 <td class="c b w20"><f:message key="customer.dateOfBirth"/></td>
                 <td class="c b w20"><f:message key="customer.pid"/></td>
-                <td class="c b w5" colspan="2"><f:message key="common.action"/></td>
+                <td class="c b w5"><f:message key="common.action"/></td>
             </tr>
             <c:forEach items="${actionBean.customers}" var="customer">
                 <tr>

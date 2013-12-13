@@ -7,7 +7,7 @@
     <s:layout-component name="body">
         <s:useActionBean beanclass="cz.muni.fi.pa165.library.LoansActionBean" var="actionBean"/>
 	
-	<!-- Find by ID ---------------------------------------------------- -->
+	<!-- Find by ID  -->
 	<s:form beanclass="cz.muni.fi.pa165.library.LoansActionBean">
 	    <fieldset>
 		<legend><f:message key="loans.findById"/></legend>
@@ -23,7 +23,7 @@
 	    </fieldset>
 	</s:form>
 	
-	<!-- Find all active ----------------------------------------------- -->
+	<!-- Find all active -->
 	<s:form beanclass="cz.muni.fi.pa165.library.LoansActionBean">
 	    <fieldset>
 		<legend><f:message key="loans.findAllActive"/></legend>
@@ -33,7 +33,7 @@
 	    </fieldset>
 	</s:form>
 	
-	<!-- Find by customer ---------------------------------------------- -->
+	<!-- Find by customer -->
 	<s:form beanclass="cz.muni.fi.pa165.library.LoansActionBean">
 	    <fieldset>
 		<legend><f:message key="loans.findByCustomer"/></legend>
@@ -56,7 +56,7 @@
 	    </fieldset>
 	</s:form>
 	
-	<!-- Find by from<->to --------------------------------------------- -->
+	<!-- Find by from<->to -->
 	<s:form beanclass="cz.muni.fi.pa165.library.LoansActionBean">
 	    <fieldset>
 		<legend><f:message key="loans.findByFromTo"/></legend>
@@ -76,7 +76,7 @@
 	    </fieldset>
 	</s:form>
 	
-	<!-- Prepare/add loan form ----------------------------------------- -->
+	<!-- Prepare/add loan form  -->
 	<s:form beanclass="cz.muni.fi.pa165.library.LoansActionBean">
 	    <fieldset><legend><f:message key="loans.prepare"/></legend>
 	    <table>
@@ -104,6 +104,7 @@
 		</tr>
 	    </table>
 	    <s:submit name="prepare"><f:message key="loans.prepare.prepareLoan"/></s:submit>
+            </fieldset>
 	</s:form>
 	
 	<script type="text/javascript">

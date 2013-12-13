@@ -7,6 +7,12 @@
         <s:useActionBean beanclass="cz.muni.fi.pa165.library.BooksActionBean" var="actionBean"/>
         <a href="javascript:showHide('books_find')" title="<f:message key="common.search" />"><h2><f:message key="common.search" /></h2></a>
         <div id="books_find" <c:if test="${actionBean.validationError }">style="display:none"</c:if>>
+            
+            <s:form beanclass="cz.muni.fi.pa165.library.BooksActionBean">
+                <fieldset><legend><f:message key="books.list.findall"/></legend>
+                    <s:submit name="findAll"><f:message key="books.submit.find" /></s:submit>
+                </fieldset>
+            </s:form>
             <s:form beanclass="cz.muni.fi.pa165.library.BooksActionBean">
                 <fieldset><legend><f:message key="books.list.findid"/></legend>
                     

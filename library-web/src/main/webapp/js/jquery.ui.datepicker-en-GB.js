@@ -14,10 +14,13 @@ jQuery(function($){
 		dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 		dayNamesMin: ['Su','Mo','Tu','We','Th','Fr','Sa'],
 		weekHeader: 'Wk',
-		dateFormat: 'dd/mm/yy',
+		dateFormat: 'mm/dd/yy',
 		firstDay: 1,
 		isRTL: false,
 		showMonthAfterYear: false,
-		yearSuffix: ''};
+		yearSuffix: '',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "c-30:c+30"};
 	$.datepicker.setDefaults($.datepicker.regional['en-GB']);
 });

@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Impression;
-import cz.muni.fi.pa165.library.exceptions.BookDaoException;
 import java.util.Collection;
 import java.util.Date;
 
@@ -94,7 +93,7 @@ public interface BookDao {
      * Finds books for given Impression
      * 
      * @param impression impression to find book for
-     * @throws BookDaoException
+     * @throws IllegalArgumentException if impression is null
      * @return Book for given impression
      */
     public Book findBookByImpression(Impression impression);

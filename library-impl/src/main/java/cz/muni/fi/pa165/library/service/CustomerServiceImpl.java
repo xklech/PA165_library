@@ -93,7 +93,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerTo> findCustomersByBook(BookTo bookTo) {
 	if (bookTo == null) {
-	    throw new IllegalArgumentException("bookTo");
+	    throw new IllegalArgumentException("bookTo is null");
 	}
         Collection <Customer> customers;
 	Book book = bookDao.findBookById(bookTo.getId());

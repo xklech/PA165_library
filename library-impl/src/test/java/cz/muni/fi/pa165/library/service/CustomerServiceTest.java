@@ -6,8 +6,6 @@ import cz.muni.fi.pa165.library.dao.LoanDao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Customer;
 import cz.muni.fi.pa165.library.entity.Loan;
-import cz.muni.fi.pa165.library.exceptions.CustomerDaoException;
-import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.to.BookTo;
 
 import cz.muni.fi.pa165.library.to.CustomerTo;

@@ -69,7 +69,7 @@ public class LoanTest extends AbstractIntegrationTest{
     public void testFindLoanById() throws Exception {
 	Long fakeId = new Long(Long.MAX_VALUE);
 	Customer customer = new Customer();
-	Loan loan = new Loan(customer,new Impression(),this.parseDate("05/05/2005"),null,null);;
+	Loan loan = new Loan(customer,new Impression(),this.parseDate("05/05/2005"),null,null);
 
 	loanDao.addLoan(loan);
 

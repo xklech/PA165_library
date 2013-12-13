@@ -11,8 +11,6 @@ import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.dao.ImpressionDao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Impression;
-import cz.muni.fi.pa165.library.exceptions.BookDaoException;
-import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.to.BookTo;
 import cz.muni.fi.pa165.library.to.ImpressionTo;
 import cz.muni.fi.pa165.library.utils.EntityConvertor;
@@ -26,7 +24,6 @@ import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -184,7 +181,7 @@ public class BookServiceTest extends AbstractIntegrationTest{
 
     }
     
-    @Test(expected=BookDaoException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testFindBooksByDepartment() throws Exception
     {
         BookTo bookTo= new BookTo("Android", "1234-4569-874", "Mobil", null, "Jaryn");
@@ -199,7 +196,7 @@ public class BookServiceTest extends AbstractIntegrationTest{
         when(mockedBookDao.findBooksByDepartment("1234")).thenReturn(null);
         assertNull(bookService.findBooksByDepartment("1234"));
         
-        doThrow(BookDaoException.class).when(mockedBookDao).findBooksByDepartment(null);
+        doThrow(IllegalArgumentException.class).when(mockedBookDao).findBooksByDepartment(null);
         bookService.findBooksByDepartment(null);
 
     } 

@@ -7,7 +7,6 @@ import cz.muni.fi.pa165.library.entity.Impression;
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.enums.DamageType;
 import cz.muni.fi.pa165.library.enums.StatusType;
-import cz.muni.fi.pa165.library.exceptions.CustomerDaoException;
 import java.util.Arrays;
 import java.util.Date;
 import org.junit.Assert;

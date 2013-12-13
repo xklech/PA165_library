@@ -68,13 +68,29 @@ public class BooksActionBean extends BaseActionBean implements ValidationErrorHa
 
     private boolean validationError;
 
+    
+    public Resolution findAll(){
+        log.debug("books bean - find all");
+        try{
+            books = bookService.findAllBooks();
+        }catch(Exception ex){
+            log.error("find all ",ex);
+            getContext().getValidationErrors().addGlobalError(new LocalizableError("common.find.error"));
+	    return getContext().getSourcePageResolution();
+        }
+        return new ForwardResolution("/book/list.jsp");
+        
+    }
+    
     public Resolution findById() {
 	log.debug("findById() ");
-	BookTo bookTo = null;
+	BookTo bookTo;
 	try {
 	    bookTo = bookService.findBookById(findId);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("findById ",ex);
+            getContext().getValidationErrors().addGlobalError(new LocalizableError("common.find.error"));
+	    return getContext().getSourcePageResolution();
 	}
 	if (bookTo != null) {
 	    books = Arrays.asList(bookTo);
@@ -90,7 +106,9 @@ public class BooksActionBean extends BaseActionBean implements ValidationErrorHa
 	try {
 	    books = bookService.findBooksByName(findName);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("findByName ",ex);
+            getContext().getValidationErrors().addGlobalError(new LocalizableError("common.find.error"));
+	    return getContext().getSourcePageResolution();
 	}
 	if (books == null || books.isEmpty()) {
 	    getContext().getMessages().add(new LocalizableMessage("book.findName.message", findName));
@@ -104,7 +122,9 @@ public class BooksActionBean extends BaseActionBean implements ValidationErrorHa
 	try {
 	    books = bookService.findBooksByAuthor(findAuthor);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("findByAuthor ",ex);
+            getContext().getValidationErrors().addGlobalError(new LocalizableError("common.find.error"));
+	    return getContext().getSourcePageResolution();
 	}
 	if (books == null || books.isEmpty()) {
 	    getContext().getMessages().add(new LocalizableMessage("book.findAuthor.message", findAuthor));
@@ -118,7 +138,9 @@ public class BooksActionBean extends BaseActionBean implements ValidationErrorHa
 	try {
 	    books = bookService.findBooksByDepartment(findDepartment);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("findByDepartment ",ex);
+            getContext().getValidationErrors().addGlobalError(new LocalizableError("common.find.error"));
+	    return getContext().getSourcePageResolution();
 	}
 	if (books == null || books.isEmpty()) {
 	    getContext().getMessages().add(new LocalizableMessage("book.findDepartment.message", findDepartment));
@@ -132,7 +154,9 @@ public class BooksActionBean extends BaseActionBean implements ValidationErrorHa
 	try {
 	    books = bookService.findBooksByPublishDate(findDateFrom, findDateTo);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("findByDate ",ex);
+            getContext().getValidationErrors().addGlobalError(new LocalizableError("common.find.error"));
+	    return getContext().getSourcePageResolution();
 	}
 	if (books == null || books.isEmpty()) {
 	    DateFormat f = DateFormat.getDateInstance(DateFormat.LONG, getContext().getRequest().getLocale());
@@ -159,7 +183,7 @@ public class BooksActionBean extends BaseActionBean implements ValidationErrorHa
 	try {
 	    book = bookService.findBookById(id);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("loadBookFromDatabase ",ex);
 	}
     }
 
@@ -168,7 +192,9 @@ public class BooksActionBean extends BaseActionBean implements ValidationErrorHa
 	try {
 	    bookService.save(book);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("add ",ex);
+            getContext().getValidationErrors().addGlobalError(new LocalizableError("common.find.error"));
+	    return getContext().getSourcePageResolution();
 	}
 	getContext().getMessages().add(new LocalizableMessage("book.add.message", escapeHTML(book.getName()), escapeHTML(book.getAuthor()), book.getId()));
 	return new RedirectResolution(this.getClass());
@@ -195,7 +221,9 @@ public class BooksActionBean extends BaseActionBean implements ValidationErrorHa
 	try {
 	    bookService.updateBook(book);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("save ",ex);
+            getContext().getValidationErrors().addGlobalError(new LocalizableError("common.find.error"));
+	    return getContext().getSourcePageResolution();
 	}
 	getContext().getMessages().add(new LocalizableMessage("book.save.message", escapeHTML(book.getName()), escapeHTML(book.getAuthor()), book.getId()));
 	return new RedirectResolution(this.getClass());

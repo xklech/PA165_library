@@ -4,7 +4,6 @@ import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.enums.DamageType;
 import cz.muni.fi.pa165.library.entity.Impression;
 import cz.muni.fi.pa165.library.enums.StatusType;
-import cz.muni.fi.pa165.library.exceptions.ImpressionDaoException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

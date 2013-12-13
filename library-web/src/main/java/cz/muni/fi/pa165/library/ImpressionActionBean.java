@@ -5,15 +5,10 @@
  */
 package cz.muni.fi.pa165.library;
 
-import static cz.muni.fi.pa165.library.BooksActionBean.log;
-import cz.muni.fi.pa165.library.enums.DamageType;
-import cz.muni.fi.pa165.library.enums.StatusType;
-import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.service.BookService;
 import cz.muni.fi.pa165.library.service.ImpressionService;
 import cz.muni.fi.pa165.library.to.BookTo;
 import cz.muni.fi.pa165.library.to.ImpressionTo;
-import java.util.Arrays;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -64,7 +59,9 @@ public class ImpressionActionBean extends BaseActionBean {
 	try {
 	    impressions = impressionService.findImpressionsByBook(book);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+	    log.error("service error",ex);
+            getContext().getMessages().add(new LocalizableError("common.find.error"));  
+            return getContext().getSourcePageResolution();
 	}
 	return new ForwardResolution("/impression/list.jsp");
     }
@@ -139,7 +136,7 @@ public class ImpressionActionBean extends BaseActionBean {
 	try {
 	    book = bookService.findBookById(id);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("error loading data impression",ex);
 	}
 	if ("edit".equals(getContext().getEventName()) || "save".equals(getContext().getEventName())) {
 	    String impressionIdStr = getContext().getRequest().getParameter("impression.id");

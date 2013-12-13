@@ -6,8 +6,6 @@ import cz.muni.fi.pa165.library.dao.LoanDao;
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.enums.DamageType;
 import cz.muni.fi.pa165.library.enums.StatusType;
-import cz.muni.fi.pa165.library.exceptions.LoanDaoException;
-import cz.muni.fi.pa165.library.exceptions.ServiceDataAccessException;
 import cz.muni.fi.pa165.library.to.BookTo;
 import cz.muni.fi.pa165.library.to.CustomerTo;
 import cz.muni.fi.pa165.library.to.ImpressionTo;

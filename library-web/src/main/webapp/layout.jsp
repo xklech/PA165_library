@@ -41,7 +41,7 @@
 	    </div>
 	    <div id="footerWrapper">
 		<div id="footer">
-		    Copyright &copy 2013 fi.muni.cz
+		    Copyright &copy; 2013 fi.muni.cz
 		</div>
 	    </div>
 	</div>

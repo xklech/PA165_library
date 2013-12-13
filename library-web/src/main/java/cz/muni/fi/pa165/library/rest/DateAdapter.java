@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.library.rest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.ws.rs.WebApplicationException;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

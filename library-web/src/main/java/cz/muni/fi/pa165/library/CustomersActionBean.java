@@ -1,11 +1,16 @@
 package cz.muni.fi.pa165.library;
 
+import cz.muni.fi.pa165.library.service.BookService;
 import cz.muni.fi.pa165.library.service.CustomerService;
+import cz.muni.fi.pa165.library.service.LoanService;
+import cz.muni.fi.pa165.library.to.BookTo;
 import cz.muni.fi.pa165.library.to.CustomerTo;
+import cz.muni.fi.pa165.library.to.LoanTo;
 import java.util.Arrays;
 import java.util.Collection;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.controller.LifecycleStage;
+import net.sourceforge.stripes.exception.SourcePageNotFoundException;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
@@ -22,6 +27,10 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
 
     @SpringBean
     protected CustomerService customerService;
+    @SpringBean
+    protected BookService bookService;
+    @SpringBean
+    protected LoanService loanService;
     
     private boolean validationError;
 
@@ -43,6 +52,12 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
     @Validate(on = {"findByName"}, required = true, minlength = 1)
     private String findLastName;
 
+    @Validate(on = {"findByBookId"}, required = true, minvalue = 0)
+    private Long findBookId;
+    
+    @Validate(on = {"findByLoanId"}, required = true, minvalue = 0)
+    private Long findLoanId;
+    
     public CustomerTo getCustomer() {
         return customer;
     }
@@ -84,7 +99,9 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
 	try {
 	    customerService.addCustomer(customer);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("service error",ex);
+            getContext().getMessages().add(new LocalizableError("common.find.error"));  
+            return getContext().getSourcePageResolution();
 	}
         getContext().getMessages().add(new LocalizableMessage("customer.add.message",escapeHTML(customer.getFirstName()),escapeHTML(customer.getLastName()),customer.getId()));
         return new RedirectResolution(this.getClass());
@@ -95,7 +112,9 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
 	try {
 	    customerService.updateCustomer(customer);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("service error",ex);
+            getContext().getMessages().add(new LocalizableError("common.find.error"));  
+            return getContext().getSourcePageResolution();
 	}
         getContext().getMessages().add(new LocalizableMessage("customer.save.message",escapeHTML(customer.getFirstName()),escapeHTML(customer.getLastName()),customer.getId()));
         return new RedirectResolution(this.getClass());
@@ -130,22 +149,58 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
 	try {
 	    customer = customerService.findCustomerById(id);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("service error",ex);
 	}
     }
 
+    public Resolution findByBookId(){
+        log.debug("find by boiok id: "+findBookId);
+        try{
+            BookTo bookTo = bookService.findBookById(findBookId);
+            if(bookTo == null){
+                 getContext().getMessages().add(new LocalizableMessage("books.list.missing",findBookId));  
+                 return getContext().getSourcePageResolution();
+            }
+            this.customers = customerService.findCustomersByBook(bookTo);
+        }catch(Exception ex){
+            log.error("service error",ex);
+            getContext().getMessages().add(new LocalizableError("common.find.error"));  
+            return getContext().getSourcePageResolution();
+        }
+        return new ForwardResolution("/customer/list.jsp");
+    }
+    
+    public Resolution findByLoanId(){
+        log.debug("find by loan id: "+findLoanId);
+        try{
+            LoanTo loanTo = loanService.findLoanById(findLoanId);
+            if(loanTo == null){
+                 getContext().getMessages().add(new LocalizableMessage("loans.findId.invalid",findLoanId));  
+                 return getContext().getSourcePageResolution();
+            }
+            this.customers = Arrays.asList(customerService.findCustomerByLoan(loanTo));
+        }catch(Exception ex){
+            log.error("service error",ex);
+            getContext().getMessages().add(new LocalizableError("common.find.error"));  
+            return getContext().getSourcePageResolution();
+        }
+        return new ForwardResolution("/customer/list.jsp");
+    }
+    
     public Resolution findById() {
         log.debug("findById() ");
-	CustomerTo customerTo = null;
+	CustomerTo customerTo;
 	try {
 	    customerTo = customerService.findCustomerById(findId);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("service error",ex);
+            getContext().getMessages().add(new LocalizableError("common.find.error"));  
+            return getContext().getSourcePageResolution();
 	}
         if (customerTo != null) {
             customers = Arrays.asList(customerTo);
         } else {
-            getContext().getMessages().add(new LocalizableError("customer.findId.message",findId));  
+	    getContext().getMessages().add(new LocalizableMessage("book.findId.message", findId)); 
             return getContext().getSourcePageResolution();
         }
         return new ForwardResolution("/customer/list.jsp");                  
@@ -156,13 +211,27 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
 	try {
 	    customers = customerService.findCustomerByName(findFirstName, findLastName);
 	} catch (Exception ex) {
-	    /** @todo response to IllegalArgumentException */
+            log.error("service error",ex);
+            getContext().getMessages().add(new LocalizableError("common.find.error"));  
+            return getContext().getSourcePageResolution();
 	}
         if (customers == null || customers.isEmpty()) {
             getContext().getMessages().add(new LocalizableError("customer.findName.message", findFirstName, findLastName));  
             return getContext().getSourcePageResolution();
         }
         return new ForwardResolution("/customer/list.jsp");                  
+    }
+    
+    public Resolution findAll(){
+        log.debug("Find all customers");
+        try{
+            customers = customerService.findAllCustomers();
+        }catch(Exception ex){
+            log.error("service error",ex);
+            getContext().getMessages().add(new LocalizableError("common.find.error"));  
+            return getContext().getSourcePageResolution();
+        }
+        return new ForwardResolution("/customer/list.jsp");
     }
     
     public boolean isValidationError() {
@@ -197,4 +266,22 @@ public class CustomersActionBean extends BaseActionBean implements ValidationErr
         this.findLastName = findLastName;
     }
 
+    public Long getFindBookId() {
+        return findBookId;
+    }
+
+    public void setFindBookId(Long findBookId) {
+        this.findBookId = findBookId;
+    }
+
+    public Long getFindLoanId() {
+        return findLoanId;
+    }
+
+    public void setFindLoanId(Long findLoanId) {
+        this.findLoanId = findLoanId;
+    }
+
+    
+    
 }

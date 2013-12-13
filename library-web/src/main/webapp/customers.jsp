@@ -9,6 +9,16 @@
         <div id="customer_find" <c:if test="${actionBean.validationError }">style="display:none"</c:if>>
             
             <s:form beanclass="cz.muni.fi.pa165.library.CustomersActionBean">
+                <fieldset><legend><f:message key="customer.list.findall"/></legend>                    
+                    <table>   
+                        <tr>
+                            <td><s:submit name="findAll"><f:message key="common.search" /></s:submit></td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </s:form>
+            
+            <s:form beanclass="cz.muni.fi.pa165.library.CustomersActionBean">
                 <fieldset><legend><f:message key="customer.list.findid"/></legend>                    
                     <table>
                         <tr>
@@ -23,6 +33,35 @@
             </s:form>
             
             <s:form beanclass="cz.muni.fi.pa165.library.CustomersActionBean">
+                <fieldset><legend><f:message key="customer.list.findBook"/></legend>                    
+                    <table>
+                        <tr>
+                            <th><s:label for="fb1" name="findBookId"/></th>
+                            <td><s:text id="fb1" name="findBookId"/><s:errors field="findBookId" /></td>
+                        </tr>      
+                        <tr>
+                            <td colspan="2"><s:submit name="findByBookId"><f:message key="common.search" /></s:submit></td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </s:form>
+            
+            <s:form beanclass="cz.muni.fi.pa165.library.CustomersActionBean">
+                <fieldset><legend><f:message key="customer.list.findLoan"/></legend>                    
+                    <table>
+                        <tr>
+                            <th><s:label for="fl1" name="findLoanId"/></th>
+                            <td><s:text id="fl1" name="findLoanId"/><s:errors field="findLoanId" /></td>
+                        </tr>      
+                        <tr>
+                            <td colspan="2"><s:submit name="findByLoanId"><f:message key="common.search" /></s:submit></td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </s:form>
+            
+            
+            <s:form beanclass="cz.muni.fi.pa165.library.CustomersActionBean">
                 <fieldset>
                     <legend><f:message key="customer.list.findName"/></legend>                 
                     <table>
@@ -35,7 +74,7 @@
                             <td><s:text id="f3" name="findLastName"/><s:errors field="findLastName" /></td>
                         </tr>
                         <tr>
-                            <td><s:submit name="findByName"><f:message key="common.search" /></s:submit></td>
+                            <td colspan="2"><s:submit name="findByName"><f:message key="common.search" /></s:submit></td>
                         </tr>
                     </table>
                 </fieldset>

@@ -13,6 +13,6 @@
         </tr>
         <tr>
             <th class="w20 r"><s:label for="b3" name="impression.status"/></th>
-            <td class="w80"><s:select id="b2" name="impression.status"><s:options-enumeration enum="cz.muni.fi.pa165.library.enums.StatusType"/></s:select><s:errors field="impression.status"/></td>
+            <td class="w80"><s:select id="b3" name="impression.status"><s:options-enumeration enum="cz.muni.fi.pa165.library.enums.StatusType"/></s:select><s:errors field="impression.status"/></td>
         </tr>
     </table>

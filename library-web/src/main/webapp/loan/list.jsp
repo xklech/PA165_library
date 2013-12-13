@@ -6,7 +6,7 @@
 <s:layout-render name="/layout.jsp" titlekey="loans.title">
     <s:layout-component name="body">
         <s:useActionBean beanclass="cz.muni.fi.pa165.library.LoansActionBean" var="actionBean"/>
-	<table>
+	<table class="table_display w100">
 	    <tr>
 		<th>Loan</th>
 		<th>Customer</th>
@@ -22,11 +22,12 @@
 		    <td>${loan.impressionTo.bookTo.author} - ${loan.impressionTo.bookTo.name}</td>
 		    <td>${loan.fromDate}</td>
 		    <td>${loan.toDate}</td>
-		    <td></td>
 		    <td>
 			<s:form beanclass="cz.muni.fi.pa165.library.LoansActionBean">
 			    <s:hidden name="loanId" value="${loan.id}"/>
-			    <s:submit name="restore"><f:message key="loans.list.restore"/></s:submit>
+                            <c:if test="${empty loan.toDate}">
+                                <s:submit name="restore"><f:message key="loans.list.restore"/></s:submit>
+                            </c:if> 
 			    <s:submit name="delete"><f:message key="loans.list.delete"/></s:submit>
 			</s:form>
 		    </td>

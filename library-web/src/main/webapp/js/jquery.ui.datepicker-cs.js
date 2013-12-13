@@ -18,6 +18,10 @@ jQuery(function($){
 		firstDay: 1,
 		isRTL: false,
 		showMonthAfterYear: false,
-		yearSuffix: ''};
+		yearSuffix: '',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "c-30:c+30"
+            };
 	$.datepicker.setDefaults($.datepicker.regional['cs']);
 });
