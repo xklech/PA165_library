@@ -9,14 +9,12 @@
     <global-method-security secured-annotations="enabled" />
     <authentication-manager>
 	<authentication-provider>
-	    <user-service>
-		<user name="admin" password="admin" authorities="ROLE_ADMIN" />
-		<user name="rest" password="rest" authorities="ROLE_ADMIN" />
-	    </user-service>
+            <password-encoder hash="sha" />
+                <user-service>
+                    <user name="admin" password="d033e22ae348aeb5660fc2140aec35850c4da997" authorities="ROLE_ADMIN" />
+                    <user name="rest" password="27ad1672d8c97d748c9f1d8d465abfbf6bffeb72" authorities="ROLE_ADMIN" />
+                </user-service>
 	</authentication-provider>
-	<!--<authentication-provider user-service-ref="userDetailsService">
-	    
-	</authentication-provider>-->
     </authentication-manager>    
     
     <http use-expressions="true">

@@ -10,7 +10,7 @@
 
         <form name="f" action="<c:url value="j_spring_security_check" />" method="POST">
 
-            <div class="post">
+            <div>
                 <table>
                     <tr>
                         <td> <s:label for="j_username" name="username"/></td>
