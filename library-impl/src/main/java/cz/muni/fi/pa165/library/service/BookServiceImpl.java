@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public BookTo save(BookTo bookTo) {
 	Book book = EntityConvertor.convertFromBookTo(bookTo);
 	bookDao.addBook(book);
@@ -47,6 +49,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public BookTo updateBook(BookTo bookTo) {
 	Book book = EntityConvertor.convertFromBookTo(bookTo);
 	bookDao.updateBook(book);
@@ -54,6 +57,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public boolean deleteBook(BookTo bookTo) {
 	Book book = EntityConvertor.convertFromBookTo(bookTo);
 	bookDao.deleteBook(book);

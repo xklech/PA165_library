@@ -2,6 +2,7 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <s:layout-definition>
 <!DOCTYPE html>
 <html lang="${pageContext.request.locale}">
@@ -29,9 +30,14 @@
 	    </div>
 	    <div id="contentWrapper">
 		<nav>
-		    <s:link beanclass="cz.muni.fi.pa165.library.CustomersActionBean"><f:message key="navigation.customers"/></s:link>
-		    <s:link beanclass="cz.muni.fi.pa165.library.LoansActionBean"><f:message key="navigation.loans"/></s:link>
+		    <sec:authorize access="isAuthenticated()">
+			<s:link beanclass="cz.muni.fi.pa165.library.CustomersActionBean"><f:message key="navigation.customers"/></s:link>
+			<s:link beanclass="cz.muni.fi.pa165.library.LoansActionBean"><f:message key="navigation.loans"/></s:link>
+		    </sec:authorize>
 		    <s:link beanclass="cz.muni.fi.pa165.library.BooksActionBean"><f:message key="navigation.books"/></s:link>
+		    <sec:authorize access="isAuthenticated()"> 
+			<a href="/pa165/<c:url value="j_spring_security_logout" />"><f:message key="logout"/></a>
+		    </sec:authorize>
 		</nav>
 		<div id="content" class="container">   
 		    <h1>
@@ -44,7 +50,10 @@
 	    </div>
 	    <div id="footerWrapper">
 		<div id="footer">
-		    Copyright &copy; 2013 fi.muni.cz
+		    Copyright &copy; 2013 fi.muni.cz 
+		    <sec:authorize access="!isAuthenticated()"> 
+			<a href="${pageContext.request.contextPath}/login.jsp"><f:message key="admin"/></a>
+		    </sec:authorize>
 		</div>
 	    </div>
 	</div>

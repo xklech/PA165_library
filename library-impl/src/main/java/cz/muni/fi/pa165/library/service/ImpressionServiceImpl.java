@@ -12,6 +12,7 @@ import cz.muni.fi.pa165.library.utils.EntityConvertor;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +39,7 @@ public class ImpressionServiceImpl implements ImpressionService {
     }
     
     @Override
+    @Secured({"ROLE_ADMIN"})
     public ImpressionTo addImpression(ImpressionTo impressionTo) {  
         Impression entity = EntityConvertor.convertFromImpressionTo(impressionTo);
 	entity = impDao.addImpression(entity);
@@ -46,6 +48,7 @@ public class ImpressionServiceImpl implements ImpressionService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public ImpressionTo updateImpression(ImpressionTo impressionTo) {
         Impression entity = EntityConvertor.convertFromImpressionTo(impressionTo);
 	impDao.updateImpression(entity);
@@ -53,6 +56,7 @@ public class ImpressionServiceImpl implements ImpressionService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public boolean deleteImpression(ImpressionTo impressionTo) {
         Impression entity = EntityConvertor.convertFromImpressionTo(impressionTo);
 	impDao.deleteImpression(entity);
@@ -60,6 +64,7 @@ public class ImpressionServiceImpl implements ImpressionService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public ImpressionTo findImpressionById(Long id) {
         Impression result;
 	result = impDao.findImpressionById(id);
@@ -67,6 +72,7 @@ public class ImpressionServiceImpl implements ImpressionService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public List<ImpressionTo> findImpressionsByDamage(DamageType damage) {
         List<ImpressionTo> result = new ArrayList();
         List<Impression> supp = impDao.findImpressionsByDamage(damage);
@@ -77,6 +83,7 @@ public class ImpressionServiceImpl implements ImpressionService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public List<ImpressionTo> findImpressionsByStatus(StatusType status) {
         List<ImpressionTo> result = new ArrayList();
         List<Impression> supp = impDao.findImpressionsByStatus(status);
@@ -87,6 +94,7 @@ public class ImpressionServiceImpl implements ImpressionService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public List<ImpressionTo> findImpressionsByBook(BookTo bookTo) {
 	if (bookTo == null) {
 	    throw new IllegalArgumentException("bookTo");

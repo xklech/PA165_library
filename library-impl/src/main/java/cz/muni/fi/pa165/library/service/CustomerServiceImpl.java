@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
     
     @Transactional
     @Override
+    @Secured({"ROLE_ADMIN"})
     public CustomerTo addCustomer(CustomerTo customerTo) {
 	Customer customer = EntityConvertor.convertFromCustomerTo(customerTo);
 	customerDao.addCustomer(customer);
@@ -57,6 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public CustomerTo updateCustomer(CustomerTo customerTo) {
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTo);
        customerDao.updateCustomer(customer);
@@ -64,6 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
     
     @Override
+    @Secured({"ROLE_ADMIN"})
     public boolean deleteCustomer(CustomerTo customerTo) {
         Customer customer = EntityConvertor.convertFromCustomerTo(customerTo);
 	customerDao.deleteCustomer(customer); 
@@ -71,6 +75,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public CustomerTo findCustomerById(Long id) {
         Customer customer;
 	customer = customerDao.findCustomerById(id);
@@ -78,6 +83,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public List<CustomerTo> findAllCustomers() {
         Collection <Customer> customers = customerDao.findAllCustomers(); 
         if (customers == null) {
@@ -91,6 +97,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public List<CustomerTo> findCustomersByBook(BookTo bookTo) {
 	if (bookTo == null) {
 	    throw new IllegalArgumentException("bookTo is null");
@@ -109,6 +116,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public CustomerTo findCustomerByLoan(LoanTo loanTo) {
 	if (loanTo == null) {
 	    throw new IllegalArgumentException("loanTo");
@@ -120,6 +128,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    
     public List<CustomerTo> findCustomerByName(String firstName, String lastName) {
         Collection<Customer> customers;
 	customers = customerDao.findCustomerByName(firstName, lastName);

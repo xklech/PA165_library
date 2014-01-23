@@ -1,6 +1,13 @@
 $(function(){
     $(".datepick").datepicker();
+    $.ajax({
+	    type: "POST",
+	    url: "/pa165/j_spring_security_check",
+	    data: { j_username:'rest', j_password: 'rest'},
+	    async: false   
+    });
     zobrazVsechnyZakazniky();
+    
 });
 
 

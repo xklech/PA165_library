@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +39,7 @@ public class LoanServiceImpl implements LoanService {
     }
     
     @Override
+    @Secured({"ROLE_ADMIN"})
     public LoanTo addLoan(LoanTo loanTo) {
 	Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
 	this.loanDao.addLoan(loan);                
@@ -46,6 +48,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public LoanTo updateLoan(LoanTo loanTo) {
 	Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
 	this.loanDao.updateLoan(loan);
@@ -53,6 +56,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public boolean deleteLoan(LoanTo loanTo) {
 	Loan loan = EntityConvertor.convertFromLoanTo(loanTo);
 	this.loanDao.deleteLoan(loan);
@@ -60,12 +64,14 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public LoanTo findLoanById(Long id) {
 	Loan loan = this.loanDao.findLoanById(id);
 	return EntityConvertor.convertFromLoan(loan);
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public List<LoanTo> findAllActiveLoans() {
 	Collection<Loan> loans = this.loanDao.findAllActiveLoans();
         if (loans == null) {
@@ -79,6 +85,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public List<LoanTo> findLoansByCustomer(CustomerTo customerTo) {
 	Customer customer = this.customerDao.findCustomerById(customerTo.getId());
 	Collection<Loan> loans = this.loanDao.findLoansByCustomer(customer);
@@ -93,6 +100,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public List<LoanTo> findLoansByFromTo(Date fromDate, Date toDate) {
 	Collection<Loan> loans = this.loanDao.findLoansByFromTo(fromDate,toDate);
         if (loans == null) {
